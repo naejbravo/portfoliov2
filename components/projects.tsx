@@ -1,3 +1,9 @@
+"use client"
+
+import Link from "next/link"
+import { useKeenSlider } from "keen-slider/react"
+import "keen-slider/keen-slider.min.css"
+
 // --- Datos de ejemplo (reemplaza por tus proyectos reales o por MDX) ---
 const featured = [
   {
@@ -18,6 +24,15 @@ const featured = [
     href: '/work/firma-notificaciones',
     imageAlt: 'Document signing and notifications',
   },
+  {
+    slug: 'Documental management system',
+    title: 'Documental management system',
+    year: '2025',
+    description: 'Document management, multiple signatures and auditing.',
+    tags: ['.NET 8','QuestPDF','SignalR', 'Azure'],
+    href: '/work/documental-management-system',
+    imageAlt: 'Documental management system',
+  }
 ]
 
 // --- Componentes internos ---
@@ -30,7 +45,8 @@ function ProjectCard({ title, year, description, tags, href, imageAlt }: {
   imageAlt: string
 }) {
   return (
-    <a href={href} className="group block rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
+    // <a href={href} className="group block rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
+    <a href={href} className="keen-slider__slide group block rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
       <div className="relative aspect-[16/9] bg-neutral-100 dark:bg-neutral-900">
         {/* Aquí puedes usar next/image */}
         <div className="absolute inset-0 grid place-items-center text-neutral-400 text-sm">{imageAlt}</div>
@@ -52,18 +68,30 @@ function ProjectCard({ title, year, description, tags, href, imageAlt }: {
 }
 
 export default function ProjectsSection(){
+  const [sliderRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    mode: "free-snap",
+    slides: { perView: 1.2, spacing: 24 }, // en desktop se ajusta con CSS
+    breakpoints: {
+      "(min-width: 768px)": {
+        slides: { perView: 2.3, spacing: 32 },
+      },
+    },
+  })
     return (
         <section className="mx-auto max-w-6xl px-4 pb-16 md:pb-24" id="projects">
             <div className="flex items-end justify-between gap-4">
                 <h2 className="text-2xl md:text-3xl font-semibold">Featured projects</h2>
-                <a href="/work" className="text-sm underline underline-offset-4 hover:opacity-80">See all</a>
+                <Link href="/work" className="text-sm underline underline-offset-4 hover:opacity-80">See all</Link>
             </div>
 
-            <div className="mt-8 grid md:grid-cols-2 gap-6">
+            {/* <div className="mt-8 grid md:grid-cols-2 gap-6"> */}
+            <div ref={sliderRef} className="keen-slider mt-8 md:mt-10">
                 {featured.map((p) => (
                 <ProjectCard key={p.slug} {...p} />
                 ))}
             </div>
+                  {/* Estilos de opacidad/escala para los lados */}
         </section>
 
     )

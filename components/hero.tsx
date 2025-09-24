@@ -17,7 +17,7 @@ export default function Hero() {
                         View projects
                     </a>
                     <a href="/contact" className="inline-flex items-center rounded-2xl px-5 py-2.5 text-sm font-medium border border-neutral-300/70 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900">
-                        Contact
+                        Do you have something on your mind? Let’s talk.
                     </a>
                     </div>
                     {/* Aquí se pueden agregar las etiquetas de tecnologías */}

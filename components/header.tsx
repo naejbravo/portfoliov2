@@ -10,7 +10,7 @@ export default function Header() {
                         <a className="hover:opacity-80" href="#projects">Projects</a>
                         <a className="hover:opacity-80" href="#contact">Contact</a>
                     </nav>
-                    <a href="/contact" className="inline-flex items-center rounded-xl border border-neutral-300/70 dark:border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900">Do you have something on mind?</a>
+                    {/* <a href="/contact" className="inline-flex items-center rounded-xl border border-neutral-300/70 dark:border-neutral-700 px-3 py-1.5 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900">Do you have something on mind?</a> */}
                 </div>
             </div>
         </header>
