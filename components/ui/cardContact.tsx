@@ -12,7 +12,7 @@ import { ContactForm } from "./contactForm"
 export default function CardContact() 
 {
     return (
-        <Card className="px-4 py-10 gap-2">
+        <Card className="px-4 py-10 gap-2 max-w-10/10 lg:max-w-5/10">
             <CardHeader className="text-xl md:text-2xl font-bold p-0">
                 Do you have a challenge? Then let's talk
             </CardHeader>
