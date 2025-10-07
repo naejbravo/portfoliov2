@@ -2,7 +2,10 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import { z } from "zod"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resendApiKey = process.env.RESEND_API_KEY
+const resend = resendApiKey ? new Resend(resendApiKey) : null
+const contactRecipient = process.env.CONTACT_EMAIL ?? "naejbravo@gmail.com"
+const contactFrom = process.env.CONTACT_FROM ?? "Portfolio <onboarding@resend.dev>"
 
 // Validación del payload (seguridad básica)
 const BodySchema = z.object({
@@ -36,13 +39,18 @@ export async function POST(req: Request) {
     // Si el honeypot viene relleno, ignoramos silenciosamente
     if (botField) return NextResponse.json({ success: true })
 
-    // IMPORTANTE:
-    // - Para pruebas rápidas puedes usar "onboarding@resend.dev" como 'from'
-    // - Para producción, verifica tu propio dominio en Resend y usa algo tipo "hola@tudominio.com"
+    if (!resend) {
+      console.info("[contact] Mensaje recibido sin enviar email (API key no configurada)", {
+        email,
+        message,
+      })
+      return NextResponse.json({ success: true, skippedEmail: true })
+    }
+
     await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>",
-      to: ["naejbravo@gmail.com"], // <-- donde quieres recibir los mensajes
-      reply_to: email,                  // así puedes contestar directo al remitente
+      from: contactFrom,
+      to: [contactRecipient],
+      reply_to: email,
       subject: "Nuevo mensaje desde tu portafolio",
       text: `Email: ${email}\n\n${message}`,
       html: `
