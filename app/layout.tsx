@@ -16,33 +16,33 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://jeanbravo.dev"),
   title: {
-    default: "Jean Bravo · Ingeniero de software",
+    default: "Jean Bravo · Software Engineer",
     template: "%s · Jean Bravo",
   },
   description:
-    "Desarrollador full-stack especializado en experiencias web escalables con Next.js, ASP.NET Core y PostgreSQL.",
+    "Full-stack developer specialized in scalable web experiences with Next.js, ASP.NET Core and PostgreSQL.",
   openGraph: {
     type: "website",
     url: "/",
-    title: "Jean Bravo · Ingeniero de software",
+    title: "Jean Bravo · Software Engineer",
     description:
-      "Construyo productos digitales con foco en rendimiento, accesibilidad y experiencia de desarrolladores.",
-    locale: "es_ES",
+      "I build digital products with focus on performance, accessibility and developer experience.",
+    locale: "en_US",
     siteName: "Jean Bravo",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jean Bravo · Ingeniero de software",
+    title: "Jean Bravo · Software Engineer",
     description:
-      "Desarrollo plataformas web con Next.js, ASP.NET Core y PostgreSQL.",
+      "I develop web platforms with Next.js, ASP.NET Core and PostgreSQL.",
     creator: "@jeanbravo",
   },
   keywords: [
     "Jean Bravo",
-    "Desarrollador Full Stack",
+    "Full Stack Developer",
     "Next.js",
     "ASP.NET Core",
-    "Portafolio",
+    "Portfolio",
   ],
   authors: [{ name: "Jean Bravo" }],
 }

@@ -2,101 +2,94 @@
   "projects": [
     {
       "projectName": "WebCaeProCliente",
-      "displayName": "Sistema motor de gestor documental",
-      "tagline": "Automatizamos el envío de documentos laborales a CreateRD con un pipeline resilient y trazable.",
-      "status": "MVP funcional en evolución",
+      "displayName": "Document management system engine",
+      "tagline": "We automated the sending of labor documents to CreateRD with a resilient and traceable pipeline.",
+      "status": "Evolving functional MVP",
       "role": "Full-stack .NET Developer",
       "team": {
         "size": 1,
         "composition": [
-          "Desarrollo full-stack",
-          "Arquitectura pipeline",
-          "Integración API externa"
+          "Full-stack development",
+          "Pipeline architecture",
+          "External API integration"
         ]
       },
       "timeline": {
         "start": "2024",
         "end": null,
-        "stage": "Iterando Primera Versión"
+        "stage": "Iterating First Version"
       },
-      "businessProblem": "El cliente necesita cargar miles de PDF laborales en la plataforma maestra CreateRD sin depender de procesos manuales y con total trazabilidad de errores.",
-      "solutionOverview": "Aplicación ASP.NET Core 8 MVC que monitorea una carpeta compartida, extrae metadatos desde la nomenclatura del archivo, normaliza la información y envía lotes JSON a la API CreateRD, con tablero administrativo, circuit breaker y auditoría de cada paso.",
+      "businessProblem": "The client needs to upload thousands of labor PDFs to the CreateRD master platform without relying on manual processes and with full error traceability.",
+      "solutionOverview": "ASP.NET Core 8 MVC application that monitors a shared folder, extracts metadata from file nomenclature, normalizes information and sends JSON batches to the CreateRD API, with administrative dashboard, circuit breaker and audit of each step.",
       "techStack": {
-        "backend": [
-          ".NET 8",
-          "ASP.NET Core MVC",
-          "BackgroundService"
-        ],
-        "data": [
-          "Entity Framework Core",
-          "MySQL (Pomelo provider)"
-        ],
+        "backend": [".NET 8", "ASP.NET Core MVC", "BackgroundService"],
+        "data": ["Entity Framework Core", "MySQL (Pomelo provider)"],
         "infrastructure": [
-          "IHostedService para workers",
-          "Carpeta compartida on-premise (D:\\\\IntranetCarpetas)"
+          "IHostedService for workers",
+          "On-premise shared folder (D:\\\\IntranetCarpetas)"
         ],
         "observability": [
-          "Serilog con logs rolling",
-          "Endpoint /metrics estilo Prometheus",
+          "Serilog with rolling logs",
+          "/metrics endpoint Prometheus-style",
           "DocumentHistory + NormalizationAudit"
         ],
         "security": [
           "ASP.NET Identity",
-          "Roles con semilla Admin",
-          "Cookies protegidas"
+          "Roles with Admin seed",
+          "Protected cookies"
         ]
       },
       "keyFeatures": [
         {
-          "name": "Pipeline 4 etapas",
-          "description": "Detector, Parser, Normalize y Sender se encadenan para llevar un PDF desde la carpeta local hasta la API externa.",
-          "value": "Disminuye el tiempo operativo y homogeniza la data antes de integrarla.",
+          "name": "4-stage pipeline",
+          "description": "Detector, Parser, Normalize and Sender are chained to take a PDF from the local folder to the external API.",
+          "value": "Reduces operational time and homogenizes data before integrating it.",
           "highlights": [
-            "Lotes concurrentes con Parallel.ForEachAsync",
-            "Reintentos controlados por Intentos/NextRetryAt",
-            "Circuit breaker configurable"
+            "Concurrent batches with Parallel.ForEachAsync",
+            "Controlled retries by Attempts/NextRetryAt",
+            "Configurable circuit breaker"
           ]
         },
         {
-          "name": "Parser inteligente de nomenclaturas",
-          "description": "Analiza tokens en el nombre del archivo para inferir tipo de registro, IDs, fechas y actor principal (trabajador/empresa/autónomo).",
-          "value": "Permite integrar fuentes heterogéneas sin intervención humana.",
+          "name": "Smart nomenclature parser",
+          "description": "Analyzes tokens in the file name to infer record type, IDs, dates and main actor (worker/company/freelancer).",
+          "value": "Allows integrating heterogeneous sources without human intervention.",
           "highlights": [
-            "Reglas específicas para autónomos",
-            "Validación de tokens obligatorios",
-            "Mensajes de error amigables para revisión manual"
+            "Specific rules for freelancers",
+            "Mandatory token validation",
+            "Friendly error messages for manual review"
           ]
         },
         {
-          "name": "Normalización y auditoría",
-          "description": "Deriva nombres canónicos de empresa/centro y guarda snapshots antes/después de la normalización.",
-          "value": "Garantiza consistencia en la data enviada y facilita auditorías posteriores.",
+          "name": "Normalization and audit",
+          "description": "Derives canonical company/center names and saves snapshots before/after normalization.",
+          "value": "Guarantees consistency in sent data and facilitates later audits.",
           "highlights": [
-            "Heurísticas por tipo de registro",
-            "NormalizationAudit con JSON de cambios",
-            "DocumentHistory por etapa"
+            "Heuristics by record type",
+            "NormalizationAudit with changes JSON",
+            "DocumentHistory by stage"
           ]
         },
         {
-          "name": "Dashboard administrativo",
-          "description": "Panel con métricas por estado, series históricas y top empresas, más vistas filtradas de la cola.",
-          "value": "Ofrece visibilidad en tiempo real para operaciones y soporte.",
+          "name": "Administrative dashboard",
+          "description": "Panel with metrics by status, historical series and top companies, plus filtered queue views.",
+          "value": "Offers real-time visibility for operations and support.",
           "highlights": [
-            "Chart.js para visualizaciones",
-            "Filtros avanzados en VerDto",
-            "Modal de auditoría de normalización"
+            "Chart.js for visualizations",
+            "Advanced filters in VerDto",
+            "Normalization audit modal"
           ]
         }
       ],
       "architecture": {
-        "style": "Clean-ish MVC con servicios hospedados",
+        "style": "Clean-ish MVC with hosted services",
         "layers": [
-          "Controllers + ViewModels para UI",
-          "Services para pipeline y clientes externos",
-          "Models/Data para EF Core"
+          "Controllers + ViewModels for UI",
+          "Services for pipeline and external clients",
+          "Models/Data for EF Core"
         ],
         "integration": {
-          "externalApi": "CreateRD (HttpClient + ApiKey en headers)",
+          "externalApi": "CreateRD (HttpClient + ApiKey in headers)",
           "circuitBreaker": {
             "enabled": true,
             "failureThreshold": 5,
@@ -107,172 +100,158 @@
       },
       "dataFlow": [
         {
-          "stage": "Detección",
+          "stage": "Detection",
           "service": "DetectorWorkerService",
-          "input": "PDF en D:\\\\IntranetCarpetas",
-          "output": "DocumentLoadQueue estado Pendiente + log Detección"
+          "input": "PDF in D:\\\\IntranetCarpetas",
+          "output": "DocumentLoadQueue Pending status + Detection log"
         },
         {
-          "stage": "Parseo",
+          "stage": "Parsing",
           "service": "ParserWorkerService + DocumentParser",
-          "input": "DocumentLoadQueue Pendiente",
-          "output": "Campos extraídos, estado Parseado/Error, log Parseo"
+          "input": "DocumentLoadQueue Pending",
+          "output": "Extracted fields, Parsed/Error status, Parsing log"
         },
         {
-          "stage": "Normalización",
+          "stage": "Normalization",
           "service": "NormalizeWorkerService",
-          "input": "DocumentLoadQueue Parseado",
-          "output": "Nombre empresa/centro canonizado, estado Normalizado/Error"
+          "input": "DocumentLoadQueue Parsed",
+          "output": "Canonized company/center name, Normalized/Error status"
         },
         {
-          "stage": "Envío",
+          "stage": "Sending",
           "service": "SenderWorkerService + WebCaeApiClient",
-          "input": "DocumentLoadQueue Normalizado",
-          "output": "POST CreateRD, estado Aceptado/Rechazado/Error, circuit breaker"
+          "input": "DocumentLoadQueue Normalized",
+          "output": "POST CreateRD, Accepted/Rejected/Error status, circuit breaker"
         }
       ],
       "observability": {
-        "logging": "Serilog a consola + rolling files (logs/myapp-.log).",
-        "metrics": "Collector en memoria expuesto para scraping Prometheus/Grafana.",
+        "logging": "Serilog to console + rolling files (logs/myapp-.log).",
+        "metrics": "In-memory collector exposed for Prometheus/Grafana scraping.",
         "adminScreens": [
           "Dashboard /Home/Index",
-          "VerDto con filtros por estado/tipo",
-          "Logs paginados /logs"
+          "VerDto with filters by status/type",
+          "Paginated logs /logs"
         ]
       },
       "security": {
-        "identity": "ASP.NET Identity con seeding de rol Admin y usuario admin@startup.",
-        "authZ": "Controllers administrativos restringidos por rol.",
-        "config": "ApiKey y BaseUrl leídos desde appsettings/secretos de usuario."
+        "identity": "ASP.NET Identity with Admin role seeding and admin@startup user.",
+        "authZ": "Administrative controllers restricted by role.",
+        "config": "ApiKey and BaseUrl read from appsettings/user secrets."
       },
       "risksAndChallenges": [
-        "Nomenclaturas dispares pueden romper el parser: se mitiga con RequiresManualReview y mensajes específicos.",
-        "Disponibilidad carpeta compartida: Detector implementa backoff exponencial y logging dedicado.",
-        "Integración CreateRD definitiva pendiente: circuit breaker habilitado y payload centralizado en extensión ToRegistroDocumento."
+        "Disparate nomenclatures can break the parser: mitigated with RequiresManualReview and specific messages.",
+        "Shared folder availability: Detector implements exponential backoff and dedicated logging.",
+        "Definitive CreateRD integration pending: circuit breaker enabled and payload centralized in ToRegistroDocumento extension."
       ],
       "impact": {
-        "ops": "Reduce tiempos de integración documental de horas a minutos y habilita seguimiento centralizado.",
-        "quality": "Reglas de negocio y auditorías reducen rechazos por datos inconsistentes.",
-        "scalability": "Pipeline por lotes soporta aumentar frecuencia y volumen sin bloquear la UI."
+        "ops": "Reduces document integration times from hours to minutes and enables centralized tracking.",
+        "quality": "Business rules and audits reduce rejections due to inconsistent data.",
+        "scalability": "Batch pipeline supports increasing frequency and volume without blocking the UI."
       },
       "nextIterations": [
-        "Conectar HttpClient a endpoint productivo CreateRD",
-        "Añadir FileSystemWatcher para detección casi en tiempo real",
-        "Publicar métricas en Prometheus/Grafana y alertas en Slack/Teams",
-        "Completar módulo de notificaciones (tablas ya esbozadas en DbContext)"
+        "Connect HttpClient to CreateRD production endpoint",
+        "Add FileSystemWatcher for near real-time detection",
+        "Publish metrics in Prometheus/Grafana and alerts in Slack/Teams",
+        "Complete notifications module (tables already outlined in DbContext)"
       ],
       "assets": {
         "screenshots": [
-          {
-            "description": "Dashboard con métricas por estado y top empresas",
-            "path": null
-          },
-          {
-            "description": "Vista VerDto con filtros avanzados",
-            "path": null
-          }
+          {"description": "Dashboard with metrics by status and top companies", "path": null},
+          {"description": "VerDto view with advanced filters", "path": null}
         ],
         "demoVideo": null,
         "publicRepo": null
       },
-      "callToAction": "Disponible para mostrar demo técnica del pipeline end-to-end y profundizar en la integración CreateRD."
+      "callToAction": "Available to show technical demo of the end-to-end pipeline and delve into CreateRD integration."
     },
     {
       "projectName": "WebCaeProComunicacionCliente",
-      "displayName": "Sistema de envío de notificaciones y firma de documentación",
-      "tagline": "Centralizamos notificaciones y firma digital para clientes CAEPro con acceso delegado.",
-      "status": "Listo para entornos productivos con validación de configuración crítica",
+      "displayName": "Notification sending and document signature system",
+      "tagline": "We centralized notifications and digital signature for CAEPro clients with delegated access.",
+      "status": "Ready for production environments with critical configuration validation",
       "role": "Tech Lead & Full-stack .NET Developer",
       "team": {
         "size": 1,
         "composition": [
-          "Desarrollo full-stack",
-          "Integración maestro trabajadores",
-          "Experiencia de firma digital"
+          "Full-stack development",
+          "Worker master integration",
+          "Digital signature experience"
         ]
       },
       "timeline": {
         "start": "2023",
         "end": null,
-        "stage": "Preparando despliegue productivo"
+        "stage": "Preparing production deployment"
       },
-      "businessProblem": "Las empresas necesitaban centralizar la comunicación con trabajadores y clientes, garantizando lectura y firma de documentos críticos sin depender de credenciales locales.",
-      "solutionOverview": "Aplicación ASP.NET Core MVC que delega acceso administrativo mediante JWT, orquesta la creación de mensajes y destinatarios, sincroniza datos desde el maestro corporativo y completa la firma digital de documentos con seguimiento en tiempo real.",
+      "businessProblem": "Companies needed to centralize communication with workers and clients, guaranteeing reading and signing of critical documents without depending on local credentials.",
+      "solutionOverview": "ASP.NET Core MVC application that delegates administrative access through JWT, orchestrates the creation of messages and recipients, synchronizes data from the corporate master and completes the digital signature of documents with real-time tracking.",
       "techStack": {
-        "backend": [
-          ".NET 8",
-          "ASP.NET Core MVC",
-          "SignalR",
-          "Hosted Services"
-        ],
-        "data": [
-          "Entity Framework Core",
-          "MySQL (Pomelo provider)"
-        ],
+        "backend": [".NET 8", "ASP.NET Core MVC", "SignalR", "Hosted Services"],
+        "data": ["Entity Framework Core", "MySQL (Pomelo provider)"],
         "infrastructure": [
-          "JWT AdminAccess para Single Sign-On",
-          "BackgroundService para refresco de trabajadores",
-          "DinkToPdf para generación de PDFs firmados"
+          "JWT AdminAccess for Single Sign-On",
+          "BackgroundService for worker refresh",
+          "DinkToPdf for signed PDF generation"
         ],
         "observability": [
-          "Logging de excepciones en servicios críticos",
-          "Health check público /health",
-          "Migración controlada de tokens legacy"
+          "Exception logging in critical services",
+          "Public health check /health",
+          "Controlled legacy token migration"
         ],
         "security": [
-          "JWT HMAC con secreto compartido",
-          "Cookies HttpOnly protegidas",
-          "Middleware de restricción de rutas"
+          "JWT HMAC with shared secret",
+          "Protected HttpOnly cookies",
+          "Route restriction middleware"
         ]
       },
       "keyFeatures": [
         {
-          "name": "Acceso delegado sin credenciales locales",
-          "description": "Valida tokens emitidos por la app maestra y canjea cookies seguras para navegar el panel administrativo.",
-          "value": "Evita gestionar usuarios internos y mantiene el control centralizado en la plataforma principal.",
+          "name": "Delegated access without local credentials",
+          "description": "Validates tokens issued by the master app and exchanges secure cookies to navigate the administrative panel.",
+          "value": "Avoids managing internal users and maintains centralized control in the main platform.",
           "highlights": [
-            "Middleware que restringe rutas no públicas",
-            "JWT firmado con secretos configurables por entorno",
-            "Cookies HttpOnly con nombre personalizable"
+            "Middleware that restricts non-public routes",
+            "JWT signed with environment-configurable secrets",
+            "HttpOnly cookies with customizable name"
           ]
         },
         {
-          "name": "Gestión integral de mensajes y destinatarios",
-          "description": "Permite crear mensajes, adjuntar plantillas y administrar destinatarios con paginación y sincronización de datos.",
-          "value": "Reduce fricción operativa y asegura que cada destinatario tenga la información que necesita.",
+          "name": "Comprehensive message and recipient management",
+          "description": "Allows creating messages, attaching templates and managing recipients with pagination and data synchronization.",
+          "value": "Reduces operational friction and ensures each recipient has the information they need.",
           "highlights": [
-            "MensajesController + MensajeService para orquestación",
-            "Adjuntos propagados automáticamente a destinatarios",
-            "Soft-delete para recuperar destinatarios eliminados"
+            "MensajesController + MensajeService for orchestration",
+            "Attachments automatically propagated to recipients",
+            "Soft-delete to recover deleted recipients"
           ]
         },
         {
-          "name": "Firma digital web y móvil",
-          "description": "Experiencia de firma sincronizada con SignalR, generación de PDF y aplicación de certificados por trabajador.",
-          "value": "Garantiza validez legal y seguimiento de cada firma sin abandonar la plataforma.",
+          "name": "Web and mobile digital signature",
+          "description": "Signature experience synchronized with SignalR, PDF generation and certificate application per worker.",
+          "value": "Guarantees legal validity and tracking of each signature without leaving the platform.",
           "highlights": [
-            "DinkToPdf convierte HTML en PDF previo a la firma",
-            "Certificados gestionados por trabajador y activación automática",
-            "SignalR sincroniza la firma entre web y móvil"
+            "DinkToPdf converts HTML to PDF prior to signature",
+            "Certificates managed per worker and automatic activation",
+            "SignalR synchronizes signature between web and mobile"
           ]
         },
         {
-          "name": "Sincronización automática y notificaciones transaccionales",
-          "description": "Actualiza datos de trabajadores desde el maestro y envía correos personalizados con Brevo.",
-          "value": "Mantiene contacto actualizado y asegura la entrega de notificaciones clave.",
+          "name": "Automatic synchronization and transactional notifications",
+          "description": "Updates worker data from the master and sends personalized emails with Brevo.",
+          "value": "Keeps contact updated and ensures delivery of key notifications.",
           "highlights": [
-            "Hosted service para refresco periódico",
-            "HttpClient tipado contra MaestroTrabajadores",
-            "EmailService con plantillas HTML y adjuntos"
+            "Hosted service for periodic refresh",
+            "Typed HttpClient against MaestroTrabajadores",
+            "EmailService with HTML templates and attachments"
           ]
         }
       ],
       "architecture": {
-        "style": "MVC modular con servicios especializados y Hub SignalR",
+        "style": "Modular MVC with specialized services and SignalR Hub",
         "layers": [
-          "Controllers y vistas para panel admin y experiencia pública",
-          "Servicios de dominio para tokens, firmas, sincronización y email",
-          "Data layer EF Core con filtros de soft-delete"
+          "Controllers and views for admin panel and public experience",
+          "Domain services for tokens, signatures, synchronization and email",
+          "EF Core data layer with soft-delete filters"
         ],
         "integration": {
           "externalApi": "Brevo (Sendinblue) + MaestroTrabajadores (HttpClient + ApiKey)",
@@ -286,75 +265,69 @@
       },
       "dataFlow": [
         {
-          "stage": "Acceso delegado",
+          "stage": "Delegated access",
           "service": "AuthController + AdminAccessService",
-          "input": "JWT emitido por aplicación maestra",
-          "output": "Cookie HttpOnly válida para panel administrativo"
+          "input": "JWT issued by master application",
+          "output": "Valid HttpOnly cookie for administrative panel"
         },
         {
-          "stage": "Gestión de mensajes",
+          "stage": "Message management",
           "service": "MensajesController + MensajeService",
-          "input": "Datos de remitente, destinatarios y plantillas",
-          "output": "Mensaje persistido con destinatarios sincronizados"
+          "input": "Sender data, recipients and templates",
+          "output": "Persisted message with synchronized recipients"
         },
         {
-          "stage": "Firma y evidencias",
+          "stage": "Signature and evidence",
           "service": "NotificacionController + FirmaHub + FirmaService",
-          "input": "Token de destinatario y trazos de firma",
-          "output": "PDF firmado digitalmente y estados actualizados"
+          "input": "Recipient token and signature strokes",
+          "output": "Digitally signed PDF and updated statuses"
         },
         {
-          "stage": "Entrega y seguimiento",
+          "stage": "Delivery and tracking",
           "service": "EmailService",
-          "input": "Mensaje listo y destinatarios pendientes",
-          "output": "Correo Brevo con enlaces/adjuntos y registro de envío"
+          "input": "Ready message and pending recipients",
+          "output": "Brevo email with links/attachments and delivery record"
         }
       ],
       "observability": {
-        "logging": "Validación temprana de configuración y excepciones detalladas en servicios clave.",
-        "metrics": "Health check /health y logs manuales; métricas específicas planificadas.",
+        "logging": "Early configuration validation and detailed exceptions in key services.",
+        "metrics": "Health check /health and manual logs; specific metrics planned.",
         "adminScreens": [
-          "Mensajes/Index (panel operativo)",
-          "Remitentes/Index (configuración correo)",
-          "Notificacion/Ver?token=... (vista pública controlada)"
+          "Mensajes/Index (operational panel)",
+          "Remitentes/Index (email configuration)",
+          "Notificacion/Ver?token=... (controlled public view)"
         ]
       },
       "security": {
-        "identity": "Acceso delegado vía JWT firmados; no se almacenan credenciales locales.",
-        "authZ": "Middleware exige token válido excepto rutas públicas de notificación y recursos estáticos.",
-        "config": "Shared secret, App:BaseUrl y ApiKey Brevo obtenidos desde variables de entorno seguras."
+        "identity": "Delegated access via signed JWTs; no local credentials stored.",
+        "authZ": "Middleware requires valid token except public notification routes and static resources.",
+        "config": "Shared secret, App:BaseUrl and Brevo ApiKey obtained from secure environment variables."
       },
       "risksAndChallenges": [
-        "Dependencia de la app maestra para emitir tokens: mitigado con fake access en desarrollo.",
-        "Integración Brevo requiere gestión segura de API keys y manejo de errores.",
-        "Conversión HTML→PDF puede ser costosa; se documenta migrar DinkToPdf a contenedor dedicado."
+        "Dependency on master app to issue tokens: mitigated with fake access in development.",
+        "Brevo integration requires secure API key management and error handling.",
+        "HTML→PDF conversion can be expensive; documented to migrate DinkToPdf to dedicated container."
       ],
       "impact": {
-        "ops": "Centraliza la comunicación y reduce tareas manuales coordinando mensajes, firmas y envíos desde un solo panel.",
-        "quality": "Sincronización de trabajadores y validaciones previas evitan envíos fallidos o destinatarios sin datos.",
-        "scalability": "Diseño por servicios y SignalR permiten extender flujos de firma y añadir más integraciones."
+        "ops": "Centralizes communication and reduces manual tasks by coordinating messages, signatures and deliveries from a single panel.",
+        "quality": "Worker synchronization and prior validations avoid failed deliveries or recipients without data.",
+        "scalability": "Service design and SignalR allow extending signature flows and adding more integrations."
       },
       "nextIterations": [
-        "Agrupar conexiones SignalR por destinatario/token para reducir broadcast global.",
-        "Automatizar archivado y versionado de PDFs firmados.",
-        "Exponer métricas específicas (envíos, firmas, errores) para monitoreo Prometheus.",
-        "Agregar pruebas automatizadas para controladores críticos."
+        "Group SignalR connections by recipient/token to reduce global broadcast.",
+        "Automate archiving and versioning of signed PDFs.",
+        "Expose specific metrics (deliveries, signatures, errors) for Prometheus monitoring.",
+        "Add automated tests for critical controllers."
       ],
       "assets": {
         "screenshots": [
-          {
-            "description": "Panel de mensajes y destinatarios",
-            "path": null
-          },
-          {
-            "description": "Experiencia de firma web sincronizada",
-            "path": null
-          }
+          {"description": "Message and recipient panel", "path": null},
+          {"description": "Synchronized web signature experience", "path": null}
         ],
         "demoVideo": null,
         "publicRepo": null
       },
-      "callToAction": "Agenda una demo para recorrer el flujo completo: acceso delegado, creación de mensajes y firma digital sincronizada."
+      "callToAction": "Schedule a demo to go through the complete flow: delegated access, message creation and synchronized digital signature."
     }
   ]
 }

@@ -10,10 +10,10 @@ export default function Header() {
         <div className="flex items-center gap-6">
           <nav className="hidden items-center gap-6 text-sm md:flex">
             <Link className="hover:opacity-80" href="/#projects">
-              Proyectos
+              Projects
             </Link>
             <Link className="hover:opacity-80" href="/#contact">
-              Contacto
+              Contact
             </Link>
           </nav>
         </div>

@@ -13,9 +13,9 @@ export default function ProjectsSection() {
   return (
     <section className="mx-auto max-w-6xl px-4 pb-16 md:pb-24" id="projects">
       <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
-        <h2 className="text-2xl font-semibold md:text-3xl md:text-left">Proyectos destacados</h2>
+        <h2 className="text-2xl font-semibold md:text-3xl md:text-left">Featured projects</h2>
         <Link href="/work" className="text-sm underline underline-offset-4 hover:opacity-80">
-          Ver todos
+          View all
         </Link>
       </div>
 

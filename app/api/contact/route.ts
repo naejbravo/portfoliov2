@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     const json = await req.json()
     const parsed = BodySchema.safeParse(json)
     if (!parsed.success) {
-      return NextResponse.json({ error: "Datos inválidos" }, { status: 400 })
+      return NextResponse.json({ error: "Invalid data" }, { status: 400 })
     }
 
     const { email, message, botField } = parsed.data
@@ -50,8 +50,8 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: contactFrom,
       to: [contactRecipient],
-      reply_to: email,
-      subject: "Nuevo mensaje desde tu portafolio",
+      replyTo: email,
+      subject: "New message from your portfolio",
       text: `Email: ${email}\n\n${message}`,
       html: `
         <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;">
@@ -64,6 +64,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error(err)
-    return NextResponse.json({ error: "Error del servidor" }, { status: 500 })
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }

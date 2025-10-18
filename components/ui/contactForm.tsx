@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
 const formSchema = z.object({
-  email: z.string().email("Introduce un correo válido"),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
+  email: z.string().email("Please enter a valid email"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
   botField: z.string().optional(),
 })
 
@@ -50,13 +50,13 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
       form.reset()
       setFeedback({
         status: "success",
-        message: "¡Gracias! Recibí tu mensaje y te responderé en las próximas 48 horas.",
+        message: "Thank you! I received your message and will reply within the next 48 hours.",
       })
     } catch (error) {
       console.error(error)
       setFeedback({
         status: "error",
-        message: "No pude enviar el mensaje. Puedes escribirme directo a jean@jeanbravo.dev.",
+        message: "Could not send the message. You can write directly to naejbravo@gmail.com.",
       })
     }
   }
@@ -96,11 +96,11 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mensaje</FormLabel>
+              <FormLabel>Message</FormLabel>
               <FormControl>
                 <Textarea
                   rows={5}
-                  placeholder="Cuéntame sobre tu producto, equipo o retos actuales…"
+                  placeholder="Tell me about your product, team or current challenges…"
                   className="resize-none"
                   {...field}
                 />
@@ -111,7 +111,7 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
         />
 
         <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
-          {form.formState.isSubmitting ? "Enviando…" : "Enviar mensaje"}
+          {form.formState.isSubmitting ? "Sending…" : "Send message"}
         </Button>
         {feedback.status === "success" && (
           <p

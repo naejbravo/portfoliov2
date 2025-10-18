@@ -5,9 +5,9 @@ import Link from "next/link"
 import { projects } from "@/lib/projects"
 
 export const metadata: Metadata = {
-  title: "Proyectos",
+  title: "Projects",
   description:
-    "Selección de plataformas y productos digitales en los que he liderado arquitectura, desarrollo y lanzamiento.",
+    "Selection of platforms and digital products where I have led architecture, development and deployment.",
 }
 
 export default function WorkPage() {
@@ -15,14 +15,14 @@ export default function WorkPage() {
     <main className="mx-auto max-w-6xl px-4 pb-24 pt-20">
       <section className="mx-auto max-w-3xl text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-          Proyectos
+          Projects
         </p>
         <h1 className="mt-3 text-4xl font-semibold leading-tight text-center md:text-5xl">
-          Transformo procesos complejos en productos digitales claros y medibles.
+          I transform complex processes into clear and measurable digital products.
         </h1>
         <p className="mt-5 text-lg text-neutral-600 dark:text-neutral-300 text-center">
-          Cada proyecto combina descubrimiento con stakeholders, arquitectura escalable y métricas de negocio para guiar
-          decisiones. Aquí tienes una muestra reciente.
+          Each project combines discovery with stakeholders, scalable architecture and business metrics to guide
+          decisions. Here&apos;s a recent sample.
         </p>
       </section>
 
@@ -56,7 +56,7 @@ export default function WorkPage() {
                   {project.timeline.start && (
                     <>
                       <span>•</span>
-                      <span>Desde {project.timeline.start}</span>
+                      <span>Since {project.timeline.start}</span>
                     </>
                   )}
                 </div>
@@ -72,7 +72,7 @@ export default function WorkPage() {
 
               <div>
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                  Impacto
+                  Impact
                 </h3>
                 <ul className="mt-2 space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
                   {project.impactHighlights.map((result) => (
@@ -100,7 +100,7 @@ export default function WorkPage() {
                   href={`/work/${project.slug}`}
                   className="inline-flex items-center gap-1 text-sm font-medium text-neutral-900 underline underline-offset-4 hover:opacity-80 dark:text-neutral-50"
                 >
-                  Ver caso de estudio →
+                  View case study →
                 </Link>
               </div>
             </div>
