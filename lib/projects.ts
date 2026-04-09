@@ -25,9 +25,9 @@ function flattenTechStack(techStack: RawProject["techStack"]) {
 function impactHighlights(impact: RawProject["impact"]) {
   if (!impact) return []
   const labelMap: Record<string, string> = {
-    ops: "Operaciones",
-    quality: "Calidad",
-    scalability: "Escalabilidad",
+    ops: "Operations",
+    quality: "Quality",
+    scalability: "Scalability",
   }
   return Object.entries(impact).map(([key, value]) => {
     const label = labelMap[key] ?? key
@@ -42,19 +42,19 @@ const coverMap: Record<
     alt: string
   }
 > = {
-  "sistema-motor-de-gestor-documental": {
+  "webcaepro-cae-integral-management-platform": {
     src: "/window.svg",
-    alt: "Dashboard de procesamiento documental",
+    alt: "WebCAEpro - CAE Management Platform",
   },
-  "sistema-de-envio-de-notificaciones-y-firma-de-documentacion": {
+  "webrrhhpro-hr-saas-multi-tenant-platform": {
     src: "/globe.svg",
-    alt: "Panel de comunicaciones con firma digital",
+    alt: "WebRRHHpro - HR SaaS Multi-tenant Platform",
   },
 }
 
 const defaultCover = {
   src: "/file.svg",
-  alt: "Proyecto digital full-stack",
+  alt: "Full-stack digital project",
 }
 
 export type Project = RawProject & {

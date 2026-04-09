@@ -1,260 +1,100 @@
 {
   "projects": [
     {
-      "projectName": "WebCaeProCliente",
-      "displayName": "Document management system engine",
-      "tagline": "We automated the sending of labor documents to CreateRD with a resilient and traceable pipeline.",
-      "status": "Evolving functional MVP",
-      "role": "Full-stack .NET Developer",
+      "projectName": "WebCAEpro",
+      "displayName": "WebCAEpro - CAE Integral Management Platform",
+      "tagline": "Comprehensive management platform for companies, centers, workers, time tracking and digital signature notifications.",
+      "status": "Production-ready with active multi-client deployment",
+      "role": "Lead Full-stack .NET Developer",
       "team": {
         "size": 1,
         "composition": [
           "Full-stack development",
-          "Pipeline architecture",
-          "External API integration"
+          "Database architecture",
+          "Client integration"
         ]
       },
       "timeline": {
-        "start": "2024",
+        "start": "2022",
         "end": null,
-        "stage": "Iterating First Version"
+        "stage": "Active maintenance and feature expansion"
       },
-      "businessProblem": "The client needs to upload thousands of labor PDFs to the CreateRD master platform without relying on manual processes and with full error traceability.",
-      "solutionOverview": "ASP.NET Core 8 MVC application that monitors a shared folder, extracts metadata from file nomenclature, normalizes information and sends JSON batches to the CreateRD API, with administrative dashboard, circuit breaker and audit of each step.",
+      "businessProblem": "CAE (External Prevention Service) clients needed centralized management of companies, work centers, workers, and time tracking compliance without relying on disconnected spreadsheets and manual processes.",
+      "solutionOverview": "ASP.NET Core MVC application providing complete CRUD operations for companies, centers, workers, and jobs. Features time tracking (Registro de Jornada) with signature workflows, notifications for document signing, and multi-client support with customizable themes.",
       "techStack": {
-        "backend": [".NET 8", "ASP.NET Core MVC", "BackgroundService"],
-        "data": ["Entity Framework Core", "MySQL (Pomelo provider)"],
+        "backend": [".NET 8", "ASP.NET Core MVC", "Entity Framework Core"],
+        "data": ["MySQL", "Pomelo Entity Framework Core Provider"],
         "infrastructure": [
-          "IHostedService for workers",
-          "On-premise shared folder (D:\\\\IntranetCarpetas)"
+          "IIS/Windows Server hosting",
+          "Shared network folders for templates",
+          "Email integration for notifications"
         ],
         "observability": [
-          "Serilog with rolling logs",
-          "/metrics endpoint Prometheus-style",
-          "DocumentHistory + NormalizationAudit"
+          "Serilog logging",
+          "Health checks endpoint",
+          "Detailed exception handling"
         ],
         "security": [
           "ASP.NET Identity",
-          "Roles with Admin seed",
-          "Protected cookies"
+          "Role-based authorization",
+          "Tenant isolation by client"
         ]
       },
       "keyFeatures": [
         {
-          "name": "4-stage pipeline",
-          "description": "Detector, Parser, Normalize and Sender are chained to take a PDF from the local folder to the external API.",
-          "value": "Reduces operational time and homogenizes data before integrating it.",
+          "name": "Company and Center Management",
+          "description": "Complete hierarchy management for companies, work centers, and associated workers with CSV template imports.",
+          "value": "Centralizes client data with consistent structure and easy bulk operations.",
           "highlights": [
-            "Concurrent batches with Parallel.ForEachAsync",
-            "Controlled retries by Attempts/NextRetryAt",
-            "Configurable circuit breaker"
+            "Company CRUD with logo customization",
+            "Work center geolocation and details",
+            "CSV template imports for bulk data",
+            "Collaborating companies support"
           ]
         },
         {
-          "name": "Smart nomenclature parser",
-          "description": "Analyzes tokens in the file name to infer record type, IDs, dates and main actor (worker/company/freelancer).",
-          "value": "Allows integrating heterogeneous sources without human intervention.",
+          "name": "Worker Registry and Job Management",
+          "description": "Comprehensive worker profiles with job types, trades, and company assignments.",
+          "value": "Maintains accurate worker records across all client organizations.",
           "highlights": [
-            "Specific rules for freelancers",
-            "Mandatory token validation",
-            "Friendly error messages for manual review"
+            "Worker profile with all employment details",
+            "Job type and trade classifications",
+            "Company/center assignment workflow",
+            "Template-based CSV exports"
           ]
         },
         {
-          "name": "Normalization and audit",
-          "description": "Derives canonical company/center names and saves snapshots before/after normalization.",
-          "value": "Guarantees consistency in sent data and facilitates later audits.",
+          "name": "Time Tracking (Registro de Jornada)",
+          "description": "Digital time tracking system with shift management, daily logs, and compliance reporting.",
+          "value": "Automates labor compliance tracking and generates required reports.",
           "highlights": [
-            "Heuristics by record type",
-            "NormalizationAudit with changes JSON",
-            "DocumentHistory by stage"
+            "Daily work shift registration",
+            "Planning calendar integration",
+            "CSV/Excel exports for audits",
+            "Multi-theme support (client branding)"
           ]
         },
         {
-          "name": "Administrative dashboard",
-          "description": "Panel with metrics by status, historical series and top companies, plus filtered queue views.",
-          "value": "Offers real-time visibility for operations and support.",
+          "name": "Digital Signature Notifications",
+          "description": "Notification system for workers to sign time tracking documents with email delivery and signature tracking.",
+          "value": "Ensures legal compliance with digital signature requirements.",
           "highlights": [
-            "Chart.js for visualizations",
-            "Advanced filters in VerDto",
-            "Normalization audit modal"
+            "Email notifications with signing links",
+            "Signature status tracking",
+            "Terminos y Condiciones acceptance",
+            "Complete audit trail"
           ]
         }
       ],
       "architecture": {
-        "style": "Clean-ish MVC with hosted services",
+        "style": "Clean MVC with service layer",
         "layers": [
           "Controllers + ViewModels for UI",
-          "Services for pipeline and external clients",
-          "Models/Data for EF Core"
+          "Services for business logic",
+          "EF Core for data access"
         ],
         "integration": {
-          "externalApi": "CreateRD (HttpClient + ApiKey in headers)",
-          "circuitBreaker": {
-            "enabled": true,
-            "failureThreshold": 5,
-            "openSeconds": 300
-          },
-          "metricsEndpoint": "/metrics"
-        }
-      },
-      "dataFlow": [
-        {
-          "stage": "Detection",
-          "service": "DetectorWorkerService",
-          "input": "PDF in D:\\\\IntranetCarpetas",
-          "output": "DocumentLoadQueue Pending status + Detection log"
-        },
-        {
-          "stage": "Parsing",
-          "service": "ParserWorkerService + DocumentParser",
-          "input": "DocumentLoadQueue Pending",
-          "output": "Extracted fields, Parsed/Error status, Parsing log"
-        },
-        {
-          "stage": "Normalization",
-          "service": "NormalizeWorkerService",
-          "input": "DocumentLoadQueue Parsed",
-          "output": "Canonized company/center name, Normalized/Error status"
-        },
-        {
-          "stage": "Sending",
-          "service": "SenderWorkerService + WebCaeApiClient",
-          "input": "DocumentLoadQueue Normalized",
-          "output": "POST CreateRD, Accepted/Rejected/Error status, circuit breaker"
-        }
-      ],
-      "observability": {
-        "logging": "Serilog to console + rolling files (logs/myapp-.log).",
-        "metrics": "In-memory collector exposed for Prometheus/Grafana scraping.",
-        "adminScreens": [
-          "Dashboard /Home/Index",
-          "VerDto with filters by status/type",
-          "Paginated logs /logs"
-        ]
-      },
-      "security": {
-        "identity": "ASP.NET Identity with Admin role seeding and admin@startup user.",
-        "authZ": "Administrative controllers restricted by role.",
-        "config": "ApiKey and BaseUrl read from appsettings/user secrets."
-      },
-      "risksAndChallenges": [
-        "Disparate nomenclatures can break the parser: mitigated with RequiresManualReview and specific messages.",
-        "Shared folder availability: Detector implements exponential backoff and dedicated logging.",
-        "Definitive CreateRD integration pending: circuit breaker enabled and payload centralized in ToRegistroDocumento extension."
-      ],
-      "impact": {
-        "ops": "Reduces document integration times from hours to minutes and enables centralized tracking.",
-        "quality": "Business rules and audits reduce rejections due to inconsistent data.",
-        "scalability": "Batch pipeline supports increasing frequency and volume without blocking the UI."
-      },
-      "nextIterations": [
-        "Connect HttpClient to CreateRD production endpoint",
-        "Add FileSystemWatcher for near real-time detection",
-        "Publish metrics in Prometheus/Grafana and alerts in Slack/Teams",
-        "Complete notifications module (tables already outlined in DbContext)"
-      ],
-      "assets": {
-        "screenshots": [
-          {"description": "Dashboard with metrics by status and top companies", "path": null},
-          {"description": "VerDto view with advanced filters", "path": null}
-        ],
-        "demoVideo": null,
-        "publicRepo": null
-      },
-      "callToAction": "Available to show technical demo of the end-to-end pipeline and delve into CreateRD integration."
-    },
-    {
-      "projectName": "WebCaeProComunicacionCliente",
-      "displayName": "Notification sending and document signature system",
-      "tagline": "We centralized notifications and digital signature for CAEPro clients with delegated access.",
-      "status": "Ready for production environments with critical configuration validation",
-      "role": "Tech Lead & Full-stack .NET Developer",
-      "team": {
-        "size": 1,
-        "composition": [
-          "Full-stack development",
-          "Worker master integration",
-          "Digital signature experience"
-        ]
-      },
-      "timeline": {
-        "start": "2023",
-        "end": null,
-        "stage": "Preparing production deployment"
-      },
-      "businessProblem": "Companies needed to centralize communication with workers and clients, guaranteeing reading and signing of critical documents without depending on local credentials.",
-      "solutionOverview": "ASP.NET Core MVC application that delegates administrative access through JWT, orchestrates the creation of messages and recipients, synchronizes data from the corporate master and completes the digital signature of documents with real-time tracking.",
-      "techStack": {
-        "backend": [".NET 8", "ASP.NET Core MVC", "SignalR", "Hosted Services"],
-        "data": ["Entity Framework Core", "MySQL (Pomelo provider)"],
-        "infrastructure": [
-          "JWT AdminAccess for Single Sign-On",
-          "BackgroundService for worker refresh",
-          "DinkToPdf for signed PDF generation"
-        ],
-        "observability": [
-          "Exception logging in critical services",
-          "Public health check /health",
-          "Controlled legacy token migration"
-        ],
-        "security": [
-          "JWT HMAC with shared secret",
-          "Protected HttpOnly cookies",
-          "Route restriction middleware"
-        ]
-      },
-      "keyFeatures": [
-        {
-          "name": "Delegated access without local credentials",
-          "description": "Validates tokens issued by the master app and exchanges secure cookies to navigate the administrative panel.",
-          "value": "Avoids managing internal users and maintains centralized control in the main platform.",
-          "highlights": [
-            "Middleware that restricts non-public routes",
-            "JWT signed with environment-configurable secrets",
-            "HttpOnly cookies with customizable name"
-          ]
-        },
-        {
-          "name": "Comprehensive message and recipient management",
-          "description": "Allows creating messages, attaching templates and managing recipients with pagination and data synchronization.",
-          "value": "Reduces operational friction and ensures each recipient has the information they need.",
-          "highlights": [
-            "MensajesController + MensajeService for orchestration",
-            "Attachments automatically propagated to recipients",
-            "Soft-delete to recover deleted recipients"
-          ]
-        },
-        {
-          "name": "Web and mobile digital signature",
-          "description": "Signature experience synchronized with SignalR, PDF generation and certificate application per worker.",
-          "value": "Guarantees legal validity and tracking of each signature without leaving the platform.",
-          "highlights": [
-            "DinkToPdf converts HTML to PDF prior to signature",
-            "Certificates managed per worker and automatic activation",
-            "SignalR synchronizes signature between web and mobile"
-          ]
-        },
-        {
-          "name": "Automatic synchronization and transactional notifications",
-          "description": "Updates worker data from the master and sends personalized emails with Brevo.",
-          "value": "Keeps contact updated and ensures delivery of key notifications.",
-          "highlights": [
-            "Hosted service for periodic refresh",
-            "Typed HttpClient against MaestroTrabajadores",
-            "EmailService with HTML templates and attachments"
-          ]
-        }
-      ],
-      "architecture": {
-        "style": "Modular MVC with specialized services and SignalR Hub",
-        "layers": [
-          "Controllers and views for admin panel and public experience",
-          "Domain services for tokens, signatures, synchronization and email",
-          "EF Core data layer with soft-delete filters"
-        ],
-        "integration": {
-          "externalApi": "Brevo (Sendinblue) + MaestroTrabajadores (HttpClient + ApiKey)",
+          "externalApi": null,
           "circuitBreaker": {
             "enabled": false,
             "failureThreshold": null,
@@ -265,69 +105,269 @@
       },
       "dataFlow": [
         {
-          "stage": "Delegated access",
-          "service": "AuthController + AdminAccessService",
-          "input": "JWT issued by master application",
-          "output": "Valid HttpOnly cookie for administrative panel"
+          "stage": "Client onboarding",
+          "service": "EmpresasController",
+          "input": "New company data via form",
+          "output": "Created company with associated centers"
         },
         {
-          "stage": "Message management",
-          "service": "MensajesController + MensajeService",
-          "input": "Sender data, recipients and templates",
-          "output": "Persisted message with synchronized recipients"
+          "stage": "Worker import",
+          "service": "PlantillaService + CSV parsing",
+          "input": "CSV template with worker data",
+          "output": "Bulk-created workers with assignments"
         },
         {
-          "stage": "Signature and evidence",
-          "service": "NotificacionController + FirmaHub + FirmaService",
-          "input": "Recipient token and signature strokes",
-          "output": "Digitally signed PDF and updated statuses"
+          "stage": "Time tracking",
+          "service": "RegistroHorario + PlanningService",
+          "input": "Daily shift entries",
+          "output": "Persisted time records with audit"
         },
         {
-          "stage": "Delivery and tracking",
-          "service": "EmailService",
-          "input": "Ready message and pending recipients",
-          "output": "Brevo email with links/attachments and delivery record"
+          "stage": "Signature workflow",
+          "service": "NotificationService + Email",
+          "input": "Documents pending signature",
+          "output": "Emails sent, signature status updated"
         }
       ],
       "observability": {
-        "logging": "Early configuration validation and detailed exceptions in key services.",
-        "metrics": "Health check /health and manual logs; specific metrics planned.",
+        "logging": "Serilog with rolling file logs and structured logging.",
+        "metrics": "Health check endpoint and manual log review.",
         "adminScreens": [
-          "Mensajes/Index (operational panel)",
-          "Remitentes/Index (email configuration)",
-          "Notificacion/Ver?token=... (controlled public view)"
+          "Dashboard /Index",
+          "Empresas/Index (company management)",
+          "Centros/Index (center management)",
+          "Trabajadores/Index (worker registry)",
+          "Firma/RegistroHorario (time tracking signature)"
         ]
       },
       "security": {
-        "identity": "Delegated access via signed JWTs; no local credentials stored.",
-        "authZ": "Middleware requires valid token except public notification routes and static resources.",
-        "config": "Shared secret, App:BaseUrl and Brevo ApiKey obtained from secure environment variables."
+        "identity": "ASP.NET Identity with seeded Admin role.",
+        "authZ": "Role-based access control per controller.",
+        "config": "Connection strings and app settings in secure configuration."
       },
       "risksAndChallenges": [
-        "Dependency on master app to issue tokens: mitigated with fake access in development.",
-        "Brevo integration requires secure API key management and error handling.",
-        "HTML→PDF conversion can be expensive; documented to migrate DinkToPdf to dedicated container."
+        "Legacy codebase requiring gradual modernization: mitigated with new features in separate modules.",
+        "Multi-client theming complexity: solved with CSS variables and client-specific stylesheets.",
+        "CSV template compatibility: validated with strict column mapping and error reporting."
       ],
       "impact": {
-        "ops": "Centralizes communication and reduces manual tasks by coordinating messages, signatures and deliveries from a single panel.",
-        "quality": "Worker synchronization and prior validations avoid failed deliveries or recipients without data.",
-        "scalability": "Service design and SignalR allow extending signature flows and adding more integrations."
+        "ops": "Reduced manual data entry by 80% through CSV imports and centralized management.",
+        "quality": "Improved data consistency with validated templates and relationship enforcement.",
+        "scalability": "Template-driven approach supports adding new clients without code changes."
       },
       "nextIterations": [
-        "Group SignalR connections by recipient/token to reduce global broadcast.",
-        "Automate archiving and versioning of signed PDFs.",
-        "Expose specific metrics (deliveries, signatures, errors) for Prometheus monitoring.",
-        "Add automated tests for critical controllers."
+        "Migrate to .NET 10 / EF Core 10",
+        "Add real-time notifications with SignalR",
+        "Implement API-first architecture for mobile apps",
+        "Add comprehensive test coverage"
       ],
       "assets": {
         "screenshots": [
-          {"description": "Message and recipient panel", "path": null},
-          {"description": "Synchronized web signature experience", "path": null}
+          {"description": "Company management dashboard", "path": null},
+          {"description": "Time tracking signature interface", "path": null}
         ],
         "demoVideo": null,
         "publicRepo": null
       },
-      "callToAction": "Schedule a demo to go through the complete flow: delegated access, message creation and synchronized digital signature."
+      "callToAction": "Available for technical demo of the platform and discussion on migration to modern .NET stack."
+    },
+    {
+      "projectName": "WebRRHHpro",
+      "displayName": "WebRRHHpro - HR SaaS Multi-tenant Platform",
+      "tagline": "Intelligent HR document management with AI classification, digital signature, and real-time collaboration via SignalR.",
+      "status": "Production-ready multi-tenant SaaS platform",
+      "role": "Tech Lead & Full-stack .NET Developer",
+      "team": {
+        "size": 2,
+        "composition": [
+          "Tech Lead / Full-stack development",
+          "Frontend (Blazor) development",
+          "DevOps and infrastructure"
+        ]
+      },
+      "timeline": {
+        "start": "2024",
+        "end": null,
+        "stage": "Active development with production tenants"
+      },
+      "businessProblem": "Companies need centralized HR document management with digital signatures, worker self-service portals, and compliance tracking without managing local credentials or infrastructure.",
+      "solutionOverview": "Multi-tenant SaaS HR platform built with .NET 10, Blazor, and PostgreSQL. Features AI-powered document classification, three digital signature modes (OTP, simple, certificate), worker self-service portal without account requirements, SignalR real-time notifications, and full RBAC with subdomain-based tenant isolation.",
+      "techStack": {
+        "backend": [".NET 10", "C# 14", "Blazor Web App (SSR + InteractiveServer)", "Entity Framework Core 10"],
+        "data": ["PostgreSQL 17/18", "Supabase SDK (production storage)"],
+        "ui": ["MudBlazor 9.x"],
+        "infrastructure": [
+          "Docker + Docker Compose",
+          "Caddy reverse proxy",
+          "GCP deployment ready",
+          "GitHub Actions CI/CD"
+        ],
+        "observability": [
+          "ILogger with structured logs",
+          "TenantId/UserId correlation",
+          "Health checks"
+        ],
+        "security": [
+          "ASP.NET Core Identity",
+          "RBAC (SuperAdmin, Admin, Tech, Worker, Viewer)",
+          "JWT for delegated access",
+          "Multi-tenant data isolation"
+        ]
+      },
+      "keyFeatures": [
+        {
+          "name": "Multi-tenant Architecture",
+          "description": "Subdomain-based tenant resolution (e.g., primor.webrrhhpro.com) with complete data isolation and customizable branding.",
+          "value": "Single deployment serves multiple organizations with isolated data and custom branding.",
+          "highlights": [
+            "Subdomain resolution via TenantMiddleware",
+            "X-Tenant-Slug header override for development",
+            "Per-tenant branding (colors, logo, subdomain)",
+            "Global query filters for tenant isolation"
+          ]
+        },
+        {
+          "name": "Intelligent Document Management",
+          "description": "Complete document lifecycle with AI-powered classification, versioning, expiration tracking, and automated workflows.",
+          "value": "Eliminates paper-based processes with 95% reduction and complete audit trail.",
+          "highlights": [
+            "AI classification (hybrid OCR + text analysis)",
+            "Automatic lifecycle stages (Draft → Review → Validated → Expired)",
+            "Version control and audit history",
+            "Expiration alerts and automated archiving"
+          ]
+        },
+        {
+          "name": "Digital Signature (3 Modes)",
+          "description": "Three signature options: OTP via email, simple signature, and certificate-based signature with visual PDF positioning.",
+          "value": "Legal validity with complete audit trail for every signature.",
+          "highlights": [
+            "OTP signature - email verification code",
+            "Simple signature - click to sign",
+            "Certificate signature - digital certificate application",
+            "Visual positioning on PDF with QuestPDF"
+          ]
+        },
+        {
+          "name": "Worker Self-Service Portal",
+          "description": "Anonymous access via secure link + OTP. Workers view and download their documents 24/7 without creating accounts.",
+          "value": "Empowers workers with self-service while reducing HR administrative burden.",
+          "highlights": [
+            "No account required - link + OTP authentication",
+            "Secure temporary tokens with expiration",
+            "Document download and viewing",
+            "Signature completion flow"
+          ]
+        },
+        {
+          "name": "Real-time with SignalR",
+          "description": "Live notifications for document status, signature progress, and system events across all connected clients.",
+          "value": "Instant updates without page refreshes, improving user experience.",
+          "highlights": [
+            "Real-time signature status updates",
+            "Document upload notifications",
+            "Multi-device synchronization",
+            "Connection grouping by tenant"
+          ]
+        },
+        {
+          "name": "Mass Communications",
+          "description": "Bulk email sending with document attachments, customizable templates, and per-recipient delivery tracking.",
+          "value": "Automates employee communications at scale.",
+          "highlights": [
+            "Template-based email campaigns",
+            "Document attachment automation",
+            "Delivery status per recipient",
+            "MailKit integration"
+          ]
+        }
+      ],
+      "architecture": {
+        "style": "Clean Architecture (4-layer)",
+        "layers": [
+          "Domain - Entities, Enums, Value Objects, Interfaces",
+          "Application - DTOs, Use Cases, Service Interfaces",
+          "Infrastructure - EF Core, Identity, Supabase, MailKit",
+          "Web - Blazor UI, Middleware, Program.cs"
+        ],
+        "integration": {
+          "externalApi": "Supabase (storage), Brevo (email)",
+          "circuitBreaker": {
+            "enabled": true,
+            "failureThreshold": 5,
+            "openSeconds": 300
+          },
+          "metricsEndpoint": "/health"
+        }
+      },
+      "dataFlow": [
+        {
+          "stage": "Tenant resolution",
+          "service": "TenantMiddleware",
+          "input": "Request subdomain",
+          "output": "Resolved TenantId for data isolation"
+        },
+        {
+          "stage": "Document upload",
+          "service": "DocumentService + AIClassification",
+          "input": "Uploaded PDF/document",
+          "output": "Classified document with metadata"
+        },
+        {
+          "stage": "Signature flow",
+          "service": "SignatureService + SignatureHub (SignalR)",
+          "input": "Document + signer token",
+          "output": "Signed PDF with audit trail"
+        },
+        {
+          "stage": "Worker access",
+          "service": "PortalEndpoints + OTPService",
+          "input": "Secure link + OTP",
+          "output": "Authenticated session + document access"
+        }
+      ],
+      "observability": {
+        "logging": "Structured logging with TenantId, UserId, CorrelationId context.",
+        "metrics": "Health checks and application metrics planned.",
+        "adminScreens": [
+          "Dashboard (tenant overview)",
+          "Documents/Index (document management)",
+          "Workers/Index (worker registry)",
+          "Communications (email campaigns)",
+          "Settings (tenant configuration)"
+        ]
+      },
+      "security": {
+        "identity": "ASP.NET Core Identity with RBAC roles.",
+        "authZ": "TenantId resolved server-side, never accepted from client.",
+        "config": "Environment-based secrets, no committed credentials."
+      },
+      "risksAndChallenges": [
+        "Multi-tenant data isolation: solved with EF Core global query filters and BaseEntity inheritance.",
+        "Document classification accuracy: hybrid OCR + text approach with manual override capability.",
+        "Real-time scaling: SignalR hub optimized with tenant-based connection groups."
+      ],
+      "impact": {
+        "ops": "95% paper elimination, 80% time reduction in signature workflows, 100% document traceability.",
+        "quality": "AI classification reduces manual sorting, expiration alerts prevent compliance gaps.",
+        "scalability": "Multi-tenant architecture enables growth without infrastructure changes."
+      },
+      "nextIterations": [
+        "GCP production deployment with managed PostgreSQL",
+        "Advanced AI classification models",
+        "Mobile app API development",
+        "Comprehensive test automation"
+      ],
+      "assets": {
+        "screenshots": [
+          {"description": "Multi-tenant dashboard", "path": null},
+          {"description": "Document classification interface", "path": null},
+          {"description": "Digital signature flow", "path": null}
+        ],
+        "demoVideo": null,
+        "publicRepo": null
+      },
+      "callToAction": "Schedule a demo to explore the complete platform: multi-tenant setup, document management, digital signature workflows, and worker portal."
     }
   ]
 }

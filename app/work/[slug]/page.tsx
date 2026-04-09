@@ -207,7 +207,7 @@ export default async function ProjectPage({ params }: PageParams) {
                     {category.charAt(0).toUpperCase() + category.slice(1)}
                   </h5>
                   <ul className="mt-2 space-y-1 text-sm text-neutral-600 dark:text-neutral-300">
-                    {items.map((item) => (
+                    {items.map((item: string) => (
                       <li key={`${project.slug}-stack-${category}-${item}`}>{item}</li>
                     ))}
                   </ul>

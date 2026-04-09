@@ -2,7 +2,7 @@ import CardContact from "./ui/cardContact";
 
 export default function CtaFinal() {
     return (
-      <section className="mx-auto max-w-6xl px-4 pb-24" id="contact">
+      <section className="min-h-screen flex flex-col justify-center mx-auto max-w-6xl px-4 py-16" id="contact">
 
         {/* <div className="rounded-3xl border border-neutral-200 dark:border-neutral-800 p-6 md:p-10 bg-neutral-50/60 dark:bg-neutral-900"> */}
           {/* <h3 className="text-xl md:text-2xl font-semibold">Do you have a challenge? Then let&apos;s talk</h3>

@@ -10,7 +10,7 @@ import ProjectsSection from "@/components/projects"
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+    <main className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
       <Hero />
       <ProjectsSection/>
       <CtaFinal/>

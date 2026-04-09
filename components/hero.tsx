@@ -4,15 +4,15 @@ import TagTech from "./ui/tagsTech"
 
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-6xl px-4 pt-16 pb-14 md:pt-24 md:pb-20" id="inicio">
-      <div className="grid items-center gap-10 md:grid-cols-[1.1fr,0.9fr]">
-        <div>
+    <section className="min-h-screen flex flex-col justify-center mx-auto max-w-6xl px-4 py-16" id="inicio">
+      <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+        <div className="flex-1 text-center md:text-left">
           <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
             Software Engineer
           </p>
           <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
             Hi, I&apos;m <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Jean
-            Bravo</span>. I design and build fast, maintainable web experiences.
+            Bravo</span>.
           </h1>
           <p className="mt-5 max-w-prose text-lg text-neutral-600 dark:text-neutral-300">
             I specialize in B2B digital products. I work end-to-end: discovery, architecture design,
@@ -36,17 +36,14 @@ export default function Hero() {
           <TagTech />
         </div>
 
-        <div className="relative w-full overflow-hidden rounded-3xl border border-neutral-200 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)] dark:border-neutral-800">
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-white to-indigo-100 dark:from-neutral-900 dark:via-neutral-950 dark:to-neutral-900" />
-          <div className="relative aspect-[4/3]">
-            <Image
-              src="/window.svg"
-              alt="Dashboard with product metrics"
-              fill
-              className="object-contain p-10"
-              priority
-            />
-          </div>
+        <div className="relative w-full md:w-80 lg:w-96 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
+          <Image
+            src="/perfil.jpeg"
+            alt="Jean Bravo - Software Engineer"
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
       </div>
     </section>

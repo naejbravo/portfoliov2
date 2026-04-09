@@ -12,7 +12,7 @@ export default function Footer() {
           <li>
             <a
               className="hover:opacity-80"
-              href="https://github.com/jeanbravodev"
+              href="https://github.com/naejbravo"
               target="_blank"
               rel="noreferrer"
             >
@@ -22,7 +22,7 @@ export default function Footer() {
           <li>
             <a
               className="hover:opacity-80"
-              href="https://www.linkedin.com/in/jeanbravodev/"
+              href="https://www.linkedin.com/in/jean-bravo/"
               target="_blank"
               rel="noreferrer"
             >

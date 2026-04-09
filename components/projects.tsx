@@ -11,8 +11,8 @@ export default function ProjectsSection() {
   const useSlider = featuredProjects.length > 2
 
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-16 md:pb-24" id="projects">
-      <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-left">
+    <section className="min-h-screen flex flex-col justify-center mx-auto max-w-6xl px-4 py-16" id="projects">
+      <div className="flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left mb-8 md:mb-12">
         <h2 className="text-2xl font-semibold md:text-3xl md:text-left">Featured projects</h2>
         <Link href="/work" className="text-sm underline underline-offset-4 hover:opacity-80">
           View all
