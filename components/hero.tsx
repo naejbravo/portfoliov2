@@ -15,8 +15,9 @@ export default function Hero() {
             Bravo</span>.
           </h1>
           <p className="mt-5 max-w-prose text-lg text-neutral-600 dark:text-neutral-300">
-            I specialize in B2B digital products. I work end-to-end: discovery, architecture design,
-            implementation, and continuous deployment with Next.js, ASP.NET Core, and PostgreSQL.
+            Full-stack .NET developer building scalable web applications with ASP.NET Core, Blazor, Razor and MVC.
+            I combine cloud infrastructure (GCP, Azure), IaC with Terraform, AI-powered document processing
+            including OCR, and PKI-based digital signatures (EJBCA / SignServer) — from discovery to production.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <Link

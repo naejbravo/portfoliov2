@@ -12,37 +12,24 @@ function slugify(name: string) {
     .toLowerCase()
 }
 
-function formatTitle(name: string) {
-  return name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/\s+/g, " ").trim()
-}
-
 function flattenTechStack(techStack: RawProject["techStack"]) {
   const values = Object.values(techStack ?? {}).flat()
   const unique = new Set(values)
   return Array.from(unique)
 }
 
-function impactHighlights(impact: RawProject["impact"]) {
+function formatImpact(impact: RawProject["impact"]) {
   if (!impact) return []
   const labelMap: Record<string, string> = {
     ops: "Operations",
     quality: "Quality",
     scalability: "Scalability",
   }
-  return Object.entries(impact).map(([key, value]) => {
-    const label = labelMap[key] ?? key
-    return `${label}: ${value}`
-  })
+  return Object.entries(impact).map(([key, value]) => `${labelMap[key] ?? key}: ${value}`)
 }
 
-const coverMap: Record<
-  string,
-  {
-    src: string
-    alt: string
-  }
-> = {
-  "webcaepro-cae-integral-management-platform": {
+const coverMap: Record<string, { src: string; alt: string }> = {
+  "webcaepro-cae-management-platform": {
     src: "/window.svg",
     alt: "WebCAEpro - CAE Management Platform",
   },
@@ -62,25 +49,20 @@ export type Project = RawProject & {
   title: string
   techKeywords: string[]
   impactHighlights: string[]
-  cover: {
-    src: string
-    alt: string
-  }
+  cover: { src: string; alt: string }
 }
 
 export const projects: Project[] = details.projects.map((project) => {
-  const rawName = project.displayName ?? formatTitle(project.projectName)
-  const slugFromDisplay = slugify(rawName)
-  const slugFromProjectName = slugify(project.projectName)
-  const slug = slugFromDisplay || slugFromProjectName
+  const rawName = project.displayName ?? project.slug
+  const slug = project.slug ?? slugify(rawName)
 
   return {
     ...project,
     slug,
     title: rawName,
-    techKeywords: flattenTechStack(project.techStack).slice(0, 6),
-    impactHighlights: impactHighlights(project.impact),
-    cover: coverMap[slug] ?? coverMap[slugFromProjectName] ?? defaultCover,
+    techKeywords: flattenTechStack(project.techStack).slice(0, 8),
+    impactHighlights: formatImpact(project.impact),
+    cover: coverMap[slug] ?? defaultCover,
   }
 })
 

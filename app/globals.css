@@ -131,12 +131,3 @@
   }
 }
 
-@media (min-width: 768px) {
-  html {
-    scroll-snap-type: y mandatory;
-  }
-
-  section, footer {
-    scroll-snap-align: start;
-  }
-}

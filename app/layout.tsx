@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     template: "%s · Jean Bravo",
   },
   description:
-    "Full-stack developer specialized in scalable web experiences with Next.js, ASP.NET Core and PostgreSQL.",
+    "Full-stack .NET developer specialized in Blazor, Razor, MVC, cloud infrastructure (GCP, Azure), Terraform, and AI-powered OCR document management.",
   openGraph: {
     type: "website",
     url: "/",
     title: "Jean Bravo · Software Engineer",
     description:
-      "I build digital products with focus on performance, accessibility and developer experience.",
+      "Full-stack .NET developer building scalable web applications with ASP.NET Core, Blazor, cloud infrastructure and AI-powered document processing.",
     locale: "en_US",
     siteName: "Jean Bravo",
   },
@@ -34,14 +34,19 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jean Bravo · Software Engineer",
     description:
-      "I develop web platforms with Next.js, ASP.NET Core and PostgreSQL.",
+      "Full-stack .NET developer — Blazor, MVC, GCP, Azure, Terraform, AI/OCR document management.",
     creator: "@jeanbravo",
   },
   keywords: [
     "Jean Bravo",
-    "Full Stack Developer",
-    "Next.js",
+    "Full Stack .NET Developer",
+    "Blazor",
     "ASP.NET Core",
+    "Terraform",
+    "GCP",
+    "Azure",
+    "AI",
+    "OCR",
     "Portfolio",
   ],
   authors: [{ name: "Jean Bravo" }],

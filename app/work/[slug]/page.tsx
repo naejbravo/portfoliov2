@@ -6,9 +6,7 @@ import { notFound } from "next/navigation"
 import { getProjectBySlug, projects } from "@/lib/projects"
 
 type PageParams = {
-  params: Promise<{
-    slug: string
-  }>
+  params: Promise<{ slug: string }>
 }
 
 export function generateStaticParams() {
@@ -20,14 +18,12 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   const project = getProjectBySlug(slug)
 
   if (!project) {
-    return {
-      title: "Project not found",
-    }
+    return { title: "Project not found" }
   }
 
   return {
     title: `${project.title} · Case study`,
-    description: project.solutionOverview,
+    description: project.tagline,
   }
 }
 
@@ -35,28 +31,20 @@ export default async function ProjectPage({ params }: PageParams) {
   const { slug } = await params
   const project = getProjectBySlug(slug)
 
-  if (!project) {
-    notFound()
-  }
+  if (!project) notFound()
 
-  const {
-    timeline,
-    team,
-    keyFeatures = [],
-    techStack,
-    dataFlow = [],
-    observability,
-    security,
-    risksAndChallenges = [],
-    nextIterations = [],
-  } = project
+  const { timeline, techStack, highlights = [], metrics = [] } = project
 
   return (
     <main className="mx-auto max-w-5xl px-4 pb-24 pt-20">
-      <Link href="/work" className="text-sm text-neutral-500 underline underline-offset-4 hover:text-neutral-900 dark:hover:text-neutral-50">
+      <Link
+        href="/work"
+        className="text-sm text-neutral-500 underline underline-offset-4 hover:text-neutral-900 dark:hover:text-neutral-50"
+      >
         ← Back to projects
       </Link>
 
+      {/* Header */}
       <header className="mt-6 space-y-4">
         <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
           <span>{project.status}</span>
@@ -68,17 +56,12 @@ export default async function ProjectPage({ params }: PageParams) {
               <span>Since {timeline.start}</span>
             </>
           )}
-          {timeline.end && (
-            <>
-              <span>•</span>
-              <span>Until {timeline.end}</span>
-            </>
-          )}
         </div>
         <h1 className="text-4xl font-semibold leading-tight md:text-5xl">{project.title}</h1>
         <p className="text-lg text-neutral-600 dark:text-neutral-300">{project.tagline}</p>
       </header>
 
+      {/* Cover image */}
       <figure className="mt-10 overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900">
         <div className="relative aspect-[16/9]">
           <Image
@@ -92,225 +75,81 @@ export default async function ProjectPage({ params }: PageParams) {
         </div>
       </figure>
 
+      {/* Overview card */}
       <section className="mt-10 rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50 md:p-8">
-        <h2 className="text-xl font-semibold">Project overview</h2>
-        <dl className="mt-6 grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
             <dt className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">Role</dt>
             <dd className="mt-1 text-neutral-800 dark:text-neutral-100">{project.role}</dd>
           </div>
           <div>
-            <dt className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">Team</dt>
-            <dd className="mt-1 text-neutral-800 dark:text-neutral-100">
-              {team.size === 1 ? "Individual" : `${team.size} people`}
-            </dd>
-            <ul className="mt-2 space-y-1 text-sm text-neutral-600 dark:text-neutral-300">
-              {team.composition.map((item) => (
-                <li key={`${project.slug}-team-${item}`}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
             <dt className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">Scenario</dt>
             <dd className="mt-1 text-neutral-800 dark:text-neutral-100">{project.businessProblem}</dd>
           </div>
-          <div>
-            <dt className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">Featured stack</dt>
-            <dd className="mt-1 flex flex-wrap gap-2 text-xs">
-              {project.techKeywords.map((tag) => (
-                <span
-                  key={`${project.slug}-stack-${tag}`}
-                  className="rounded-full border border-neutral-300/70 px-3 py-1 text-neutral-600 dark:border-neutral-700 dark:text-neutral-300"
-                >
-                  {tag}
-                </span>
-              ))}
-            </dd>
-          </div>
-        </dl>
+        </div>
       </section>
 
-      <section className="mt-12 space-y-8">
-        <article className="space-y-4">
-          <h2 className="text-2xl font-semibold">Solution</h2>
-          <p className="text-neutral-600 dark:text-neutral-300">{project.solutionOverview}</p>
-        </article>
-
-        {keyFeatures.length > 0 && (
-          <article className="space-y-4">
-            <h3 className="text-xl font-semibold">Key features</h3>
-            <div className="grid gap-6 md:grid-cols-2">
-              {keyFeatures.map((feature) => (
-                <div
-                  key={`${project.slug}-feature-${feature.name}`}
-                  className="rounded-2xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
-                >
-                  <h4 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{feature.name}</h4>
-                  <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{feature.description}</p>
-                  <p className="mt-3 text-sm font-medium text-neutral-900 dark:text-neutral-100">{feature.value}</p>
-                  {feature.highlights?.length ? (
-                    <ul className="mt-3 space-y-1.5 text-sm text-neutral-600 dark:text-neutral-300">
-                      {feature.highlights.map((highlight) => (
-                        <li key={`${project.slug}-feature-${feature.name}-${highlight}`} className="flex gap-2">
-                          <span aria-hidden="true" className="mt-1 inline-block size-1.5 rounded-full bg-neutral-400" />
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          </article>
-        )}
-
-        <article className="space-y-6">
-          <h3 className="text-xl font-semibold">Architecture and stack</h3>
+      {/* Highlights */}
+      {highlights.length > 0 && (
+        <section className="mt-12 space-y-6">
+          <h2 className="text-2xl font-semibold">Highlights</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-neutral-200 bg-white/70 p-5 dark:border-neutral-800 dark:bg-neutral-950/50">
-              <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">Style</h4>
-              <p className="mt-2 text-neutral-700 dark:text-neutral-200">{project.architecture.style}</p>
-              <h4 className="mt-4 text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">Layers</h4>
-              <ul className="mt-2 space-y-1 text-sm text-neutral-600 dark:text-neutral-300">
-                {project.architecture.layers.map((layer) => (
-                  <li key={`${project.slug}-layer-${layer}`}>{layer}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-2xl border border-neutral-200 bg-white/70 p-5 dark:border-neutral-800 dark:bg-neutral-950/50">
-              <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                Integrations
-              </h4>
-              <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                {project.architecture.integration.externalApi}
-              </p>
-              {project.architecture.integration.circuitBreaker.enabled && (
-                <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                  Circuit breaker configured with threshold {project.architecture.integration.circuitBreaker.failureThreshold} and
-                  reopening in {project.architecture.integration.circuitBreaker.openSeconds} seconds.
-                </p>
-              )}
-              <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                Metrics endpoint: {project.architecture.integration.metricsEndpoint}
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
-            <h4 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Complete stack
-            </h4>
-            <div className="mt-4 grid gap-6 md:grid-cols-2">
-              {Object.entries(techStack).map(([category, items]) => (
-                <div key={`${project.slug}-stack-${category}`}>
-                  <h5 className="text-sm font-semibold text-neutral-800 dark:text-neutral-100">
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                  </h5>
-                  <ul className="mt-2 space-y-1 text-sm text-neutral-600 dark:text-neutral-300">
-                    {items.map((item: string) => (
-                      <li key={`${project.slug}-stack-${category}-${item}`}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </article>
-
-        {dataFlow.length > 0 && (
-          <article className="space-y-4">
-            <h3 className="text-xl font-semibold">Data flow</h3>
-            <ol className="space-y-4">
-              {dataFlow.map((step, index) => (
-                <li
-                  key={`${project.slug}-dataflow-${step.stage}`}
-                  className="rounded-2xl border border-neutral-200 bg-white/70 p-5 dark:border-neutral-800 dark:bg-neutral-950/50"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex size-7 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-white dark:bg-neutral-100 dark:text-neutral-900">
-                      {index + 1}
-                    </span>
-                    <h4 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{step.stage}</h4>
-                  </div>
-                  <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">
-                    <span className="font-medium text-neutral-800 dark:text-neutral-100">Service:</span> {step.service}
-                  </p>
-                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-                    <span className="font-medium text-neutral-800 dark:text-neutral-100">Input:</span> {step.input}
-                  </p>
-                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
-                    <span className="font-medium text-neutral-800 dark:text-neutral-100">Output:</span> {step.output}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </article>
-        )}
-
-        <article className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
-            <h3 className="text-xl font-semibold">Observability</h3>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{observability.logging}</p>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{observability.metrics}</p>
-            {observability.adminScreens?.length ? (
-              <ul className="mt-3 space-y-1 text-sm text-neutral-600 dark:text-neutral-300">
-                {observability.adminScreens.map((screen) => (
-                  <li key={`${project.slug}-observability-${screen}`}>{screen}</li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-          <div className="rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
-            <h3 className="text-xl font-semibold">Security</h3>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{security.identity}</p>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{security.authZ}</p>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300">{security.config}</p>
-          </div>
-        </article>
-
-        {risksAndChallenges.length > 0 && (
-          <article className="rounded-2xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-600/40 dark:bg-amber-900/20">
-            <h3 className="text-xl font-semibold text-amber-900 dark:text-amber-200">Risks and mitigations</h3>
-            <ul className="mt-3 space-y-2 text-sm text-amber-900 dark:text-amber-100">
-              {risksAndChallenges.map((risk) => (
-                <li key={`${project.slug}-risk-${risk}`} className="flex gap-2">
-                  <span aria-hidden="true" className="mt-1 inline-block size-1.5 rounded-full bg-amber-500" />
-                  <span>{risk}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        )}
-
-        <article className="rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
-          <h3 className="text-xl font-semibold">Impact</h3>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
-            {project.impactHighlights.map((impactItem) => (
-              <li key={`${project.slug}-impact-${impactItem}`} className="flex gap-2">
-                <span aria-hidden="true" className="mt-1 inline-block size-1.5 rounded-full bg-neutral-400" />
-                <span>{impactItem}</span>
-              </li>
+            {highlights.map((item: string) => (
+              <div
+                key={`${project.slug}-highlight-${item.slice(0, 20)}`}
+                className="rounded-2xl border border-neutral-200 bg-white/70 p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
+              >
+                <p className="text-sm text-neutral-700 dark:text-neutral-200">{item}</p>
+              </div>
             ))}
-          </ul>
-        </article>
+          </div>
+        </section>
+      )}
 
-        {nextIterations.length > 0 && (
-          <article className="rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
-            <h3 className="text-xl font-semibold">Next steps</h3>
-            <ul className="mt-3 space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
-              {nextIterations.map((iteration) => (
-                <li key={`${project.slug}-next-${iteration}`} className="flex gap-2">
-                  <span aria-hidden="true" className="mt-1 inline-block size-1.5 rounded-full bg-neutral-400" />
-                  <span>{iteration}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        )}
+      {/* Tech stack */}
+      <section className="mt-12 rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
+        <h2 className="text-xl font-semibold">Tech stack</h2>
+        <div className="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Object.entries(techStack).map(([category, items]) => (
+            <div key={`${project.slug}-cat-${category}`}>
+              <h3 className="text-sm font-semibold capitalize text-neutral-800 dark:text-neutral-100">
+                {category.replace(/_/g, " / ")}
+              </h3>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {items.map((item: string) => (
+                  <span
+                    key={`${project.slug}-tech-${item}`}
+                    className="rounded-full border border-neutral-300/70 px-2.5 py-0.5 text-xs text-neutral-600 dark:border-neutral-700 dark:text-neutral-300"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
+      {/* Metrics */}
+      {metrics.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-xl font-semibold">Impact</h2>
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
+            {metrics.map((metric: string, i: number) => (
+              <div
+                key={`${project.slug}-metric-${i}`}
+                className="rounded-2xl border border-neutral-200 bg-white/70 p-5 text-center shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
+              >
+                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-100">{metric}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* CTA */}
       <footer className="mt-12 rounded-3xl border border-neutral-200 bg-white/80 p-6 text-neutral-800 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 md:p-8">
-        <h2 className="text-2xl font-semibold">Want to see this flow in your context?</h2>
+        <h2 className="text-2xl font-semibold">Want to see this in your context?</h2>
         <p className="mt-3 text-neutral-600 dark:text-neutral-300">{project.callToAction}</p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Link

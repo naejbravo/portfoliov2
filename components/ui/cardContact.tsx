@@ -10,8 +10,8 @@ export default function CardContact() {
         <div className="space-y-5">
           <h2 className="text-2xl font-semibold md:text-3xl">Do you have a challenge in mind? Let&apos;s talk</h2>
           <p id={descriptionId} className="text-base text-neutral-600 dark:text-neutral-300">
-            Tell me about your product or current processes. I can join from ideation to production deployment,
-            helping align technology with visible business metrics.
+            Tell me about your product or current processes. I can help with full-stack .NET development,
+            cloud infrastructure, IaC, and intelligent document management with AI and OCR — from ideation to production.
           </p>
           <dl className="grid gap-3 text-sm text-neutral-600 dark:text-neutral-300 md:grid-cols-2">
             <div>
@@ -24,7 +24,7 @@ export default function CardContact() {
             </div>
             <div>
               <dt className="font-semibold text-neutral-800 dark:text-neutral-100">Specialty</dt>
-              <dd>Web experiences with Next.js, ASP.NET Core and data pipelines.</dd>
+              <dd>Full-stack .NET, cloud infrastructure with Terraform, AI-powered document management with OCR, and PKI-based digital signatures (EJBCA / SignServer).</dd>
             </div>
             <div>
               <dt className="font-semibold text-neutral-800 dark:text-neutral-100">Format</dt>
