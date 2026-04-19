@@ -30,11 +30,11 @@ function formatImpact(impact: RawProject["impact"]) {
 
 const coverMap: Record<string, { src: string; alt: string }> = {
   "webcaepro-cae-management-platform": {
-    src: "/window.svg",
+    src: "/webcaepro-home-sidebar.png",
     alt: "WebCAEpro - CAE Management Platform",
   },
   "webrrhhpro-hr-saas-multi-tenant-platform": {
-    src: "/globe.svg",
+    src: "/webrrhhpro.png",
     alt: "WebRRHHpro - HR SaaS Multi-tenant Platform",
   },
 }
