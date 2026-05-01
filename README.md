@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# jeanbravo.dev — Portfolio
 
-## Getting Started
+Full-stack .NET developer portfolio built with Next.js, TypeScript and Tailwind CSS.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript
+- **Styling:** Tailwind CSS 4, tailwind-merge, class-variance-authority
+- **Components:** Radix UI primitives, lucide-react icons
+- **Forms:** react-hook-form, zod, @hookform/resolvers
+- **Email:** Resend (contact form)
+- **Content:** next-mdx-remote, gray-matter, remark-gfm
+- **Carousel:** embla-carousel-react, keen-slider
+- **Deployment:** Vercel (ISR with revalidation)
+
+## Project structure
+
+```
+├── app/
+│   ├── api/contact/        # Contact form API route (Resend)
+│   ├── work/
+│   │   ├── page.tsx         # Projects listing
+│   │   └── [slug]/          # Case study pages (ISR)
+│   ├── layout.tsx           # Root layout + metadata
+│   ├── page.tsx             # Home page
+│   └── sitemap.ts           # Auto-generated sitemap
+├── components/
+│   ├── ui/                  # Shared UI primitives
+│   ├── hero.tsx             # Hero section
+│   ├── projects.tsx         # Featured projects slider
+│   ├── project-card.tsx     # Project card component
+│   ├── ctaFinal.tsx         # Contact section
+│   └── ...
+├── content/projects/
+│   └── details.json         # Project data (case studies)
+├── lib/
+│   ├── projects.ts          # Project data transformations
+│   ├── mdx.ts               # MDX processing
+│   ├── isr.ts               # ISR configuration
+│   └── utils.ts             # cn() utility
+├── cv/                      # CVs in multiple languages (Markdown)
+└── public/                  # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run dev      # Start dev server (Turbopack)
+npm run build    # Production build (Turbopack)
+npm run lint     # ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+Deployed on Vercel with ISR. The contact form uses Resend for email delivery. Project pages are statically generated at build time and revalidated on demand.
 
-To learn more about Next.js, take a look at the following resources:
+## Author
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Jean Bravo — [jeanbravo.dev](https://jeanbravo.dev) — [github.com/naejbravo](https://github.com/naejbravo)

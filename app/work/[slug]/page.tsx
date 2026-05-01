@@ -33,7 +33,13 @@ export default async function ProjectPage({ params }: PageParams) {
 
   if (!project) notFound()
 
-  const { timeline, techStack, highlights = [], metrics = [] } = project
+  const {
+    timeline,
+    techStack,
+    technicalDecisions = [],
+    technicalChallenges = [],
+    metrics = [],
+  } = project
 
   return (
     <main className="mx-auto max-w-5xl px-4 pb-24 pt-20">
@@ -48,11 +54,11 @@ export default async function ProjectPage({ params }: PageParams) {
       <header className="mt-6 space-y-4">
         <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
           <span>{project.status}</span>
-          <span>•</span>
+          <span>·</span>
           <span>{timeline.stage}</span>
           {timeline.start && (
             <>
-              <span>•</span>
+              <span>·</span>
               <span>Since {timeline.start}</span>
             </>
           )}
@@ -75,28 +81,54 @@ export default async function ProjectPage({ params }: PageParams) {
         </div>
       </figure>
 
-      {/* Overview card */}
-      <section className="mt-10 rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50 md:p-8">
-        <div className="grid gap-6 md:grid-cols-2">
-          <div>
-            <dt className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">Role</dt>
-            <dd className="mt-1 text-neutral-800 dark:text-neutral-100">{project.role}</dd>
-          </div>
-          <div>
-            <dt className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">Scenario</dt>
-            <dd className="mt-1 text-neutral-800 dark:text-neutral-100">{project.businessProblem}</dd>
-          </div>
+      {/* Problem & Role */}
+      <section className="mt-12 grid gap-8 md:grid-cols-2">
+        <div className="rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50 md:p-8">
+          <h2 className="text-xl font-semibold">Problem</h2>
+          <p className="mt-3 text-neutral-700 dark:text-neutral-200 leading-relaxed">{project.businessProblem}</p>
+        </div>
+        <div className="rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50 md:p-8">
+          <h2 className="text-xl font-semibold">Role</h2>
+          <p className="mt-3 text-neutral-700 dark:text-neutral-200 leading-relaxed">{project.role}</p>
+          {"description" in project && project.description && (
+            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">{project.description}</p>
+          )}
         </div>
       </section>
 
-      {/* Highlights */}
-      {highlights.length > 0 && (
-        <section className="mt-12 space-y-6">
-          <h2 className="text-2xl font-semibold">Highlights</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {highlights.map((item: string) => (
+      {/* Solution */}
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold">Solution</h2>
+        <p className="mt-4 text-neutral-700 dark:text-neutral-200 leading-relaxed text-lg max-w-3xl">
+          {project.solutionOverview}
+        </p>
+      </section>
+
+      {/* Technical Decisions */}
+      {technicalDecisions.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold">Technical Decisions</h2>
+          <div className="mt-4 space-y-4">
+            {technicalDecisions.map((item: string) => (
               <div
-                key={`${project.slug}-highlight-${item.slice(0, 20)}`}
+                key={`${project.slug}-decision-${item.slice(0, 30)}`}
+                className="rounded-2xl border border-neutral-200 bg-white/70 p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
+              >
+                <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">{item}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Technical Challenges */}
+      {technicalChallenges.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold">Technical Challenges</h2>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {technicalChallenges.map((item: string) => (
+              <div
+                key={`${project.slug}-challenge-${item.slice(0, 30)}`}
                 className="rounded-2xl border border-neutral-200 bg-white/70 p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
               >
                 <p className="text-sm text-neutral-700 dark:text-neutral-200">{item}</p>
@@ -130,10 +162,10 @@ export default async function ProjectPage({ params }: PageParams) {
         </div>
       </section>
 
-      {/* Metrics */}
+      {/* Impact */}
       {metrics.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-xl font-semibold">Impact</h2>
+          <h2 className="text-2xl font-semibold">Impact</h2>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {metrics.map((metric: string, i: number) => (
               <div

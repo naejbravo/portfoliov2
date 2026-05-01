@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import { Github, Linkedin, FileText } from "lucide-react"
 import TagTech from "./ui/tagsTech"
 
 export default function Hero() {
@@ -8,16 +9,14 @@ export default function Hero() {
       <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
         <div className="flex-1 text-center md:text-left">
           <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-            Software Engineer
+            Software Engineer <span className="mx-1.5 opacity-50">·</span> B2B SaaS & Document Workflows
           </p>
           <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
             Hi, I&apos;m <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Jean
             Bravo</span>.
           </h1>
           <p className="mt-5 max-w-prose text-lg text-neutral-600 dark:text-neutral-300">
-            Full-stack .NET developer building scalable web applications with ASP.NET Core, Blazor, Razor and MVC.
-            I combine cloud infrastructure (GCP, Azure), IaC with Terraform, AI-powered document processing
-            including OCR, and PKI-based digital signatures (EJBCA / SignServer) — from discovery to production.
+            Full-stack .NET developer building B2B SaaS platforms for document workflows, digital signatures and operations automation. I work across ASP.NET Core, Blazor, PostgreSQL and cloud infrastructure, with a focus on multi-tenant systems, auditability and production delivery.
           </p>
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <Link
@@ -32,6 +31,34 @@ export default function Hero() {
             >
               Schedule a call
             </Link>
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
+            <a
+              href="https://github.com/naejbravo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
+            >
+              <Github className="size-4" />
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/jean-bravo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
+            >
+              <Linkedin className="size-4" />
+              LinkedIn
+            </a>
+            <a
+              href="/cv_eng_jean_2026.pdf"
+              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
+            >
+              <FileText className="size-4" />
+              CV
+            </a>
           </div>
 
           <TagTech />

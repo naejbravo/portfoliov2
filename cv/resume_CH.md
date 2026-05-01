@@ -9,7 +9,7 @@
 
 <br>
 
-Full-stack .NET-Entwickler, der skalierbare Webanwendungen mit ASP.NET Core, Blazor, Razor und MVC entwickelt. Ich kombiniere Cloud-Infrastruktur (GCP, Azure), IaC mit Terraform, KI-gestützte Dokumentenverarbeitung einschliesslich OCR und PKI-basierte digitale Signaturen (EJBCA / SignServer) — von der Idee bis zur Produktion.
+Full-stack .NET-Entwickler mit Fokus auf B2B-SaaS-Plattformen für Dokumenten-Workflows, digitale Signaturen und Betriebsautomatisierung — von der Architektur bis zur produktiven Bereitstellung auf Cloud-Infrastruktur.
 
 ## Berufserfahrung
 
@@ -17,27 +17,28 @@ Full-stack .NET-Entwickler, der skalierbare Webanwendungen mit ASP.NET Core, Bla
   : **HumanTech Software**
   : **01/2026 – Heute**
 
-WebRRHHpro
+WebRRHHpro — Multi-Tenant HR-SaaS
 
-- KI-gestützte Dokumentenklassifizierung mit OCR (PdfPig): automatische Datenextraktion aus HR-Dokumenten, Eliminierung von 95 % papierbasierter Prozesse
-- 3-Modus-digitale Unterschrift (OTP, einfach, zertifikatsbasiert mit QuestPDF) mit vollständigem Audit-Trail; PKI-Forschung mit EJBCA/SignServer für Enterprise-Signaturen
-- Multi-Tenant-SaaS (.NET 10, C# 14, Blazor Web App, PostgreSQL) mit Subdomain-Isolierung, SignalR Echtzeit und Clean Architecture
+- Leitete Architektur und Entwicklung einer Multi-Tenant-SaaS-Plattform (.NET 10, Blazor Web App, PostgreSQL, Clean Architecture) mit Subdomain-Isolierung, RBAC und globalen EF-Core-Query-Filtern für 6 Rollen.
+- Entwickelte OCR-basierte Dokumentenklassifizierung und 3-Modi-Signatur-Workflows (OTP, Klick-Signatur, zertifikatsbasiert), reduzierte papierbasierte HR-Prozesse um 95 % und Signatur-Durchlaufzeiten um 80 %.
+- Lieferte Produktionsinfrastruktur auf GCP mit Docker, Caddy, GitHub Actions CI/CD, SignalR-Echtzeit-Benachrichtigungen und Serilog-Logging mit tenant-bezogener Observability.
 
-**Contributing Developer**
+**Full-stack .NET Developer**
   : **HumanTech Software**
   : **05/2025 – Heute**
 
-WebCAEpro
+WebCAEpro — Personalmanagement-Plattform
 
-- DSGVO-konformer digitaler Unterschriften-Workflow für Zeiterfassung: SHA-256 Magic Tokens, Audit-Trail (IP, UserAgent), asynchrone Verarbeitung, PDF-Stempelung mit PdfSharpCore
-- REST-API für mobiles Zeitracking mit Tageslimits und verschlüsselten API-Schlüsseln; Multi-Tenant-Unterstützung für 3 Marken mit isolierten Datenbanken
+- Implementierte DSGVO-konformen digitalen Signatur-Workflow für monatliche Zeiterfassungsvalidierung mit SHA-256-Magic-Links, Audit-Trail und PDF-Stempelung — 100 % digitale Compliance erreicht.
+- Entwarf REST-API für gleichzeitiges mobiles Zeiterfassungs-Tracking mit verschlüsselten API-Schlüsseln, täglichen Operationslimits und zeitzonenbezogener Validierung.
+- Erweiterte eine einzige Codebasis zur Unterstützung von 3 Geschäftsmarken mit isolierten Datenbanken, unabhängigen SMTP/WhatsApp-Kanälen und gebrandeten Themes.
 
 **Software-Ingenieur**
   : **Correcto**
   : **05/2022 – 05/2023**
 
-- Aufbau responsiver Webplattformen mit Angular und JavaScript in einem schnelllebigen Startup-Umfeld
-- Verwaltung von GCP-Deployments und Zusammenarbeit in cross-funktionalen Teams mit Jira und Agile/Scrum
+- Entwicklung responsiver Webplattformen mit Angular und JavaScript in einem schnelllebigen Startup-Umfeld.
+- Verwaltung von GCP-Deployments und Zusammenarbeit in cross-funktionalen Teams mit Jira und Agile/Scrum.
 
 ## Ausbildung
 
@@ -47,7 +48,7 @@ WebCAEpro
 Upgrade Hub
   : ES, Madrid
 
-**Eidg. dipl. Informatiker (ASIR-Äquivalent) — Netzwerk-Systemadministration**
+**Higher Technical Certificate (ASIR) — Netzwerk-Systemadministration (Spanien)**
   : **09/2018 – 07/2020**
 
 IES Fuengirola N°1
@@ -55,13 +56,13 @@ IES Fuengirola N°1
 
 ## Fähigkeiten
 
-**Sprachen & Frameworks:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, JavaScript, Angular, Next.js, Astro
+**Backend und Architektur:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, Clean Architecture, REST-APIs, Hintergrundjob-Verarbeitung
 
-**Daten & Cloud:** PostgreSQL, MySQL, GCP, Azure, Docker, Caddy, Terraform, IaC, GitHub Actions CI/CD
+**Daten und Cloud:** PostgreSQL, MySQL, SQL Server, Docker, Caddy, GCP, Azure, Terraform (IaC), GitHub Actions CI/CD, Serilog
 
-**Sicherheit & PKI:** EJBCA, SignServer, ASP.NET Identity, RBAC, JWT, OAuth, SHA-256 Token-Authentifizierung
+**Dokumentenautomatisierung und Sicherheit:** PdfPig (OCR), QuestPDF, PdfSharpCore, ChromeHtmlToPdf, digitale Signaturen (OTP, SHA-256-Tokens, zertifikatsbasiert), PKI-Evaluierung (EJBCA / SignServer), RBAC, ASP.NET Identity, JWT, Audit-Trails
 
-**KI & Werkzeuge:** PdfPig (OCR), QuestPDF, PdfSharpCore, SignalR, Serilog, Clean Architecture, Multi-Tenant-SaaS
+**Frontend und Echtzeit:** SignalR, JavaScript, Angular, MudBlazor, Next.js, Astro
 
 ## Sprachen
 

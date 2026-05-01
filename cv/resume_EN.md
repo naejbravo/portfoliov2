@@ -5,11 +5,11 @@
 | | | |
 | :--- | :--- | :--- |
 | <span class="iconify" data-icon="charm:person"></span> [jeanbravo.dev](https://jeanbravo.dev) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <span class="iconify" data-icon="tabler:brand-github"></span> [github.com/naejbravo](https://github.com/naejbravo) | <span class="iconify" data-icon="tabler:phone"></span> [+34 677 750 689](tel:+34677750689) |
-| <span class="iconify" data-icon="ic:outline-location-on"></span> España | <span class="iconify" data-icon="tabler:brand-linkedin"></span> [linkedin.com/in/jean-bravo](https://linkedin.com/in/jean-bravo) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <span class="iconify" data-icon="tabler:mail"></span> [naejbravo@gmail.com](mailto:naejbravo@gmail.com) |
+| <span class="iconify" data-icon="ic:outline-location-on"></span> Spain | <span class="iconify" data-icon="tabler:brand-linkedin"></span> [linkedin.com/in/jean-bravo](https://linkedin.com/in/jean-bravo) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <span class="iconify" data-icon="tabler:mail"></span> [naejbravo@gmail.com](mailto:naejbravo@gmail.com) |
 
 <br>
 
-Full-stack .NET developer building scalable web applications with ASP.NET Core, Blazor, Razor and MVC. I combine cloud infrastructure (GCP, Azure), IaC with Terraform, AI-powered document processing including OCR, and PKI-based digital signatures (EJBCA / SignServer) — from discovery to production.
+Full-stack .NET developer building B2B SaaS platforms for document workflows, digital signatures and operations automation — from architecture to production delivery on cloud infrastructure.
 
 ## Experience
 
@@ -17,27 +17,28 @@ Full-stack .NET developer building scalable web applications with ASP.NET Core, 
   : **HumanTech Software**
   : **01/2026 – Present**
 
-WebRRHHpro
+WebRRHHpro — Multi-tenant HR SaaS
 
-- AI-powered document classification with OCR (PdfPig): automatically extracts data from HR documents, eliminating 95% of paper-based processes
-- 3-mode digital signature system (OTP, simple, certificate-based with QuestPDF) with full audit trail; PKI research with EJBCA/SignServer for enterprise-grade signatures
-- Multi-tenant SaaS (.NET 10, C# 14, Blazor Web App, PostgreSQL) with subdomain-based tenant isolation, SignalR real-time, and Clean Architecture
+- Led architecture and development of a multi-tenant SaaS platform (.NET 10, Blazor Web App, PostgreSQL, Clean Architecture) with subdomain-based tenant isolation, RBAC and EF Core global query filters across 6 roles.
+- Built OCR-based document classification and 3-mode digital signature workflows (OTP, click-to-sign, certificate-based), reducing paper-based HR processes by 95% and signature turnaround by 80%.
+- Delivered production infrastructure on GCP with Docker, Caddy, GitHub Actions CI/CD, SignalR real-time notifications and Serilog structured logging with tenant-scoped observability.
 
-**Contributing Developer**
+**Full-stack .NET Developer**
   : **HumanTech Software**
   : **05/2025 – Present**
 
-WebCAEpro
+WebCAEpro — Workforce management platform
 
-- GDPR-compliant digital signature workflow for time-sheet validation: SHA-256 magic tokens, audit trail (IP, UserAgent), async background processing, PDF stamping via PdfSharpCore
-- REST API for concurrent mobile time tracking with per-day limits and encrypted API keys; multi-tenant support for 3 brands with isolated databases
+- Implemented GDPR-compliant digital signature workflow for monthly timesheet validation with SHA-256 magic links, audit trail capture and PDF stamping — achieving 100% digital compliance.
+- Designed REST API for concurrent mobile time tracking with encrypted API keys, per-day operation limits and timezone-aware boundaries.
+- Extended a single codebase to serve 3 business brands with isolated databases, independent SMTP/WhatsApp channels and custom branded themes.
 
 **Software Engineer**
   : **Correcto**
   : **05/2022 – 05/2023**
 
-- Built responsive web platforms with Angular and JavaScript in a fast-paced startup environment
-- Managed GCP deployments and collaborated in cross-functional teams using Jira and Agile/Scrum
+- Developed responsive web platforms with Angular and JavaScript in a fast-paced startup environment.
+- Managed GCP deployments and collaborated in cross-functional teams using Jira and Agile/Scrum.
 
 ## Education
 
@@ -55,14 +56,14 @@ IES Fuengirola N°1
 
 ## Skills
 
-**Languages & Frameworks:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, JavaScript, Angular, Next.js, Astro
+**Backend & Architecture:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, Clean Architecture, REST APIs, background job processing
 
-**Data & Cloud:** PostgreSQL, MySQL, GCP, Azure, Docker, Caddy, Terraform, IaC, GitHub Actions CI/CD
+**Data & Cloud:** PostgreSQL, MySQL, SQL Server, Docker, Caddy, GCP, Azure, Terraform (IaC), GitHub Actions CI/CD, Serilog
 
-**Security & PKI:** EJBCA, SignServer, ASP.NET Identity, RBAC, JWT, OAuth, SHA-256 token authentication
+**Document Automation & Security:** PdfPig (OCR), QuestPDF, PdfSharpCore, ChromeHtmlToPdf, digital signatures (OTP, SHA-256 tokens, certificate-based), PKI evaluation (EJBCA / SignServer), RBAC, ASP.NET Identity, JWT, audit trails
 
-**AI & Tools:** PdfPig (OCR), QuestPDF, PdfSharpCore, SignalR, Serilog, Clean Architecture, Multi-tenant SaaS
+**Frontend & Real-time:** SignalR, JavaScript, Angular, MudBlazor, Next.js, Astro
 
 ## Languages
 
-**Spanish** (native)  **English** (proficient)
+**Spanish** (Native)  **English** (Proficient)

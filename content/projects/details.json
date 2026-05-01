@@ -1,62 +1,37 @@
 {
   "projects": [
     {
-      "slug": "webcaepro-cae-management-platform",
-      "displayName": "WebCAEpro",
-      "tagline": "Workforce management and time-tracking platform with GDPR-compliant digital signature.",
-      "status": "Production",
-      "role": "Contributing Developer — Full-stack .NET",
-      "timeline": {
-        "start": "2025",
-        "end": null,
-        "stage": "Active multi-client deployment"
-      },
-      "businessProblem": "CAE clients managed companies, workers and time tracking with spreadsheets and manual processes — no centralized compliance or audit trail.",
-      "solutionOverview": "Joined an existing ASP.NET Core MVC platform and led the implementation of key features: a fully automated GDPR-compliant digital signature workflow for monthly time-sheet validation, REST API for mobile apps, and multi-tenant support for 3 business brands.",
-      "highlights": [
-        "GDPR-compliant e-signature system with magic tokens (SHA-256), audit trail (IP, UserAgent, stroke count), async background job processing with retries, and PDF stamping via PdfSharpCore.",
-        "REST API for concurrent mobile time tracking with per-day operation limits, timezone-aware boundaries, and encrypted API keys per client.",
-        "Multi-tenant architecture serving 3 business brands with isolated databases, custom CSS themes, and independent communication channels (SMTP + WhatsApp).",
-        "PDF pipeline combining QuestPDF for structured reports, PdfSharpCore for signature stamping, and ChromeHtmlToPdf for HTML conversion."
-      ],
-      "techStack": {
-        "backend": [".NET 8", "ASP.NET Core MVC", "Entity Framework Core"],
-        "data": ["MySQL (Pomelo)", "SQL Server"],
-        "pdf": ["QuestPDF", "PdfSharpCore", "ChromeHtmlToPdf"],
-        "infrastructure": ["IIS / Windows Server", "SMTP + WhatsApp API"],
-        "security": ["ASP.NET Identity", "Role-based access", "Tenant isolation"]
-      },
-      "metrics": [
-        "80% reduction in manual data entry",
-        "100% digital time-sheet compliance",
-        "3 brands on a single codebase"
-      ],
-      "impact": {
-        "ops": "Reduced manual data entry by 80% through CSV imports and centralized management.",
-        "quality": "Improved data consistency with validated templates and relationship enforcement.",
-        "scalability": "Template-driven approach supports adding new clients without code changes."
-      },
-      "callToAction": "Available for a technical demo of the platform and discussion on modernization to .NET 10."
-    },
-    {
       "slug": "webrrhhpro-hr-saas-multi-tenant-platform",
       "displayName": "WebRRHHpro",
-      "tagline": "HR SaaS platform with AI-powered document classification, digital signature, and real-time collaboration.",
+      "tagline": "Multi-tenant HR SaaS with AI-powered OCR document classification, digital signatures and real-time collaboration.",
+      "description": "B2B SaaS platform for companies to manage HR documents, digital signatures and employee self-service without local infrastructure. Covers the full document lifecycle from AI-driven classification to automated expiration alerts.",
       "status": "Active development",
-      "role": "Tech Lead & Full-stack .NET Developer",
+      "role": "Tech Lead & Full-stack .NET Developer — architecture, backend, deployment and production operations.",
       "timeline": {
         "start": "2026",
         "end": null,
         "stage": "Production tenants live"
       },
-      "businessProblem": "Companies needed centralized HR document management with digital signatures and worker self-service — without managing local infrastructure or credentials.",
-      "solutionOverview": "Multi-tenant SaaS built with .NET 10, Blazor Web App, and PostgreSQL. Features AI-powered OCR document classification (PdfPig), three digital signature modes (OTP, simple, certificate), worker portal without accounts, SignalR real-time notifications, and subdomain-based tenant isolation.",
-      "highlights": [
-        "AI-powered document classification with OCR (PdfPig) — automatically extracts data from HR documents and classifies them into lifecycle stages (Draft → Review → Validated → Expired).",
-        "3-mode digital signature: OTP via email, simple click-to-sign, and certificate-based with visual PDF positioning via QuestPDF — full audit trail for each.",
-        "PKI research and integration study with EJBCA / SignServer for enterprise-grade certificate-based signatures — currently evaluating integration into production workflows.",
-        "Clean Architecture (.NET 10, C# 14) with Blazor Web App (SSR + InteractiveServer), EF Core global query filters for multi-tenant data isolation, and RBAC with 6 roles.",
-        "Docker + Caddy on GCP, GitHub Actions CI/CD, Serilog structured logging with TenantId/CorrelationId enrichment."
+      "businessProblem": "HR teams managed employee documents, signatures and expiration tracking through paper workflows, email threads and local storage. This created compliance gaps, duplicated manual work and made it impossible to audit document lifecycles across departments or prove chain of custody for signed documents.",
+      "solutionOverview": "Built a cloud-hosted multi-tenant SaaS platform from scratch. Each tenant gets a dedicated subdomain with isolated database access via EF Core global query filters, custom branding, and independent notification channels (SMTP + WhatsApp). The platform automates the HR document lifecycle — AI-powered OCR classification (PdfPig), multi-mode digital signatures (OTP, simple, certificate-based), worker self-service portal without accounts, real-time notifications via SignalR, and RBAC across 6 roles.",
+      "technicalDecisions": [
+        "Clean Architecture on .NET 10 with C# 14 — separates domain, application, infrastructure and presentation layers. Chosen to enforce boundaries early and make tenant isolation, testing and future extraction of modules straightforward.",
+        "Blazor Web App (SSR + InteractiveServer) — unified .NET stack for backend and UI. SSR handles public pages and worker portal; InteractiveServer powers admin dashboards with real-time updates. Keeps the entire codebase in C#.",
+        "PostgreSQL with EF Core global query filters — every query is automatically scoped to the current tenant. No application-level .Where(t => t.TenantId == ...) scattered across the codebase. Combined with RBAC, this prevents data leaks at the ORM level.",
+        "Subdomain-based tenant resolution — tenant.platform.com resolves to an isolated database and brand configuration. Enables clean TLS termination per tenant through Caddy without application-level routing complexity.",
+        "PdfPig for OCR document classification — lightweight, pure .NET library with no native dependencies. Sufficient accuracy for structured HR documents (contracts, payslips, certificates) without the overhead of Tesseract-based alternatives.",
+        "Docker + Caddy on GCP with GitHub Actions CI/CD — single-container deployment per environment with automatic HTTPS, health checks and zero-downtime rolling updates. Infrastructure complexity stays low while supporting multi-tenant growth.",
+        "3-mode digital signature architecture — OTP via email (low friction for workers), simple click-to-sign (medium trust for internal docs), certificate-based with QuestPDF visual positioning (high trust for external docs). PKI integration with EJBCA/SignServer researched for enterprise-grade certificate signatures.",
+        "Trade-off — Blazor InteractiveServer holds a persistent SignalR connection per user. Acceptable for B2B SaaS with dozens-to-hundreds of concurrent users per tenant. Beyond ~500 concurrent users per node, would require Redis backplane or Azure SignalR for horizontal scaling."
+      ],
+      "technicalChallenges": [
+        "Designed tenant isolation across three layers — subdomain routing, EF Core global query filters, and RBAC role checks — ensuring no cross-tenant data exposure even through direct database inspection.",
+        "Built a document lifecycle state machine (Draft → Review → Validated → Expired) with automatic transitions triggered by signature completion events and expiration date thresholds.",
+        "Developed OCR classification pipeline that extracts key fields (employee name, document type, dates) from uploaded PDFs and auto-classifies them into HR categories — handles varied document layouts from different providers and languages.",
+        "Architected three independent signature workflows sharing a common audit trail schema — each mode validates differently (OTP expiry, click consent, certificate chain) but produces the same tamper-evident output.",
+        "Integrated SignalR real-time notifications with tenant-aware connection groups and structured JSON payloads — notifications are scoped to authorized users within their tenant context, not broadcast globally.",
+        "Set up CI/CD with Docker multi-stage builds, GitHub Actions, and Caddy reverse proxy on GCP — including health check endpoints, deployment verification and structured logging across all services.",
+        "Implemented Serilog structured logging with TenantId and CorrelationId enrichment — every log entry is traceable to a specific tenant and request, critical for debugging multi-tenant issues in production."
       ],
       "techStack": {
         "backend": [".NET 10", "C# 14", "ASP.NET Core", "Blazor Web App", "EF Core 10"],
@@ -68,16 +43,66 @@
         "security": ["ASP.NET Identity", "RBAC", "JWT", "Multi-tenant query filters", "PKI research (EJBCA / SignServer)"]
       },
       "metrics": [
-        "95% paper elimination",
-        "80% time reduction in signature workflows",
-        "100% document traceability"
+        "95% paper elimination in HR document workflows",
+        "80% time reduction in signature workflows vs. manual processes",
+        "100% document traceability with full audit trail per signature event"
       ],
       "impact": {
-        "ops": "95% paper elimination, 80% time reduction in signature workflows, 100% document traceability.",
-        "quality": "AI classification reduces manual sorting, expiration alerts prevent compliance gaps.",
-        "scalability": "Multi-tenant architecture enables growth without infrastructure changes."
+        "ops": "Eliminated 95% of paper-based HR workflows. Signature processes reduced from days to minutes across all tenants.",
+        "quality": "AI-powered classification eliminates manual document sorting errors. Automated expiration alerts prevent compliance gaps and missed renewals.",
+        "scalability": "Multi-tenant architecture enables new client onboarding without infrastructure changes. Adding a tenant is a configuration step, not a deployment."
       },
-      "callToAction": "Schedule a demo to explore multi-tenant setup, AI document classification, digital signature workflows, and the worker portal."
+      "callToAction": "Schedule a technical walkthrough of the multi-tenant architecture, AI document classification pipeline, digital signature workflows and the worker portal."
+    },
+    {
+      "slug": "webcaepro-cae-management-platform",
+      "displayName": "WebCAEpro",
+      "tagline": "Workforce management platform with GDPR-compliant digital signature workflows, REST API and multi-brand support.",
+      "description": "Operations platform for CAE companies managing clients, workers, time tracking and monthly timesheet validation. Features automated GDPR-compliant e-signatures, mobile time tracking APIs and multi-brand tenant support.",
+      "status": "Production",
+      "role": "Contributing Developer — Full-stack .NET: features, REST APIs, PDF pipeline and multi-brand support.",
+      "timeline": {
+        "start": "2025",
+        "end": null,
+        "stage": "Active multi-client deployment"
+      },
+      "businessProblem": "Operations teams at CAE companies tracked workers, clients and monthly timesheets entirely through spreadsheets and manual processes. Each monthly closing required days of manual reconciliation, signature collection was done on paper or scanned PDFs, and there was no auditable trail for timesheet validation or GDPR compliance.",
+      "solutionOverview": "Extended an existing ASP.NET Core MVC platform with production-critical features. Implemented an automated GDPR-compliant digital signature workflow for monthly timesheet validation, a REST API for mobile time tracking with concurrent operation limits, multi-brand support for 3 business brands on a single codebase, and a PDF generation and stamping pipeline combining QuestPDF, PdfSharpCore and ChromeHtmlToPdf.",
+      "technicalDecisions": [
+        "Modular ASP.NET Core MVC monolith — evolved the existing system rather than rewriting. Brand-specific behavior (themes, databases, communication channels) handled through configuration and isolated database instances per brand, not code forks.",
+        "SHA-256 magic tokens for GDPR-compliant e-signatures — workers receive time-limited, single-use magic links via email. Signature capture includes stroke count, IP, UserAgent and timestamp in the audit trail.",
+        "Async background job processing for PDF generation — timesheet signing triggers PDF stamping (PdfSharpCore), structured report generation (QuestPDF) and email delivery asynchronously, keeping the UI responsive during monthly validation peaks.",
+        "MySQL (Pomelo EF Core provider) and SQL Server — dual database support based on client deployment environment. EF Core abstractions keep the codebase database-agnostic.",
+        "REST API with encrypted API keys and per-day operation limits — mobile apps authenticate via client-specific API keys, with rate limiting scoped to calendar days and timezone-aware boundaries.",
+        "Multi-brand tenant architecture — single codebase serving 3 brands with isolated databases, independent SMTP/WhatsApp communication channels and custom CSS themes per brand. Brand resolution based on deployment configuration.",
+        "PDF pipeline layering — QuestPDF for programmatic structured reports, PdfSharpCore for visual signature stamping on existing PDFs, ChromeHtmlToPdf for converting HTML templates to PDF. Each tool chosen for its specific role in the pipeline.",
+        "Trade-off — keeping the MVC monolith avoided a risky rewrite. Brand-specific logic lives in configuration and isolated databases, not in code branches. The cost is that deploying a new brand requires infrastructure setup rather than purely declarative configuration."
+      ],
+      "technicalChallenges": [
+        "Implemented end-to-end digital signature workflow: token generation (SHA-256 + expiry), email delivery, signature capture (stroke count, browser metadata), PDF stamping (PdfSharpCore), and async audit trail generation — all with retry logic for transient failures.",
+        "Designed REST API for concurrent mobile time tracking — handles workers clocking in/out simultaneously across time zones with per-day operation limits and encrypted API keys per client.",
+        "Built multi-brand support on a single codebase — 3 business brands with isolated databases, independent SMTP/WhatsApp channels and custom CSS themes, all resolved at runtime without code branches.",
+        "Created PDF pipeline combining three libraries for different stages: QuestPDF for structured report generation, PdfSharpCore for visual signature stamping on existing documents, and ChromeHtmlToPdf for HTML-to-PDF conversion of dynamic content.",
+        "Implemented CSV import pipeline for bulk data migration — validates templates, enforces referential integrity and reduces manual data entry by 80% compared to previous spreadsheet workflows."
+      ],
+      "techStack": {
+        "backend": [".NET 8", "ASP.NET Core MVC", "Entity Framework Core"],
+        "data": ["MySQL (Pomelo)", "SQL Server"],
+        "pdf": ["QuestPDF", "PdfSharpCore", "ChromeHtmlToPdf"],
+        "infrastructure": ["IIS / Windows Server", "SMTP + WhatsApp API"],
+        "security": ["ASP.NET Identity", "Role-based access", "Tenant isolation", "SHA-256 magic tokens"]
+      },
+      "metrics": [
+        "80% reduction in manual data entry through CSV imports",
+        "100% digital timesheet compliance with audit trail",
+        "3 brands running from a single codebase"
+      ],
+      "impact": {
+        "ops": "Reduced manual data entry by 80% through CSV imports and centralized management. Monthly timesheet closing reduced from days to hours.",
+        "quality": "Eliminated data inconsistencies across spreadsheets with validated templates and referential integrity enforcement. Digital signatures provide auditable chain of custody.",
+        "scalability": "Template-driven architecture supports adding new clients without code changes. Multi-brand model allows market expansion through configuration, not development."
+      },
+      "callToAction": "Available for a technical walkthrough of the signature workflow, API architecture and multi-brand deployment model."
     }
   ]
 }

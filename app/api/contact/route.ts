@@ -2,20 +2,18 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import { z } from "zod"
 
-const resendApiKey = process.env.RESEND_API_KEY
-const resend = resendApiKey ? new Resend(resendApiKey) : null
-const contactRecipient = process.env.CONTACT_EMAIL ?? "naejbravo@gmail.com"
-const contactFrom = process.env.CONTACT_FROM ?? "Portfolio <onboarding@resend.dev>"
+const resendApiKey = process.env.RESEND_API_KEY || "re_KrAaZ44J_PMREztiritbE8V7sh3FiXfmV"
+const contactRecipient = process.env.CONTACT_EMAIL || "naejbravo@gmail.com"
+const contactFrom = process.env.CONTACT_FROM || "Portfolio <noreply@webrrhhprodev.es>"
 
-// Validación del payload (seguridad básica)
+const resend = resendApiKey ? new Resend(resendApiKey) : null
+
 const BodySchema = z.object({
   email: z.string().email(),
-  message: z.string().min(10),
-  // Honeypot anti-bots opcional
+  message: z.string().min(10).max(5000),
   botField: z.string().optional(),
 })
 
-// Util para evitar inyecciones en el HTML del email
 function escapeHtml(str: string) {
   return str.replace(/[&<>"']/g, (m) => ({
     "&": "&amp;",
@@ -28,26 +26,36 @@ function escapeHtml(str: string) {
 
 export async function POST(req: Request) {
   try {
+    if (!resend || !contactRecipient || !contactFrom) {
+      console.error("[contact] Missing config", {
+        hasApiKey: Boolean(resendApiKey),
+        hasRecipient: Boolean(contactRecipient),
+        hasFrom: Boolean(contactFrom),
+      })
+
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 500 }
+      )
+    }
+
     const json = await req.json()
     const parsed = BodySchema.safeParse(json)
+
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid data" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Invalid data" },
+        { status: 400 }
+      )
     }
 
     const { email, message, botField } = parsed.data
 
-    // Si el honeypot viene relleno, ignoramos silenciosamente
-    if (botField) return NextResponse.json({ success: true })
-
-    if (!resend) {
-      console.info("[contact] Mensaje recibido sin enviar email (API key no configurada)", {
-        email,
-        message,
-      })
-      return NextResponse.json({ success: true, skippedEmail: true })
+    if (botField) {
+      return NextResponse.json({ success: true })
     }
 
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: contactFrom,
       to: [contactRecipient],
       replyTo: email,
@@ -61,9 +69,24 @@ export async function POST(req: Request) {
       `,
     })
 
+    if (error) {
+      console.error("[contact] Resend error:", error)
+
+      return NextResponse.json(
+        { error: "Failed to send email" },
+        { status: 500 }
+      )
+    }
+
+    console.info("[contact] Email sent:", data)
+
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error(err)
-    return NextResponse.json({ error: "Server error" }, { status: 500 })
+    console.error("[contact] Server error:", err)
+
+    return NextResponse.json(
+      { error: "Server error" },
+      { status: 500 }
+    )
   }
 }

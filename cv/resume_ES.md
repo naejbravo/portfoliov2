@@ -9,7 +9,7 @@
 
 <br>
 
-Desarrollador .NET full-stack construyendo aplicaciones web escalables con ASP.NET Core, Blazor, Razor y MVC. Combino infraestructura cloud (GCP, Azure), IaC con Terraform, procesamiento inteligente de documentos con IA incluyendo OCR, y firmas digitales basadas en PKI (EJBCA / SignServer) — desde la idea hasta producción.
+Desarrollador .NET full-stack construyendo plataformas SaaS B2B para flujos documentales, firmas digitales y automatización de operaciones — desde la arquitectura hasta la entrega en producción sobre infraestructura cloud.
 
 ## Experiencia
 
@@ -17,27 +17,28 @@ Desarrollador .NET full-stack construyendo aplicaciones web escalables con ASP.N
   : **HumanTech Software**
   : **01/2026 – Presente**
 
-WebRRHHpro
+WebRRHHpro — SaaS multi-tenant de RRHH
 
-- Clasificación inteligente de documentos con OCR (PdfPig): extrae datos automáticamente de documentos RRHH, eliminando el 95% de procesos en papel
-- Firma digital en 3 modos (OTP, simple, certificado con QuestPDF) con auditoría completa; investigación PKI con EJBCA/SignServer para firmas de grado empresarial
-- SaaS multi-tenant (.NET 10, C# 14, Blazor Web App, PostgreSQL) con aislamiento por subdominio, SignalR tiempo real y Clean Architecture
+- Lideré arquitectura y desarrollo de una plataforma SaaS multi-tenant (.NET 10, Blazor Web App, PostgreSQL, Clean Architecture) con aislamiento por subdominio, RBAC y filtros globales EF Core para 6 roles.
+- Construí clasificación documental con OCR y flujos de firma digital en 3 modos (OTP, simple, basada en certificado), reduciendo en 95% los procesos en papel y en 80% el tiempo de firma.
+- Entregué infraestructura en producción sobre GCP con Docker, Caddy, GitHub Actions CI/CD, notificaciones SignalR en tiempo real y logging estructurado con Serilog y observabilidad por tenant.
 
-**Desarrollador Contribuyente**
+**Desarrollador Full-stack .NET**
   : **HumanTech Software**
   : **05/2025 – Presente**
 
-WebCAEpro
+WebCAEpro — Plataforma de gestión de personal
 
-- Flujo de firma digital conforme a GDPR para validación de hojas de tiempo: tokens SHA-256, auditoría (IP, UserAgent), procesamiento asíncrono, estampado PDF con PdfSharpCore
-- API REST para tracking móvil concurrente con límites diarios y claves encriptadas; soporte multi-tenant para 3 marcas con bases de datos aisladas
+- Implementé flujo de firma digital conforme a GDPR para validación mensual de hojas de tiempo con magic links SHA-256, auditoría y estampado PDF — logrando 100% de cumplimiento digital.
+- Diseñé API REST para tracking móvil de tiempo concurrente con claves encriptadas, límites diarios de operación y validación por zona horaria.
+- Extendí una sola base de código para dar servicio a 3 marcas de negocio con bases de datos aisladas, canales independientes SMTP/WhatsApp y temas personalizados por marca.
 
 **Ingeniero de Software**
   : **Correcto**
   : **05/2022 – 05/2023**
 
-- Desarrollo de plataformas web responsivas con Angular y JavaScript en entorno startup de ritmo acelerado
-- Gestión de despliegues en GCP y colaboración en equipos cross-funcionales con Jira y Agile/Scrum
+- Desarrollé plataformas web responsivas con Angular y JavaScript en entorno startup de ritmo acelerado.
+- Gestioné despliegues en GCP y colaboré en equipos cross-funcionales con Jira y Agile/Scrum.
 
 ## Formación
 
@@ -55,14 +56,14 @@ IES Fuengirola N°1
 
 ## Competencias
 
-**Lenguajes y Frameworks:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, JavaScript, Angular, Next.js, Astro
+**Backend y Arquitectura:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, Clean Architecture, APIs REST, procesamiento en segundo plano
 
-**Datos y Cloud:** PostgreSQL, MySQL, GCP, Azure, Docker, Caddy, Terraform, IaC, CI/CD con GitHub Actions
+**Datos y Cloud:** PostgreSQL, MySQL, SQL Server, Docker, Caddy, GCP, Azure, Terraform (IaC), CI/CD con GitHub Actions, Serilog
 
-**Seguridad y PKI:** EJBCA, SignServer, ASP.NET Identity, RBAC, JWT, OAuth, autenticación por token SHA-256
+**Automatización Documental y Seguridad:** PdfPig (OCR), QuestPDF, PdfSharpCore, ChromeHtmlToPdf, firmas digitales (OTP, tokens SHA-256, basadas en certificado), evaluación PKI (EJBCA / SignServer), RBAC, ASP.NET Identity, JWT, auditoría
 
-**IA y Herramientas:** PdfPig (OCR), QuestPDF, PdfSharpCore, SignalR, Serilog, Clean Architecture, SaaS multi-tenant
+**Frontend y Tiempo Real:** SignalR, JavaScript, Angular, MudBlazor, Next.js, Astro
 
 ## Idiomas
 
-**Español** (nativo)  **Inglés** (profesional)
+**Español** (Nativo)  **Inglés** (Profesional)

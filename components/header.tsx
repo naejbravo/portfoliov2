@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Github, Linkedin, FileText } from "lucide-react"
 
 export default function Header() {
   return (
@@ -7,7 +8,7 @@ export default function Header() {
         <Link href="/" className="text-lg font-semibold tracking-tight">
           Jean Bravo
         </Link>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
           <nav className="hidden items-center gap-6 text-sm md:flex">
             <Link className="hover:opacity-80" href="/#projects">
               Projects
@@ -16,6 +17,33 @@ export default function Header() {
               Contact
             </Link>
           </nav>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/naejbravo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+              aria-label="GitHub"
+            >
+              <Github className="size-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/jean-bravo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="size-4" />
+            </a>
+            <a
+              href="/cv_eng_jean_2026.pdf"
+              className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
+              aria-label="CV"
+            >
+              <FileText className="size-4" />
+            </a>
+          </div>
         </div>
       </div>
     </header>
