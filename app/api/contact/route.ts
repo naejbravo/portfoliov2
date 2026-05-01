@@ -2,9 +2,9 @@ import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import { z } from "zod"
 
-const resendApiKey = process.env.RESEND_API_KEY || "re_KrAaZ44J_PMREztiritbE8V7sh3FiXfmV"
-const contactRecipient = process.env.CONTACT_EMAIL || "naejbravo@gmail.com"
-const contactFrom = process.env.CONTACT_FROM || "Portfolio <noreply@webrrhhprodev.es>"
+const resendApiKey = process.env.RESEND_API_KEY
+const contactRecipient = process.env.CONTACT_EMAIL
+const contactFrom = process.env.CONTACT_FROM
 
 const resend = resendApiKey ? new Resend(resendApiKey) : null
 
