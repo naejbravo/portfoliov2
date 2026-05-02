@@ -2,12 +2,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { Github, Linkedin, FileText } from "lucide-react"
 import TagTech from "./ui/tagsTech"
+import { ScrollReveal } from "./ui/scroll-reveal"
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col justify-center mx-auto max-w-6xl px-4 py-16" id="inicio">
+    <section className="mx-auto max-w-6xl px-4 pt-12 pb-20 md:pt-20 md:pb-32" id="inicio">
       <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        <div className="flex-1 text-center md:text-left">
+        <ScrollReveal className="flex-1 text-center md:text-left">
           <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
             Software Engineer <span className="mx-1.5 opacity-50">·</span> B2B SaaS & Document Workflows
           </p>
@@ -62,17 +63,19 @@ export default function Hero() {
           </div>
 
           <TagTech />
-        </div>
+        </ScrollReveal>
 
-        <div className="relative w-full md:w-80 lg:w-96 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.25)]">
+        <ScrollReveal delay={0.2} className="relative w-full max-w-sm md:w-80 lg:w-96 aspect-[3/4] flex-shrink-0" style={{ WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 88%)', maskImage: 'linear-gradient(to bottom, black 75%, transparent 88%)' }}>
           <Image
-            src="/perfil.jpeg"
+            src="/perfil.png"
             alt="Jean Bravo - Software Engineer"
             fill
-            className="object-cover"
+            className="object-contain object-center drop-shadow-2xl"
+            quality={100}
             priority
+            unoptimized
           />
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )
