@@ -19,7 +19,10 @@ export default function Hero() {
           <p className="mt-5 max-w-prose text-lg text-neutral-600 dark:text-neutral-300">
             Full-stack .NET developer building B2B SaaS platforms for document workflows, digital signatures and operations automation. I work across ASP.NET Core, Blazor, PostgreSQL and cloud infrastructure, with a focus on multi-tenant systems, auditability and production delivery.
           </p>
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+            🇪🇺 EU passport &nbsp;·&nbsp; Relocating to <strong>Zürich</strong> in 2026 &nbsp;·&nbsp; <a href="/lebenslauf_jean_2026.pdf" className="underline underline-offset-2 hover:text-blue-900 dark:hover:text-blue-200">Lebenslauf (DE)</a>
+          </div>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <Link
               href="/work"
               className="inline-flex items-center rounded-2xl bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 dark:bg-white dark:text-neutral-900"
@@ -58,7 +61,14 @@ export default function Hero() {
               className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
             >
               <FileText className="size-4" />
-              CV
+              CV (EN)
+            </a>
+            <a
+              href="/lebenslauf_jean_2026.pdf"
+              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
+            >
+              <FileText className="size-4" />
+              Lebenslauf (DE)
             </a>
           </div>
 
