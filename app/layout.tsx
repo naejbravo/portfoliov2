@@ -14,19 +14,19 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jeanbravo.dev"),
+  metadataBase: new URL("https://bravojc.com"),
   title: {
-    default: "Jean Bravo · B2B SaaS .NET Developer",
+    default: "Jean Bravo · B2B SaaS .NET Developer — Zürich 🇨🇭",
     template: "%s · Jean Bravo",
   },
   description:
-    "Full-stack .NET developer specialized in B2B SaaS platforms, document automation, digital signatures and multi-tenant systems. ASP.NET Core, Blazor, PostgreSQL, cloud infrastructure.",
+    "Full-stack .NET developer relocating to Zürich. EU passport, no visa needed. Specialized in B2B SaaS, multi-tenant architectures, Blazor, ASP.NET Core, PostgreSQL, Azure/GCP. Open to roles in Switzerland.",
   openGraph: {
     type: "website",
     url: "/",
-    title: "Jean Bravo · B2B SaaS .NET Developer",
+    title: "Jean Bravo · B2B SaaS .NET Developer — Zürich",
     description:
-      "Full-stack .NET developer building B2B SaaS platforms for document workflows, digital signatures and operations automation.",
+      "Full-stack .NET developer building B2B SaaS platforms. EU passport holder, relocating to Zürich in 2026.",
     locale: "en_US",
     siteName: "Jean Bravo",
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jean Bravo · B2B SaaS .NET Developer",
     description:
-      "Full-stack .NET developer — B2B SaaS, document automation, Blazor, PostgreSQL, GCP.",
+      "Full-stack .NET developer — B2B SaaS, Blazor, PostgreSQL, Azure. Relocating to Zürich.",
     creator: "@jeanbravo",
   },
   keywords: [
@@ -44,12 +44,15 @@ export const metadata: Metadata = {
     "B2B SaaS",
     "Blazor",
     "ASP.NET Core",
-    "Document Automation",
-    "Digital Signatures",
-    "Multi-tenant",
+    "Azure",
     "PostgreSQL",
-    "GCP",
-    "Portfolio",
+    "Zürich",
+    "Switzerland",
+    "EU passport",
+    ".NET Developer Switzerland",
+    "Multi-tenant",
+    "Digital Signatures",
+    "Document Automation",
   ],
   authors: [{ name: "Jean Bravo" }],
 }
@@ -64,6 +67,26 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Jean Bravo",
+              "url": "https://bravojc.com",
+              "jobTitle": "Full-stack .NET Developer",
+              "knowsLanguage": ["Spanish", "English", "German"],
+              "jobLocation": {
+                "@type": "Place",
+                "address": {
+                  "addressLocality": "Zürich",
+                  "addressCountry": "CH"
+                }
+              }
+            })
+          }}
+        />
         <Header />
         {children}
       </body>
