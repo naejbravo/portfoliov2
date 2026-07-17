@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jean Carlos Bravo Gonzalez — CV</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9.1pt;
+    line-height: 1.33;
+    color: #222;
+    width: 210mm;
+    padding: 11mm 15mm 6mm;
+    position: relative;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Header */
+  .photo {
+    position: absolute;
+    top: 11mm;
+    right: 15mm;
+    width: 96px;
+    height: 128px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 6px;
+  }
+  h1 { font-size: 17.5pt; color: #1e5f9e; margin-bottom: 3px; }
+  .subtitle { font-size: 10pt; color: #555; margin-bottom: 8px; }
+  .contact { font-size: 8.8pt; color: #333; margin-bottom: 3px; }
+  .contact .sep { color: #999; margin: 0 5px; }
+  .contact b { font-weight: bold; }
+
+  /* Sections */
+  h2 {
+    font-size: 10.5pt;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1f4e79;
+    border-bottom: 1px solid #8ea9c1;
+    padding-bottom: 2px;
+    margin: 10px 0 6px;
+  }
+  .header-block { margin-bottom: 10px; padding-right: 115px; }
+
+  /* Entries */
+  .entry { margin-bottom: 7px; }
+  .entry-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .entry-head .title { font-weight: bold; font-size: 9.8pt; }
+  .entry-head .date { color: #777; font-size: 8.8pt; white-space: nowrap; margin-left: 12px; }
+  .company { font-weight: bold; color: #222; }
+  .project-line { font-style: italic; color: #444; }
+  ul { list-style: none; margin-top: 2px; }
+  li { padding-left: 13px; position: relative; margin-bottom: 1px; }
+  li::before { content: "•"; position: absolute; left: 3px; color: #333; }
+
+  /* Education one-liners */
+  .edu-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+  .edu-row .date { color: #777; font-size: 8.8pt; white-space: nowrap; margin-left: 12px; }
+
+  /* Skills table */
+  .skills { width: 100%; border-collapse: collapse; }
+  .skills td { padding: 1.5px 0; vertical-align: top; }
+  .skills td.label { width: 158px; color: #1e5f9e; font-weight: bold; padding-right: 10px; }
+
+  /* Languages */
+  .langs span.lang { color: #1e5f9e; font-weight: bold; }
+  .langs { border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+</style>
+</head>
+<body>
+  <img class="photo" src="../public/perfil.jpeg" alt="Jean Carlos Bravo Gonzalez">
+
+  <div class="header-block">
+    <h1>Jean Carlos Bravo Gonzalez</h1>
+    <div class="subtitle">Backend &amp; AI Engineer — .NET · Cloud · Applied AI</div>
+    <div class="contact">
+      📧 <a href="mailto:naejbravo@gmail.com">naejbravo@gmail.com</a><span class="sep">|</span>📱 +34 677 750 689<span class="sep">|</span>🌐 <a href="https://bravojc.com">bravojc.com</a>
+    </div>
+    <div class="contact">
+      📍 Spain<span class="sep">|</span>🔗 <a href="https://linkedin.com/in/jean-bravo">linkedin.com/in/jean-bravo</a><span class="sep">|</span>💻 <a href="https://github.com/naejbravo">github.com/naejbravo</a>
+    </div>
+  </div>
+
+  <h2>Profile</h2>
+  <p>
+    Backend engineer building and operating production systems — REST APIs, multi-tenant SaaS backends and applied AI pipelines.
+    Strong with .NET, PostgreSQL, Docker and cloud infrastructure (GCP, Azure, OCI); hands-on with LLM integrations, RAG over
+    vector databases and self-hosted agent infrastructure.
+  </p>
+
+  <h2>Experience</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="title">Tech Lead &amp; Full-stack .NET Developer</span>
+      <span class="date">Jan 2026 – Present</span>
+    </div>
+    <div class="company">HumanTech Software</div>
+    <div class="project-line">WebRRHHpro — Multi-tenant HR SaaS (Production)</div>
+    <ul>
+      <li>Architected multi-tenant SaaS platform (.NET 10, Blazor, PostgreSQL, Clean Architecture) with subdomain isolation, RBAC and EF Core global query filters across 6 roles.</li>
+      <li>Built AI-powered document classification (OCR, field extraction, auto-categorization) and 3-mode signature workflows (OTP, click, certificate). Reduced paper processes by 95% and signature turnaround by 80%.</li>
+      <li>Designed and operate production infrastructure on GCP: Docker, Caddy, GitHub Actions CI/CD, SignalR, Serilog.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="title">Full-stack .NET Developer</span>
+      <span class="date">May 2025 – Present</span>
+    </div>
+    <div class="company">HumanTech Software</div>
+    <div class="project-line">WebCAEpro — Workforce management (Multi-tenant)</div>
+    <ul>
+      <li>Built GDPR-compliant signature workflow with SHA-256 magic links, audit trail and PDF stamping — 100% digital compliance.</li>
+      <li>Designed REST API for mobile time tracking with encrypted API keys and timezone-aware validation.</li>
+      <li>Architected single codebase serving 3 business brands with isolated databases and independent SMTP/WhatsApp channels.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="title">Software Engineer</span>
+      <span class="date">May 2022 – May 2023</span>
+    </div>
+    <div class="company">Correcto · Startup</div>
+    <ul>
+      <li>Built responsive web platforms with Angular and JavaScript in agile startup environment.</li>
+      <li>GCP deployments and cross-functional teamwork using Jira.</li>
+    </ul>
+  </div>
+
+  <h2>Projects</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="title">Hermes Agent Infrastructure — self-hosted AI agent stack</span>
+      <span class="date">2026 – Present</span>
+    </div>
+    <ul>
+      <li>Deployed and operate a 24/7 self-hosted AI agent (Hermes Agent, open source by Nous Research) on Oracle Cloud ARM64 — Docker, systemd, Cloudflare Tunnel, ~$5/month total cost.</li>
+      <li>Persistent semantic memory with self-hosted Mem0 + Qdrant vector DB (hybrid semantic + keyword search); multi-model LLM routing via OpenRouter with automatic fallbacks across ~20 providers.</li>
+      <li>Cloud browser automation (Browser Use API), multi-platform messaging gateway (Telegram, Slack) and cron-based scheduled automation.</li>
+    </ul>
+  </div>
+
+  <h2>Education</h2>
+
+  <div class="edu-row">
+    <span><b>Full Stack Developer Program</b> — Upgrade Hub, Madrid</span>
+    <span class="date">2021 – 2022</span>
+  </div>
+  <div class="edu-row">
+    <span><b>Higher Technical Certificate (ASIR)</b> — Network Admin, IES Fuengirola N°1</span>
+    <span class="date">2018 – 2020</span>
+  </div>
+
+  <h2>Skills</h2>
+
+  <table class="skills">
+    <tr><td class="label">Backend</td><td>C# 14, .NET 8/10, ASP.NET Core, REST APIs, EF Core, Blazor, Clean Architecture, SignalR</td></tr>
+    <tr><td class="label">Cloud &amp; Infrastructure</td><td>Docker, GCP, Azure, OCI, Terraform, GitHub Actions CI/CD, Caddy, Cloudflare Tunnel, Linux/systemd</td></tr>
+    <tr><td class="label">Data</td><td>PostgreSQL, MySQL, SQL Server, Qdrant (vector DB)</td></tr>
+    <tr><td class="label">Applied AI</td><td>LLM integrations, multi-model routing (OpenRouter), RAG, semantic memory (Mem0), browser automation (Browser Use), OCR document classification</td></tr>
+    <tr><td class="label">Security &amp; Docs</td><td>ASP.NET Identity, RBAC, JWT, digital signatures (OTP, SHA-256, certificate), audit trails, GDPR</td></tr>
+  </table>
+
+  <h2>Languages</h2>
+
+  <p class="langs">
+    <span class="lang">Spanish</span> — Native&nbsp;&nbsp;&nbsp;&nbsp;<span class="lang">English</span> — Proficient (C1)
+  </p>
+</body>
+</html>
