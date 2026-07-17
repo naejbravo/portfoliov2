@@ -37,6 +37,10 @@ const coverMap: Record<string, { src: string; alt: string }> = {
     src: "/webrrhhpro.png",
     alt: "WebRRHHpro - HR SaaS Multi-tenant Platform",
   },
+  hermes: {
+    src: "/hermes-cover.svg",
+    alt: "Hermes Agent Infrastructure - self-hosted AI agent stack",
+  },
 }
 
 const defaultCover = {

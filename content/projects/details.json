@@ -55,6 +55,56 @@
       "callToAction": "Schedule a technical walkthrough of the multi-tenant architecture, AI document classification pipeline, digital signature workflows and the worker portal."
     },
     {
+      "slug": "hermes",
+      "displayName": "Hermes Agent Infrastructure",
+      "tagline": "Self-hosted autonomous AI agent stack — persistent semantic memory, multi-model routing, browser automation and multi-platform messaging on a $5/month ARM VPS.",
+      "description": "Personal AI agent infrastructure built on Hermes Agent (Nous Research's open-source framework). I designed, deployed and operate the full self-hosted stack: vector-backed long-term memory, LLM provider routing with fallbacks, cloud browser automation, a multi-platform messaging gateway and scheduled automation — all running 24/7 on Oracle Cloud ARM64.",
+      "status": "Live 24/7",
+      "role": "Infrastructure & AI Engineer — self-hosted deployment, integration and operations of the open-source Hermes Agent framework.",
+      "timeline": {
+        "start": "2026",
+        "end": null,
+        "stage": "Running in production (personal)"
+      },
+      "businessProblem": "Hosted AI assistants are stateless, locked to a single provider and unreachable outside their own app. I wanted a persistent agent I fully control — one that remembers context across sessions, survives provider outages and rate limits, automates browser tasks, and is reachable from the messaging apps I already use — without recurring SaaS costs or sending private data to a third-party host.",
+      "solutionOverview": "Deployed and operate the full Hermes Agent stack self-hosted on Oracle Cloud (ARM64, Ubuntu 22.04): Mem0 (OSS mode) with a self-hosted Qdrant vector database for cross-session semantic memory, multi-model inference routed through OpenRouter and OpenCode Go with automatic fallback chains across ~20 providers, cloud browser automation via the Browser Use REST API with hybrid cloud/local routing, and a systemd-managed messaging gateway serving Telegram and Slack (6+ platforms supported). Cron-based scheduled jobs deliver daily briefings and health reports, and a Kanban orchestration pipeline dispatches multi-worker task flows. Exposed securely through Cloudflare Tunnel — no open inbound ports.",
+      "technicalDecisions": [
+        "Self-hosted Mem0 (OSS) + Qdrant over managed memory APIs — semantic long-term memory with hybrid search (vector + keyword) stays on my own infrastructure. The agent captures and retrieves cross-session context automatically via LLM-powered extraction, with zero per-request SaaS cost.",
+        "Multi-provider routing through OpenRouter / OpenCode Go — fallback chains across ~20 model providers (Claude, GPT, Gemini, DeepSeek, Qwen) with credential pools, rate-limit recovery and exhaustion tracking. No single provider is a point of failure.",
+        "Browser Use cloud API with hybrid routing — public URLs are handled by cloud browsers via REST; LAN/localhost targets auto-route to a local Chromium sidecar. Keeps internal services unexposed while enabling full web automation.",
+        "Cloudflare Tunnel instead of open ports — the dashboard and gateway are reachable from anywhere with no inbound firewall rules on the VPS, reducing attack surface on a box that holds API credentials.",
+        "systemd user services for the gateway and sidecars — automatic restarts, journald logging and clean dependency ordering without a container orchestrator. Docker is reserved for stateful services (Qdrant, Mem0).",
+        "OCI ARM64 free/low-cost tier — the entire stack (agent, vector DB, memory layer, gateway, dashboard) runs 24/7 on a ~$5/month ARM VPS, which forced deliberate choices about resource footprint and ARM-compatible images.",
+        "Trade-off — self-hosting means I own upgrades, backups and incident response. Acceptable for a personal system; it is also the point: the project exists to operate real AI infrastructure end-to-end, not just consume it."
+      ],
+      "technicalChallenges": [
+        "Integrated Mem0 (self-hosted OSS mode) with Qdrant v1.18 as vector store — configured LLM-powered memory extraction, semantic + keyword hybrid search and cross-session retrieval so the agent recalls facts and preferences without manual memory management.",
+        "Configured provider routing and fallback chains across ~20 LLM providers with credential pools, automatic rate-limit recovery and per-provider exhaustion tracking — the agent degrades gracefully instead of failing when a provider throttles.",
+        "Deployed the full stack on ARM64 (OCI) — sourcing/validating ARM-compatible Docker images for Qdrant and Mem0, tuning memory footprint to fit a small VPS, and keeping everything on Ubuntu 22.04 with unattended upgrades.",
+        "Set up a long-running multi-platform messaging gateway under systemd — Telegram and Slack live, with per-platform tool gating, DM pairing authorization and isolated session stores per platform.",
+        "Built scheduled automation with cron-based jobs (daily briefings, system health reports) delivered across platforms, plus Kanban orchestration for multi-profile, multi-worker task pipelines with automatic dispatch and failure recovery.",
+        "Operate 40+ agent skills with a background curator handling lifecycle — stale detection, archival, backup and rollback — keeping the agent's procedural knowledge maintainable over time."
+      ],
+      "techStack": {
+        "ai": ["Hermes Agent (Nous Research)", "OpenRouter", "OpenCode Go", "Mem0 (self-hosted)", "LLM fallback routing"],
+        "data": ["Qdrant v1.18 (vector DB)", "PostgreSQL", "Hybrid semantic + keyword search"],
+        "automation": ["Browser Use (cloud REST API)", "Cron jobs", "Kanban multi-worker orchestration", "40+ agent skills"],
+        "messaging": ["Telegram", "Slack", "Multi-platform gateway (systemd)"],
+        "infrastructure": ["OCI ARM64", "Ubuntu 22.04", "Docker", "Cloudflare Tunnel", "systemd"]
+      },
+      "metrics": [
+        "~$5/month total infrastructure cost for a 24/7 autonomous agent stack",
+        "~20 LLM providers behind automatic fallback routing — no single point of failure",
+        "6+ messaging platforms supported through one self-hosted gateway"
+      ],
+      "impact": {
+        "ops": "A persistent AI agent available 24/7 from Telegram, Slack or the CLI, with daily automated briefings and health reports — fully self-hosted and self-operated.",
+        "quality": "Cross-session semantic memory (Mem0 + Qdrant) means the agent retains context, preferences and facts indefinitely — no repeated onboarding per conversation.",
+        "scalability": "Provider-agnostic routing and containerized stateful services make swapping models, adding messaging platforms or migrating hosts a configuration change, not a rebuild."
+      },
+      "callToAction": "Happy to walk through the architecture — memory pipeline, provider routing, browser automation and how the whole stack fits on a $5 ARM VPS."
+    },
+    {
       "slug": "webcaepro-cae-management-platform",
       "displayName": "WebCAEpro",
       "tagline": "Workforce management platform with GDPR-compliant digital signature workflows, REST API and multi-brand support.",

@@ -18,10 +18,10 @@ export default function WorkPage() {
           Projects
         </p>
         <h1 className="mt-3 text-4xl font-semibold leading-tight text-center md:text-5xl">
-          I transform complex processes into clear and measurable digital products.
+          I turn complex processes into reliable backends, APIs and AI-powered systems.
         </h1>
         <p className="mt-5 text-lg text-neutral-600 dark:text-neutral-300 text-center">
-          Each project combines discovery with stakeholders, scalable architecture and business metrics to guide
+          Each project combines scalable architecture, production operations and business metrics to guide
           decisions. Here&apos;s a recent sample.
         </p>
       </section>

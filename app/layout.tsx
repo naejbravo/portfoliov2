@@ -16,43 +16,44 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bravojc.com"),
   title: {
-    default: "Jean Bravo · B2B SaaS .NET Developer — Zürich 🇨🇭",
+    default: "Jean Bravo · Backend & AI Engineer — .NET, Cloud, Applied AI",
     template: "%s · Jean Bravo",
   },
   description:
-    "Full-stack .NET developer relocating to Zürich. EU passport, no visa needed. Specialized in B2B SaaS, multi-tenant architectures, Blazor, ASP.NET Core, PostgreSQL, Azure/GCP. Open to roles in Switzerland.",
+    "Backend engineer building production systems — REST APIs, multi-tenant SaaS backends and AI-powered pipelines. .NET, PostgreSQL, Docker, GCP/Azure, LLM integrations, RAG and agent infrastructure.",
   openGraph: {
     type: "website",
     url: "/",
-    title: "Jean Bravo · B2B SaaS .NET Developer — Zürich",
+    title: "Jean Bravo · Backend & AI Engineer",
     description:
-      "Full-stack .NET developer building B2B SaaS platforms. EU passport holder, relocating to Zürich in 2026.",
+      "Backend engineer building production systems — REST APIs, cloud infrastructure and applied AI (LLMs, RAG, agents).",
     locale: "en_US",
     siteName: "Jean Bravo",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jean Bravo · B2B SaaS .NET Developer",
+    title: "Jean Bravo · Backend & AI Engineer",
     description:
-      "Full-stack .NET developer — B2B SaaS, Blazor, PostgreSQL, Azure. Relocating to Zürich.",
+      "Backend engineer — .NET, REST APIs, PostgreSQL, Docker, cloud and applied AI (LLMs, RAG, agents).",
     creator: "@jeanbravo",
   },
   keywords: [
     "Jean Bravo",
+    "Backend Engineer",
+    "AI Engineer",
     ".NET Developer",
-    "Full-stack Developer",
-    "B2B SaaS",
-    "Blazor",
     "ASP.NET Core",
-    "Azure",
+    "REST APIs",
     "PostgreSQL",
-    "Zürich",
-    "Switzerland",
-    "EU passport",
-    ".NET Developer Switzerland",
+    "Docker",
+    "GCP",
+    "Azure",
+    "LLM Integrations",
+    "RAG",
+    "Vector Databases",
+    "AI Agents",
     "Multi-tenant",
-    "Digital Signatures",
-    "Document Automation",
+    "B2B SaaS",
   ],
   authors: [{ name: "Jean Bravo" }],
 }
@@ -75,15 +76,8 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Jean Bravo",
               "url": "https://bravojc.com",
-              "jobTitle": "Full-stack .NET Developer",
-              "knowsLanguage": ["Spanish", "English", "German"],
-              "jobLocation": {
-                "@type": "Place",
-                "address": {
-                  "addressLocality": "Zürich",
-                  "addressCountry": "CH"
-                }
-              }
+              "jobTitle": "Backend & AI Engineer",
+              "knowsLanguage": ["Spanish", "English"]
             })
           }}
         />
