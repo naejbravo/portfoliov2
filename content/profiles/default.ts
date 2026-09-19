@@ -1,51 +1,15 @@
+import { base } from "./base"
+import type { Profile } from "./types"
+
 /**
- * Contenido de la portada — PLANTILLA.
- *
- * Los cinco pilares del perfil mandan sobre este archivo: soluciones .NET, Docker y
- * registry (GHCR), cloud engineering y fullstack, con la IA aplicada como capacidad
- * secundaria.
- *
- * Todo el copy de las secciones es genérico de plantilla a propósito: la idea es poder
- * sustituirlo por contenido adaptado a cada candidatura sin tocar los componentes. El
- * ritmo de cada bloque (3 métricas, 3 columnas de stack, 4 filas de proyecto, 4 hitos de
- * trayectoria) es el del diseño; cambiarlo desajusta la comparación con el mockup.
+ * Perfil por defecto: plantilla con el énfasis general del perfil (soluciones .NET,
+ * Docker y GHCR, cloud engineering, fullstack; IA aplicada como capacidad secundaria).
+ * Es el que se sirve en `/` salvo que PORTFOLIO_PROFILE diga otra cosa.
  */
-
-export type Level = "advanced" | "solid" | "working knowledge"
-
-export type StackGroup = {
-  title: string
-  items: { name: string; level: Level }[]
-}
-
-export type ProjectRow = {
-  id: string
-  title: string
-  summary: string
-  year: string
-  detail: string
-  tech: string[]
-  href?: string
-}
-
-export type ExperienceEntry = {
-  period: string
-  role: string
-  org: string
-  description: string
-}
-
-export const portfolio = {
-  brand: {
-    name: "Jean Bravo",
-    role: "Full-stack .NET Engineer",
-  },
-
-  /* línea de posicionamiento única — la misma que cuentan CV y metadatos */
-  positioning: "Full-stack .NET Engineer — Cloud, Containers, Applied AI",
-
-  availability: "Available for new projects",
-  availabilityNote: "2026",
+export const defaultProfile: Profile = {
+  ...base,
+  slug: "default",
+  label: "General — .NET · Cloud · Containers",
 
   statement: {
     lead: "I design, build and run",
@@ -55,13 +19,6 @@ export const portfolio = {
 
   intro:
     "Full-stack .NET engineer building and operating production systems end-to-end: solution and data-model design, ASP.NET Core and Blazor, container images published to GHCR, and cloud infrastructure on GCP, Azure and OCI with Terraform and CI/CD. Applied AI — LLM integrations and RAG — as a capability on top, not as the headline.",
-
-  meta: {
-    location: "Málaga, ES · Zürich, CH",
-    modality: "Remote · Hybrid · Relocation",
-    languages: "Spanish (native) · English (professional)",
-    timezone: "CET (UTC+01:00)",
-  },
 
   stats: [
     { value: "6", label: "years of experience" },
@@ -101,9 +58,8 @@ export const portfolio = {
         { name: "LLM integrations & RAG", level: "solid" },
       ],
     },
-  ] satisfies StackGroup[],
+  ],
 
-  /* filas de la portada: plantilla, no los casos reales (esos viven en /work) */
   projects: [
     {
       id: "01",
@@ -141,7 +97,7 @@ export const portfolio = {
         "Component design system, accessible states and type-safe API contracts. End-to-end tests cover the complete signature flow.",
       tech: ["TypeScript", "React", ".NET"],
     },
-  ] satisfies ProjectRow[],
+  ],
 
   experience: [
     {
@@ -172,18 +128,5 @@ export const portfolio = {
       description:
         "Programming, databases and networks. Continuous learning since then through real projects and self-directed study.",
     },
-  ] satisfies ExperienceEntry[],
-
-  contact: {
-    email: "naejbravo@gmail.com",
-    github: "https://github.com/naejbravo",
-    linkedin: "https://www.linkedin.com/in/jean-bravo/",
-    cvEn: "/cv_eng_jean_2026.pdf",
-    cvDe: "/lebenslauf_jean_2026.pdf",
-  },
-
-  photo: {
-    src: "/perfil.png",
-    alt: "Portrait of Jean Bravo",
-  },
-} as const
+  ],
+}

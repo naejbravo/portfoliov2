@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "cv:build": "node scripts/build-cv.mjs",
     "lint": "eslint"
   },
   "dependencies": {

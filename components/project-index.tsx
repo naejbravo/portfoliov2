@@ -3,17 +3,16 @@
 import { useState } from "react"
 import Link from "next/link"
 
-import { portfolio } from "@/content/portfolio/placeholder"
+import type { ProjectRow } from "@/content/profiles/types"
 
 /**
  * Índice de proyectos: filas tabulares con inversión a tinta de abajo arriba al pasar
  * el cursor, y detalle que se abre en la propia fila. Misma mecánica que la propuesta.
  *
- * Las filas son plantilla (content/portfolio/placeholder.ts). Los casos reales viven en
- * /work (content/projects/details.json): aquí se pone el contenido que interese para cada
- * candidatura, sin tocar componentes ni diseño.
+ * Las filas llegan por props desde el perfil activo, así que cada candidatura puede
+ * contar proyectos distintos sin tocar este componente.
  */
-export default function ProjectIndex() {
+export default function ProjectIndex({ projects }: { projects: ProjectRow[] }) {
   const [openIds, setOpenIds] = useState<string[]>([])
 
   const toggle = (id: string) =>
@@ -33,7 +32,7 @@ export default function ProjectIndex() {
         </div>
 
         <div className="rows">
-          {portfolio.projects.map((project) => {
+          {projects.map((project) => {
             const isOpen = openIds.includes(project.id)
             const panelId = `project-${project.id}`
 
@@ -61,7 +60,7 @@ export default function ProjectIndex() {
                       </li>
                     ))}
                   </ul>
-                  {"href" in project && project.href ? (
+                  {project.href ? (
                     <p className="mt-4 text-[0.92rem]">
                       <Link
                         href={project.href}
@@ -78,7 +77,7 @@ export default function ProjectIndex() {
         </div>
 
         <div className="ft-note mt-8 flex flex-wrap items-center justify-between gap-4 text-ink-soft">
-          <span>Template content · edit content/portfolio/placeholder.ts</span>
+          <span>Template content · edit content/profiles</span>
           <Link href="/work" className="underline underline-offset-4 hover:text-brand-text">
             View all case studies →
           </Link>

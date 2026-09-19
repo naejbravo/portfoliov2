@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Inter_Tight, JetBrains_Mono } from "next/font/google"
 import GridGuides from "@/components/grid-guides"
+import { getProfile } from "@/content/profiles"
 import Header from "@/components/header"
 import "./globals.css"
 
@@ -17,8 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bravojc.com"),
   title: {
-    default:
-      "Jean Bravo · Full-stack .NET Engineer — Cloud, Containers, Applied AI · Zürich",
+    default: `${getProfile().brand.name} · ${getProfile().positioning} · Zürich`,
     template: "%s · Jean Bravo",
   },
   description:

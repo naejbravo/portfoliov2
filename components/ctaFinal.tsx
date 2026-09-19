@@ -1,10 +1,11 @@
 import CardContact from "./ui/cardContact"
+import type { Profile } from "@/content/profiles/types"
 
 /**
  * Cierre de página: la sección 05 en el mismo patrón que el resto
  * (número + titular + nota monoespaciada) con el formulario de contacto.
  */
-export default function CtaFinal() {
+export default function CtaFinal({ profile }: { profile: Profile }) {
   return (
     <section className="blk" id="contact">
       <div className="shell">
@@ -16,7 +17,7 @@ export default function CtaFinal() {
           </h2>
         </div>
 
-        <CardContact />
+        <CardContact email={profile.contact.email} />
       </div>
     </section>
   )

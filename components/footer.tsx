@@ -1,13 +1,13 @@
 import Link from "next/link"
 
-import { portfolio } from "@/content/portfolio/placeholder"
+import { getProfile } from "@/content/profiles"
 
 /**
  * Footer en tinta: etiqueta en monoespaciada, email en grande con subrayado de acento y
  * columna de enlaces, tal como cierra la propuesta.
  */
 export default function Footer() {
-  const { contact } = portfolio
+  const { contact } = getProfile()
 
   return (
     <footer className="ft">

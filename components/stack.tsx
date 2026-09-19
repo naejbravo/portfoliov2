@@ -1,10 +1,10 @@
-import { portfolio } from "@/content/portfolio/placeholder"
+import type { Profile } from "@/content/profiles/types"
 
 /**
  * Stack en tres columnas: cabecera monoespaciada con filete de tinta, filas
  * tecnología / nivel separadas por filetes finos y el nivel siempre en el acento.
  */
-export default function Stack() {
+export default function Stack({ profile }: { profile: Profile }) {
   return (
     <section className="blk" id="stack">
       <div className="shell">
@@ -17,7 +17,7 @@ export default function Stack() {
         </div>
 
         <div className="cols3">
-          {portfolio.stack.map((group) => (
+          {profile.stack.map((group) => (
             <div key={group.title}>
               <h3 className="col-h3">{group.title}</h3>
               <ul className="col-list">

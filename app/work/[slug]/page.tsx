@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-import { portfolio } from "@/content/portfolio/placeholder"
+import { getProfile } from "@/content/profiles"
 import { getProjectBySlug, projects } from "@/lib/projects"
 
 type PageParams = {
@@ -168,7 +168,7 @@ export default async function ProjectPage({ params }: PageParams) {
               Schedule a call
             </Link>
             <a
-              href={`mailto:${portfolio.contact.email}`}
+              href={`mailto:${getProfile().contact.email}`}
               className="btn btn-ghost border-white/60 text-white hover:border-white hover:bg-white/10 hover:text-white"
             >
               Email me

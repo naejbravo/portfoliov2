@@ -1,21 +1,21 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { portfolio } from "@/content/portfolio/placeholder"
+import type { Profile } from "@/content/profiles/types"
 
 /**
  * Hero del sistema editorial: declaración tipográfica a gran escala, retícula de tres
- * columnas bajo un filete fino y la foto reducida a un apunte en la columna de metadatos
- * (única adición respecto a la propuesta, que no llevaba retrato).
+ * columnas bajo un filete fino y la foto reducida a un apunte en la columna de metadatos.
+ * Todo el contenido llega por props: el perfil activo decide qué se cuenta.
  */
-export default function Hero() {
-  const { contact, meta, photo, statement } = portfolio
+export default function Hero({ profile }: { profile: Profile }) {
+  const { contact, meta, photo, statement } = profile
 
   return (
     <div className="hero-blk" id="profile">
       <div className="shell">
         <div className="kicker">
-          {portfolio.availability} · {portfolio.availabilityNote}
+          {profile.availability} · {profile.availabilityNote}
         </div>
 
         <h1 className="h1 mt-10">
@@ -25,10 +25,10 @@ export default function Hero() {
 
         <div className="hero-foot">
           <div>
-            <p className="lead">{portfolio.intro}</p>
+            <p className="lead">{profile.intro}</p>
 
             <div className="stat-strip">
-              {portfolio.stats.map((stat) => (
+              {profile.stats.map((stat) => (
                 <div key={stat.label}>
                   <strong>{stat.value}</strong>
                   {stat.label}

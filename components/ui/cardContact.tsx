@@ -1,14 +1,12 @@
 import { Card } from "@/components/ui/card"
 import { ContactForm } from "./contactForm"
-import { portfolio } from "@/content/portfolio/placeholder"
 
 /**
  * Bloque de contacto: texto y datos a la izquierda, formulario en una caja con filete a
  * la derecha. Sin sombras ni esquinas redondeadas — caja, filete y tipografía.
  */
-export default function CardContact() {
+export default function CardContact({ email }: { email: string }) {
   const descriptionId = "contact-section-description"
-  const { email } = portfolio.contact
 
   const details = [
     {
@@ -22,7 +20,7 @@ export default function CardContact() {
     {
       term: "Specialty",
       value:
-        "Backend .NET and REST APIs, cloud infrastructure with Docker and Terraform, applied AI (LLM integrations, RAG with vector databases) and AI-powered document automation.",
+        ".NET solutions and REST APIs, container delivery with Docker and GHCR, cloud infrastructure with Terraform, and applied AI (LLM integrations, RAG with vector databases).",
     },
     {
       term: "Format",
@@ -34,9 +32,9 @@ export default function CardContact() {
     <div className="hero-foot mt-0 border-t-0 pt-0">
       <div className="md:col-span-2">
         <p id={descriptionId} className="lead max-w-[62ch] text-ink-soft">
-          Tell me about your product or current processes. I can help with backend and API development,
-          cloud infrastructure, IaC, and applied AI — LLM integrations, RAG and document automation —
-          from ideation to production.
+          Tell me about your product or current processes. I can help with .NET solution design,
+          containerised delivery, cloud infrastructure as code and applied AI — from architecture to
+          production.
         </p>
 
         <dl className="mt-10 grid gap-x-10 gap-y-0 border-t border-rule sm:grid-cols-2">
@@ -50,10 +48,9 @@ export default function CardContact() {
       </div>
 
       <Card className="border border-rule p-6 shadow-none md:col-span-1">
-        <ContactForm descriptionId={descriptionId} />
+        <ContactForm descriptionId={descriptionId} errorEmail={email} />
         <p className="kv mt-6">
-          Or write directly to{" "}
-          <a href={`mailto:${email}`}>{email}</a>
+          Or write directly to <a href={`mailto:${email}`}>{email}</a>
         </p>
       </Card>
     </div>

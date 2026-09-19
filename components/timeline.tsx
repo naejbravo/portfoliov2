@@ -1,10 +1,10 @@
-import { portfolio } from "@/content/portfolio/placeholder"
+import type { Profile } from "@/content/profiles/types"
 
 /**
  * Trayectoria como documento: periodo en monoespaciada a la izquierda, puesto y contexto
  * a la derecha, separados por filetes finos y con fondo claro al pasar el cursor.
  */
-export default function Timeline() {
+export default function Timeline({ profile }: { profile: Profile }) {
   return (
     <section className="blk" id="experience">
       <div className="shell">
@@ -17,7 +17,7 @@ export default function Timeline() {
         </div>
 
         <div>
-          {portfolio.experience.map((entry) => (
+          {profile.experience.map((entry) => (
             <div key={`${entry.period}-${entry.role}`} className="cv-row">
               <div className="when">{entry.period}</div>
               <div>

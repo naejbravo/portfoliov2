@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { portfolio } from "@/content/portfolio/placeholder"
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -25,9 +24,11 @@ type FeedbackState =
 
 type ContactFormProps = {
   descriptionId?: string
+  /** dirección que se muestra si el envío falla; llega desde el perfil activo */
+  errorEmail?: string
 }
 
-export function ContactForm({ descriptionId }: ContactFormProps) {
+export function ContactForm({ descriptionId, errorEmail }: ContactFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: "", message: "", botField: "" },
@@ -57,7 +58,7 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
       console.error(error)
       setFeedback({
         status: "error",
-        message: `Could not send the message. You can write directly to ${portfolio.contact.email}.`,
+        message: `Could not send the message. You can write directly to ${errorEmail ?? "the address in the footer"}.`,
       })
     }
   }

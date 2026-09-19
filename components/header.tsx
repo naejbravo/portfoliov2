@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { portfolio } from "@/content/portfolio/placeholder"
+import { getProfile } from "@/content/profiles"
 
 const sections = [
   { index: "01", label: "Profile", href: "/#profile" },
@@ -16,7 +16,7 @@ const sections = [
  * la propuesta.
  */
 export default function Header() {
-  const { contact, brand } = portfolio
+  const { contact, brand } = getProfile()
 
   return (
     <header className="sticky top-0 z-40 border-b border-ink bg-white/[0.92] py-6 backdrop-blur">

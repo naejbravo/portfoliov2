@@ -1,19 +1,16 @@
-import CtaFinal from "@/components/ctaFinal"
-import Footer from "@/components/footer"
-import Hero from "@/components/hero"
-import ProjectIndex from "@/components/project-index"
-import Stack from "@/components/stack"
-import Timeline from "@/components/timeline"
+import type { Metadata } from "next"
+
+import PortfolioPage from "@/components/portfolio-page"
+import { getProfile } from "@/content/profiles"
+
+export const metadata: Metadata = {
+  title: {
+    absolute: `${getProfile().brand.name} · ${getProfile().positioning}`,
+  },
+}
 
 export default function HomePage() {
-  return (
-    <main>
-      <Hero />
-      <Stack />
-      <ProjectIndex />
-      <Timeline />
-      <CtaFinal />
-      <Footer />
-    </main>
-  )
+  const profile = getProfile()
+
+  return <PortfolioPage profile={profile} />
 }
