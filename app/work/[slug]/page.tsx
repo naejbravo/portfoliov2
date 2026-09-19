@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
 }
 
 /**
- * Caso de estudio como documento: encabezado, problema/rol en dos columnas,
- * decisiones y retos en filas con filete, stack en mono y métricas en celdas planas.
+ * Caso de estudio como documento: encabezado con metadatos en mono, problema/rol en dos
+ * columnas, decisiones y retos en filas con filete, stack en columnas y cierre en tinta.
  */
 export default async function ProjectPage({ params }: PageParams) {
   const { slug } = await params
@@ -47,27 +47,21 @@ export default async function ProjectPage({ params }: PageParams) {
   } = project
 
   return (
-    <main className="mx-auto w-full max-w-[1100px] px-5 pb-24 pt-12 sm:px-8 md:pt-16">
-      <Link
-        href="/work"
-        className="mono-label text-muted-foreground transition-colors hover:text-brand"
-      >
+    <main className="shell pb-24 pt-12 md:pt-16">
+      <Link href="/work" className="ft-note text-[#8b8b84] transition-colors hover:text-brand-text">
         ← Back to projects
       </Link>
 
-      <header className="mt-10 border-b border-foreground pb-8">
-        <div className="mono-label flex flex-wrap gap-x-4 gap-y-1 text-brand">
-          <span>{project.status}</span>
-          <span>{timeline.stage}</span>
-          {timeline.start ? <span>Since {timeline.start}</span> : null}
+      <header className="mt-10 border-b border-ink pb-8">
+        <div className="sec-num">
+          {project.status} · {timeline.stage}
+          {timeline.start ? ` · Since ${timeline.start}` : ""}
         </div>
-        <h1 className="display mt-5 text-3xl font-medium md:text-5xl">{project.title}</h1>
-        <p className="mt-5 max-w-[62ch] text-lg leading-relaxed text-muted-foreground">
-          {project.tagline}
-        </p>
+        <h1 className="h2 mt-5">{project.title}</h1>
+        <p className="lead mt-5 text-ink-soft">{project.tagline}</p>
       </header>
 
-      <figure className="relative mt-10 aspect-[16/9] border border-border">
+      <figure className="relative mt-10 aspect-[16/9] border border-rule">
         <Image
           src={project.cover.src}
           alt={project.cover.alt}
@@ -80,33 +74,31 @@ export default async function ProjectPage({ params }: PageParams) {
 
       <section className="mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
         <div>
-          <h2 className="mono-label border-b border-foreground pb-3">Problem</h2>
-          <p className="mt-4 leading-relaxed text-muted-foreground">{project.businessProblem}</p>
+          <h2 className="col-h3">Problem</h2>
+          <p className="text-ink-soft">{project.businessProblem}</p>
         </div>
         <div>
-          <h2 className="mono-label border-b border-foreground pb-3">Role</h2>
-          <p className="mt-4 leading-relaxed text-muted-foreground">{project.role}</p>
+          <h2 className="col-h3">Role</h2>
+          <p className="text-ink-soft">{project.role}</p>
           {"description" in project && project.description ? (
-            <p className="mt-3 text-sm text-muted-foreground">{project.description}</p>
+            <p className="mt-3 text-[0.95rem] text-ink-soft">{project.description}</p>
           ) : null}
         </div>
       </section>
 
       <section className="mt-14">
-        <h2 className="mono-label border-b border-foreground pb-3">Solution</h2>
-        <p className="mt-5 max-w-[68ch] text-lg leading-relaxed text-muted-foreground">
-          {project.solutionOverview}
-        </p>
+        <h2 className="col-h3">Solution</h2>
+        <p className="lead max-w-[68ch] text-ink-soft">{project.solutionOverview}</p>
       </section>
 
       {technicalDecisions.length > 0 && (
         <section className="mt-14">
-          <h2 className="mono-label border-b border-foreground pb-3">Technical decisions</h2>
-          <ul className="mt-4 border-b border-border">
+          <h2 className="col-h3">Technical decisions</h2>
+          <ul className="border-b border-rule">
             {technicalDecisions.map((item: string) => (
               <li
                 key={`${project.slug}-decision-${item.slice(0, 30)}`}
-                className="border-t border-border py-5 text-sm leading-relaxed text-muted-foreground"
+                className="border-t border-rule py-5 text-[0.95rem] leading-relaxed text-ink-soft"
               >
                 {item}
               </li>
@@ -117,12 +109,12 @@ export default async function ProjectPage({ params }: PageParams) {
 
       {technicalChallenges.length > 0 && (
         <section className="mt-14">
-          <h2 className="mono-label border-b border-foreground pb-3">Technical challenges</h2>
-          <ul className="mt-4 grid gap-x-12 gap-y-0 border-b border-border md:grid-cols-2">
+          <h2 className="col-h3">Technical challenges</h2>
+          <ul className="grid gap-x-12 border-b border-rule md:grid-cols-2">
             {technicalChallenges.map((item: string) => (
               <li
                 key={`${project.slug}-challenge-${item.slice(0, 30)}`}
-                className="border-t border-border py-5 text-sm leading-relaxed text-muted-foreground"
+                className="border-t border-rule py-5 text-[0.95rem] leading-relaxed text-ink-soft"
               >
                 {item}
               </li>
@@ -132,17 +124,14 @@ export default async function ProjectPage({ params }: PageParams) {
       )}
 
       <section className="mt-14">
-        <h2 className="mono-label border-b border-foreground pb-3">Tech stack</h2>
+        <h2 className="col-h3">Tech stack</h2>
         <div className="mt-6 grid gap-8 md:grid-cols-3">
           {Object.entries(techStack).map(([category, items]) => (
             <div key={`${project.slug}-cat-${category}`}>
-              <h3 className="mono-label text-brand">{category.replace(/_/g, " / ")}</h3>
+              <h3 className="sec-num">{category.replace(/_/g, " / ")}</h3>
               <ul className="mt-3">
                 {(items as string[]).map((item: string) => (
-                  <li
-                    key={`${project.slug}-tech-${item}`}
-                    className="border-b border-border py-2 text-sm"
-                  >
+                  <li key={`${project.slug}-tech-${item}`} className="border-b border-rule py-2 text-[0.95rem]">
                     {item}
                   </li>
                 ))}
@@ -154,37 +143,37 @@ export default async function ProjectPage({ params }: PageParams) {
 
       {metrics.length > 0 && (
         <section className="mt-14">
-          <h2 className="mono-label border-b border-foreground pb-3">Impact</h2>
-          <div className="mt-6 grid gap-x-8 gap-y-0 border-b border-border md:grid-cols-3">
+          <h2 className="col-h3">Impact</h2>
+          <div className="mt-6 grid gap-x-8 border-b border-rule md:grid-cols-3">
             {metrics.map((metric: string, i: number) => (
-              <div key={`${project.slug}-metric-${i}`} className="border-t border-border py-5">
-                <p className="text-sm leading-relaxed">{metric}</p>
+              <div key={`${project.slug}-metric-${i}`} className="border-t border-rule py-5">
+                <p className="text-[0.95rem] leading-relaxed">{metric}</p>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <footer className="mt-16 bg-foreground px-6 py-10 text-background md:px-10 md:py-12">
-        <h2 className="display max-w-[24ch] text-2xl font-medium md:text-3xl">
-          Want to see this in your context?
-        </h2>
-        <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-background/75">
-          {project.callToAction}
-        </p>
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Link
-            href="/#contact"
-            className="inline-flex items-center border border-background bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-brand hover:bg-brand hover:text-background"
-          >
-            Schedule a call
-          </Link>
-          <a
-            href={`mailto:${portfolio.contact.email}`}
-            className="inline-flex items-center border border-background/60 px-5 py-2.5 text-sm font-medium transition-colors hover:border-background hover:bg-background/10"
-          >
-            Email me
-          </a>
+      <footer className="ft mt-16">
+        <div className="grid gap-6 p-6 md:grid-cols-[1.4fr_1fr] md:items-end md:p-10">
+          <div>
+            <h2 className="big">Want to see this in your context?</h2>
+            <p className="lead mt-4 max-w-[58ch] text-[#b9b9b3]">{project.callToAction}</p>
+          </div>
+          <div className="flex flex-wrap gap-3 md:justify-end">
+            <Link
+              href="/#contact"
+              className="btn border-white bg-white text-ink hover:border-brand hover:bg-brand hover:text-white"
+            >
+              Schedule a call
+            </Link>
+            <a
+              href={`mailto:${portfolio.contact.email}`}
+              className="btn btn-ghost border-white/60 text-white hover:border-white hover:bg-white/10 hover:text-white"
+            >
+              Email me
+            </a>
+          </div>
         </div>
       </footer>
     </main>

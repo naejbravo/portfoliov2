@@ -11,67 +11,42 @@ const sections = [
 ]
 
 /**
- * Cabecera editorial: identidad en monoespaciada, índice numerado de secciones
- * y enlaces directos. Sin iconos de relleno ni degradados: la jerarquía la marca
- * la tipografía y el filete inferior.
+ * Cabecera del sistema editorial: filete de tinta, identidad en monoespaciada con la
+ * barra en rojo y índice numerado de secciones. En móvil el índice se oculta, como en
+ * la propuesta.
  */
 export default function Header() {
   const { contact, brand } = portfolio
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="mx-auto flex w-full max-w-[1400px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-3 sm:px-8">
-        <Link href="/" className="mono-label text-foreground">
-          {brand.name}
-          <span className="hidden text-muted-foreground sm:inline"> / {brand.role}</span>
+    <header className="sticky top-0 z-40 border-b border-ink bg-white/[0.92] py-6 backdrop-blur">
+      <div className="shell flex flex-wrap items-baseline justify-between gap-8">
+        <Link href="/" className="brand">
+          {brand.name} <em className="not-italic text-brand-text">/</em> {brand.role}
         </Link>
 
-        <nav
-          aria-label="Sections"
-          className="order-3 -mx-5 w-full overflow-x-auto px-5 sm:-mx-8 sm:px-8 md:order-2 md:mx-0 md:w-auto md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          <ul className="flex items-center gap-5 whitespace-nowrap md:gap-6">
-            {sections.map((section) => (
-              <li key={section.index}>
-                <Link
-                  href={section.href}
-                  className="mono-label text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <span className="text-brand">{section.index}</span> {section.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav aria-label="Sections" className="toc-nav">
+          {sections.map((section) => (
+            <Link key={section.index} href={section.href}>
+              <span>{section.index}</span>
+              {section.label}
+            </Link>
+          ))}
         </nav>
 
-        <ul className="order-2 flex items-center gap-4 md:order-3">
+        <ul className="toc">
           <li>
-            <a
-              href={contact.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mono-label text-muted-foreground transition-colors hover:text-brand"
-            >
+            <a href={contact.github} target="_blank" rel="noopener noreferrer">
               GitHub ↗
             </a>
           </li>
           <li>
-            <a
-              href={contact.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mono-label text-muted-foreground transition-colors hover:text-brand"
-            >
+            <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
               LinkedIn ↗
             </a>
           </li>
           <li>
-            <a
-              href={contact.cvEn}
-              className="mono-label text-muted-foreground transition-colors hover:text-brand"
-            >
-              CV ↓
-            </a>
+            <a href={contact.cvEn}>CV ↓</a>
           </li>
         </ul>
       </div>

@@ -6,9 +6,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter-tight);
+  --font-mono: var(--font-jetbrains-mono);
   --color-brand: var(--brand);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-shade: var(--shade);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -38,10 +42,11 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* el sistema es de esquinas rectas: los radios de shadcn se quedan a cero */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
   --animate-line-shadow: line-shadow 15s linear infinite;
   @keyframes line-shadow {
     0% {
@@ -54,30 +59,39 @@
 }
 
 /*
- * Sistema editorial: papel, tinta y un único acento rojo.
- * Sin modo oscuro — el sitio es claro a propósito (imprime bien y aguanta PDF).
+ * Sistema editorial: papel, tinta y un único acento rojo. Solo modo claro.
+ * --brand es el acento del diseño; --brand-text es el mismo rojo oscurecido para
+ * textos de 11-12 px, donde #E4322B se queda en 4.38:1 y no pasa AA.
  */
 :root {
-  --radius: 0.375rem;
+  --radius: 0.125rem;
 
+  --paper: #ffffff;
   --background: #ffffff;
+  --ink: #111110;
   --foreground: #111110;
+  --ink-soft: #4a4a46;
+  --rule: #dcdcd6;
+  --shade: #f4f4f1;
+
+  /* acento único del sistema. #E4322B es el del diseño: exacto, pero se queda en
+     4,38:1 y no pasa AA en textos de 11-12 px. Si algún día primas accesibilidad
+     sobre fidelidad, cambia solo este token a #cc3327 (5,16:1). */
+  --brand: #e4322b;
+  --brand-text: #e4322b;
+
   --card: #ffffff;
   --card-foreground: #111110;
   --popover: #ffffff;
   --popover-foreground: #111110;
-
   --primary: #111110;
   --primary-foreground: #ffffff;
   --secondary: #f4f4f1;
   --secondary-foreground: #111110;
-
   --muted: #f4f4f1;
   --muted-foreground: #6a6a64;
   --accent: #f4f4f1;
   --accent-foreground: #111110;
-
-  --brand: #cc3327;
   --destructive: #c0392b;
   --border: #dcdcd6;
   --input: #dcdcd6;
@@ -85,7 +99,7 @@
 
   --chart-1: #111110;
   --chart-2: #6a6a64;
-  --chart-3: #e4322b;
+  --chart-3: #cc3327;
   --chart-4: #dcdcd6;
   --chart-5: #f4f4f1;
 
@@ -96,7 +110,7 @@
   --sidebar-accent: #f4f4f1;
   --sidebar-accent-foreground: #111110;
   --sidebar-border: #dcdcd6;
-  --sidebar-ring: #e4322b;
+  --sidebar-ring: #cc3327;
 }
 
 @layer base {
@@ -105,6 +119,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    line-height: 1.5;
     font-feature-settings: "ss01", "cv05";
     -webkit-font-smoothing: antialiased;
   }
@@ -118,63 +133,485 @@
   }
 }
 
+/*
+ * Porte del sistema de la propuesta 2 (editorial suizo), clase por clase y valor por valor.
+ * Se conservan los nombres del diseño para poder comparar estilos computados entre el
+ * mockup y esta implementación sin traducciones intermedias.
+ */
 @layer utilities {
-  /* etiquetas, años, niveles y metadatos: todo lo que en un documento iría en monoespaciada */
-  .mono-label {
-    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.72rem;
-    line-height: 1.4;
-    letter-spacing: 0.14em;
+  /* ---------- estructura ---------- */
+  .shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 2rem;
+  }
+  .gridlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    max-width: 1440px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    padding-inline: 2rem;
+  }
+  .gridlines > div {
+    border-left: 1px solid rgba(17, 17, 16, 0.045);
+  }
+  .gridlines > div:last-child {
+    border-right: 1px solid rgba(17, 17, 16, 0.045);
+  }
+  @media (max-width: 900px) {
+    .gridlines {
+      display: none;
+    }
+  }
+
+  /* ---------- cabecera ---------- */
+  .brand {
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-
-  /* titulares: una sola familia, contraste de pesos y tracking cerrado */
-  .display {
-    letter-spacing: -0.035em;
-    line-height: 0.98;
-    text-wrap: balance;
+  .toc,
+  .toc-nav {
+    display: flex;
+    gap: 1.5rem;
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+  .toc a,
+  .toc-nav a {
+    padding-bottom: 0.15rem;
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color 0.25s,
+      color 0.25s;
+  }
+  .toc a:hover,
+  .toc-nav a:hover {
+    border-color: var(--brand-text);
+    color: var(--brand-text);
+  }
+  .toc a span,
+  .toc-nav a span {
+    color: var(--brand-text);
+    margin-right: 0.3rem;
+  }
+  /* el índice de secciones se oculta en móvil, como en la propuesta */
+  @media (max-width: 900px) {
+    .toc-nav {
+      display: none;
+    }
   }
 
-  /* subrayado tipo rotulador, un solo acento */
-  .marker {
-    background-image: linear-gradient(
-      transparent 62%,
-      color-mix(in oklab, var(--brand) 18%, transparent) 62%
-    );
+  /* ---------- hero ---------- */
+  .hero-blk {
+    padding: 5.5rem 0 4rem;
+    border-bottom: 1px solid var(--ink);
+  }
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand-text);
+  }
+  .kicker::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .h1 {
+    font-size: clamp(2.6rem, 7.4vw, 6.2rem);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    max-width: 19ch;
+  }
+  .thin {
+    font-weight: 300;
+    color: var(--ink-soft);
+  }
+  .mark {
+    background-image: linear-gradient(transparent 62%, rgba(228, 50, 43, 0.22) 62%);
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
+  .hero-foot {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 900px) {
+    .hero-foot {
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+    }
+  }
+  .lead {
+    font-size: 1.15rem;
+    max-width: 44ch;
+    line-height: 1.45;
+  }
+  .kv {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.78rem;
+    line-height: 1.9;
+  }
+  .kv dt {
+    color: #8b8b84;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .kv dd {
+    margin-bottom: 0.9rem;
+  }
+  .kv a {
+    border-bottom: 1px solid var(--ink);
+  }
+  .kv a:hover {
+    color: var(--brand-text);
+    border-color: var(--brand-text);
+  }
+  .stat-strip {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+  .stat-strip div {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    color: #6a6a64;
+  }
+  .stat-strip strong {
+    display: block;
+    font-family: var(--font-inter-tight), sans-serif;
+    font-size: 2.4rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
 
-  /* filetes y guías de retícula */
-  .rule {
-    border-top: 1px solid var(--border);
-  }
-  .rule-b {
-    border-bottom: 1px solid var(--border);
-  }
-  .grid-guides {
-    background-image: repeating-linear-gradient(
-      to right,
-      color-mix(in oklab, var(--foreground) 6%, transparent) 0 1px,
-      transparent 1px calc(100% / 12)
-    );
-  }
-
-  /* fila de proyecto: se invierte a tinta al pasar el cursor */
-  .row-invert {
+  /* ---------- botones ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.4rem;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: #ffffff;
+    cursor: pointer;
     transition:
-      background-color 0.25s ease,
-      color 0.25s ease;
+      background 0.25s,
+      color 0.25s,
+      transform 0.25s;
   }
-  .row-invert:hover,
-  .row-invert:focus-visible {
-    background-color: var(--foreground);
-    color: var(--background);
+  .btn:hover {
+    background: var(--brand);
+    border-color: var(--brand);
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--ink);
+    color: #ffffff;
+    border-color: var(--ink);
+  }
+
+  /* ---------- secciones ---------- */
+  .blk {
+    border-bottom: 1px solid var(--ink);
+    padding: 4.5rem 0 5rem;
+  }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: baseline;
+  }
+  @media (max-width: 760px) {
+    .sec-head {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+  }
+  .sec-num {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    color: var(--brand-text);
+  }
+  .h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.9rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    max-width: 24ch;
+  }
+  .h2-note {
+    display: block;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8b8b84;
+    margin-top: 0.9rem;
+  }
+
+  /* ---------- índice de proyectos ---------- */
+  .rows {
+    border-top: 1px solid var(--rule);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 4rem 1.4fr 2fr 9rem;
+    gap: 1.5rem;
+    align-items: center;
+    width: 100%;
+    padding: 1.4rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  .row > * {
+    position: relative;
+    z-index: 1;
+  }
+  .row::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  }
+  .row:hover::before,
+  .row:focus-visible::before {
+    transform: scaleY(1);
+  }
+  .row:hover,
+  .row:focus-visible {
+    color: #ffffff;
+  }
+  .row:hover .r-idx,
+  .row:focus-visible .r-idx {
+    color: #ffffff;
+  }
+  .row:hover .r-desc,
+  .row:focus-visible .r-desc {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .row:hover .r-year,
+  .row:focus-visible .r-year {
+    color: var(--brand);
+  }
+  .row-open {
+    background: var(--shade);
+  }
+  .r-idx {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: #8b8b84;
+  }
+  .r-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+  .r-desc {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .r-year {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    text-align: right;
+    color: #8b8b84;
+  }
+  .row-detail {
+    border-left: 2px solid var(--brand);
+    padding: 0.9rem 0 0.4rem 1rem;
+    margin: -0.4rem 0 1.4rem 6rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .r-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+  }
+  .r-tags span {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--rule);
+    padding: 0.15rem 0.45rem;
+    color: #6a6a64;
+  }
+  @media (max-width: 980px) {
+    .row {
+      grid-template-columns: 3rem 1fr;
+      row-gap: 0.5rem;
+    }
+    .row .r-desc {
+      grid-column: 2;
+    }
+    .row .r-year {
+      grid-column: 2;
+      text-align: left;
+    }
+    .row-detail {
+      margin-left: 5rem;
+    }
+  }
+
+  /* ---------- stack en columnas ---------- */
+  .cols3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  @media (max-width: 900px) {
+    .cols3 {
+      grid-template-columns: 1fr;
+    }
+  }
+  .col-h3 {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8b8b84;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 1rem;
+  }
+  .col-list {
+    font-size: 1rem;
+  }
+  .col-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .lvl {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: var(--brand-text);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  /* ---------- trayectoria ---------- */
+  .cv-row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 2rem;
+    border-top: 1px solid var(--rule);
+    padding: 1.6rem 0;
+    transition: background 0.3s ease;
+  }
+  .cv-row:hover {
+    background: var(--shade);
+  }
+  .when {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--brand-text);
+    letter-spacing: 0.06em;
+    padding-top: 0.2rem;
+  }
+  .cv-co {
+    font-size: 0.9rem;
+    color: #8b8b84;
+    margin: 0.25rem 0 0.7rem;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  }
+  .cv-p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  @media (max-width: 760px) {
+    .cv-row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+
+  /* ---------- footer ---------- */
+  .ft {
+    background: var(--ink);
+    color: #ffffff;
+    padding: 3.5rem 0;
+  }
+  .ft-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .big {
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+  .mail {
+    border-bottom: 2px solid var(--brand);
+  }
+  .mail:hover {
+    color: var(--brand);
+  }
+  .ft-note {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: #8b8b84;
+    letter-spacing: 0.08em;
+    line-height: 2;
+  }
+  .ft-note a:hover {
+    color: #ffffff;
   }
 }
 
-/* Nada de contenido invisible: si el usuario prefiere menos movimiento o imprime,
-   las secciones animadas se muestran tal cual. */
+/* Nada de contenido invisible: si el usuario prefiere menos movimiento, los estados
+   se aplican igual pero sin animación. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

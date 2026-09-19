@@ -6,15 +6,17 @@
  *
  * Nota: el nombre y los enlaces de contacto son los reales del sitio (aparecen también en los
  * metadatos, los PDFs y /work). El copy de las secciones es genérico de plantilla.
+ *
+ * El ritmo de cada bloque (3 métricas, 3 columnas de 5 tecnologías, 4 filas de proyecto,
+ * 4 hitos de trayectoria) es el del diseño: cambiarlo desajusta la comparación con el mockup.
  */
+
+export type Level = "advanced" | "solid" | "working knowledge"
 
 export type StackGroup = {
   title: string
-  intro: string
   items: { name: string; level: Level }[]
 }
-
-export type Level = "advanced" | "solid" | "working knowledge"
 
 export type ProjectRow = {
   id: string
@@ -58,51 +60,39 @@ export const portfolio = {
   },
 
   stats: [
-    { value: "6", label: "years in production" },
-    { value: "20+", label: "projects shipped" },
-    { value: "99.9%", label: "service uptime" },
-    { value: "2", label: "countries, 3\u00a0teams" },
+    { value: "6", label: "years of experience" },
+    { value: "20+", label: "projects delivered" },
+    { value: "2", label: "target markets" },
   ],
 
   stack: [
     {
       title: "Backend & APIs",
-      intro:
-        "Production backends from the data model outwards: multi-tenant systems, RBAC, background processing and real-time.",
       items: [
         { name: ".NET 8 / 10", level: "advanced" },
         { name: "ASP.NET Core", level: "advanced" },
-        { name: "REST APIs", level: "advanced" },
-        { name: "Entity Framework Core", level: "advanced" },
-        { name: "Blazor", level: "solid" },
+        { name: "REST APIs & EF Core", level: "advanced" },
         { name: "PostgreSQL / SQL Server", level: "solid" },
-        { name: "SignalR", level: "solid" },
+        { name: "Blazor & SignalR", level: "solid" },
       ],
     },
     {
       title: "Cloud & Infrastructure",
-      intro:
-        "Delivery you can repeat: containers, infrastructure as code, CI/CD and the operating system underneath.",
       items: [
-        { name: "Docker", level: "solid" },
+        { name: "Docker & Compose", level: "solid" },
         { name: "Terraform (IaC)", level: "solid" },
         { name: "GCP / Azure / OCI", level: "solid" },
         { name: "GitHub Actions CI/CD", level: "solid" },
-        { name: "Linux / systemd", level: "solid" },
-        { name: "Caddy / Cloudflare Tunnel", level: "working knowledge" },
-        { name: "Structured logging (Serilog)", level: "solid" },
+        { name: "Linux / systemd", level: "advanced" },
       ],
     },
     {
       title: "Applied AI",
-      intro:
-        "AI features that survive contact with real data: retrieval, document understanding and agent tooling.",
       items: [
-        { name: "LLM integrations & multi-model routing", level: "solid" },
-        { name: "RAG with vector databases (Qdrant)", level: "solid" },
+        { name: "LLM integrations & routing", level: "advanced" },
+        { name: "RAG / vector databases", level: "solid" },
         { name: "Semantic memory (Mem0)", level: "working knowledge" },
-        { name: "Agent infrastructure & browser automation", level: "working knowledge" },
-        { name: "OCR document classification", level: "working knowledge" },
+        { name: "Agent infrastructure", level: "working knowledge" },
         { name: "Python", level: "solid" },
       ],
     },

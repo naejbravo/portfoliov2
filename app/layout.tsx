@@ -1,15 +1,16 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter_Tight, JetBrains_Mono } from "next/font/google"
+import GridGuides from "@/components/grid-guides"
 import Header from "@/components/header"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
 })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 })
 
@@ -72,7 +73,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      className={`${interTight.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
       <body className="antialiased">
         <script
@@ -95,6 +96,7 @@ export default function RootLayout({
             })
           }}
         />
+        <GridGuides />
         <Header />
         {children}
       </body>
