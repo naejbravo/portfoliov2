@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
+import { portfolio } from "@/content/portfolio/placeholder"
 import { getProjectBySlug, projects } from "@/lib/projects"
 
 type PageParams = {
@@ -27,6 +28,10 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   }
 }
 
+/**
+ * Caso de estudio como documento: encabezado, problema/rol en dos columnas,
+ * decisiones y retos en filas con filete, stack en mono y métricas en celdas planas.
+ */
 export default async function ProjectPage({ params }: PageParams) {
   const { slug } = await params
   const project = getProjectBySlug(slug)
@@ -42,157 +47,141 @@ export default async function ProjectPage({ params }: PageParams) {
   } = project
 
   return (
-    <main className="mx-auto max-w-5xl px-4 pb-24 pt-20">
+    <main className="mx-auto w-full max-w-[1100px] px-5 pb-24 pt-12 sm:px-8 md:pt-16">
       <Link
         href="/work"
-        className="text-sm text-neutral-500 underline underline-offset-4 hover:text-neutral-900 dark:hover:text-neutral-50"
+        className="mono-label text-muted-foreground transition-colors hover:text-brand"
       >
         ← Back to projects
       </Link>
 
-      {/* Header */}
-      <header className="mt-6 space-y-4">
-        <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
+      <header className="mt-10 border-b border-foreground pb-8">
+        <div className="mono-label flex flex-wrap gap-x-4 gap-y-1 text-brand">
           <span>{project.status}</span>
-          <span>·</span>
           <span>{timeline.stage}</span>
-          {timeline.start && (
-            <>
-              <span>·</span>
-              <span>Since {timeline.start}</span>
-            </>
-          )}
+          {timeline.start ? <span>Since {timeline.start}</span> : null}
         </div>
-        <h1 className="text-4xl font-semibold leading-tight md:text-5xl">{project.title}</h1>
-        <p className="text-lg text-neutral-600 dark:text-neutral-300">{project.tagline}</p>
+        <h1 className="display mt-5 text-3xl font-medium md:text-5xl">{project.title}</h1>
+        <p className="mt-5 max-w-[62ch] text-lg leading-relaxed text-muted-foreground">
+          {project.tagline}
+        </p>
       </header>
 
-      {/* Cover image */}
-      <figure className="mt-10 overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900">
-        <div className="relative aspect-[16/9]">
-          <Image
-            src={project.cover.src}
-            alt={project.cover.alt}
-            fill
-            className="object-contain p-8 md:p-16"
-            sizes="(max-width: 768px) 100vw, 800px"
-            priority
-          />
-        </div>
+      <figure className="relative mt-10 aspect-[16/9] border border-border">
+        <Image
+          src={project.cover.src}
+          alt={project.cover.alt}
+          fill
+          className="object-contain p-8 md:p-16"
+          sizes="(max-width: 768px) 100vw, 1100px"
+          priority
+        />
       </figure>
 
-      {/* Problem & Role */}
-      <section className="mt-12 grid gap-8 md:grid-cols-2">
-        <div className="rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50 md:p-8">
-          <h2 className="text-xl font-semibold">Problem</h2>
-          <p className="mt-3 text-neutral-700 dark:text-neutral-200 leading-relaxed">{project.businessProblem}</p>
+      <section className="mt-14 grid gap-10 md:grid-cols-2 md:gap-16">
+        <div>
+          <h2 className="mono-label border-b border-foreground pb-3">Problem</h2>
+          <p className="mt-4 leading-relaxed text-muted-foreground">{project.businessProblem}</p>
         </div>
-        <div className="rounded-3xl border border-neutral-200 bg-white/70 p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50 md:p-8">
-          <h2 className="text-xl font-semibold">Role</h2>
-          <p className="mt-3 text-neutral-700 dark:text-neutral-200 leading-relaxed">{project.role}</p>
-          {"description" in project && project.description && (
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">{project.description}</p>
-          )}
+        <div>
+          <h2 className="mono-label border-b border-foreground pb-3">Role</h2>
+          <p className="mt-4 leading-relaxed text-muted-foreground">{project.role}</p>
+          {"description" in project && project.description ? (
+            <p className="mt-3 text-sm text-muted-foreground">{project.description}</p>
+          ) : null}
         </div>
       </section>
 
-      {/* Solution */}
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold">Solution</h2>
-        <p className="mt-4 text-neutral-700 dark:text-neutral-200 leading-relaxed text-lg max-w-3xl">
+      <section className="mt-14">
+        <h2 className="mono-label border-b border-foreground pb-3">Solution</h2>
+        <p className="mt-5 max-w-[68ch] text-lg leading-relaxed text-muted-foreground">
           {project.solutionOverview}
         </p>
       </section>
 
-      {/* Technical Decisions */}
       {technicalDecisions.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-2xl font-semibold">Technical Decisions</h2>
-          <div className="mt-4 space-y-4">
+        <section className="mt-14">
+          <h2 className="mono-label border-b border-foreground pb-3">Technical decisions</h2>
+          <ul className="mt-4 border-b border-border">
             {technicalDecisions.map((item: string) => (
-              <div
+              <li
                 key={`${project.slug}-decision-${item.slice(0, 30)}`}
-                className="rounded-2xl border border-neutral-200 bg-white/70 p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
+                className="border-t border-border py-5 text-sm leading-relaxed text-muted-foreground"
               >
-                <p className="text-sm text-neutral-700 dark:text-neutral-200 leading-relaxed">{item}</p>
-              </div>
+                {item}
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
 
-      {/* Technical Challenges */}
       {technicalChallenges.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-2xl font-semibold">Technical Challenges</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <section className="mt-14">
+          <h2 className="mono-label border-b border-foreground pb-3">Technical challenges</h2>
+          <ul className="mt-4 grid gap-x-12 gap-y-0 border-b border-border md:grid-cols-2">
             {technicalChallenges.map((item: string) => (
-              <div
+              <li
                 key={`${project.slug}-challenge-${item.slice(0, 30)}`}
-                className="rounded-2xl border border-neutral-200 bg-white/70 p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
+                className="border-t border-border py-5 text-sm leading-relaxed text-muted-foreground"
               >
-                <p className="text-sm text-neutral-700 dark:text-neutral-200">{item}</p>
-              </div>
+                {item}
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
 
-      {/* Tech stack */}
-      <section className="mt-12 rounded-2xl border border-neutral-200 bg-white/70 p-6 dark:border-neutral-800 dark:bg-neutral-950/50">
-        <h2 className="text-xl font-semibold">Tech stack</h2>
-        <div className="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <section className="mt-14">
+        <h2 className="mono-label border-b border-foreground pb-3">Tech stack</h2>
+        <div className="mt-6 grid gap-8 md:grid-cols-3">
           {Object.entries(techStack).map(([category, items]) => (
             <div key={`${project.slug}-cat-${category}`}>
-              <h3 className="text-sm font-semibold capitalize text-neutral-800 dark:text-neutral-100">
-                {category.replace(/_/g, " / ")}
-              </h3>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {items.map((item: string) => (
-                  <span
+              <h3 className="mono-label text-brand">{category.replace(/_/g, " / ")}</h3>
+              <ul className="mt-3">
+                {(items as string[]).map((item: string) => (
+                  <li
                     key={`${project.slug}-tech-${item}`}
-                    className="rounded-full border border-neutral-300/70 px-2.5 py-0.5 text-xs text-neutral-600 dark:border-neutral-700 dark:text-neutral-300"
+                    className="border-b border-border py-2 text-sm"
                   >
                     {item}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Impact */}
       {metrics.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-2xl font-semibold">Impact</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-3">
+        <section className="mt-14">
+          <h2 className="mono-label border-b border-foreground pb-3">Impact</h2>
+          <div className="mt-6 grid gap-x-8 gap-y-0 border-b border-border md:grid-cols-3">
             {metrics.map((metric: string, i: number) => (
-              <div
-                key={`${project.slug}-metric-${i}`}
-                className="rounded-2xl border border-neutral-200 bg-white/70 p-5 text-center shadow-sm dark:border-neutral-800 dark:bg-neutral-950/50"
-              >
-                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-100">{metric}</p>
+              <div key={`${project.slug}-metric-${i}`} className="border-t border-border py-5">
+                <p className="text-sm leading-relaxed">{metric}</p>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {/* CTA */}
-      <footer className="mt-12 rounded-3xl border border-neutral-200 bg-white/80 p-6 text-neutral-800 shadow-sm dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 md:p-8">
-        <h2 className="text-2xl font-semibold">Want to see this in your context?</h2>
-        <p className="mt-3 text-neutral-600 dark:text-neutral-300">{project.callToAction}</p>
-        <div className="mt-5 flex flex-wrap gap-3">
+      <footer className="mt-16 bg-foreground px-6 py-10 text-background md:px-10 md:py-12">
+        <h2 className="display max-w-[24ch] text-2xl font-medium md:text-3xl">
+          Want to see this in your context?
+        </h2>
+        <p className="mt-4 max-w-[58ch] text-sm leading-relaxed text-background/75">
+          {project.callToAction}
+        </p>
+        <div className="mt-7 flex flex-wrap gap-3">
           <Link
             href="/#contact"
-            className="inline-flex items-center rounded-2xl bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 dark:bg-white dark:text-neutral-900"
+            className="inline-flex items-center border border-background bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-brand hover:bg-brand hover:text-background"
           >
             Schedule a call
           </Link>
           <a
-            href="mailto:naejbravo@gmail.com"
-            className="inline-flex items-center rounded-2xl border border-neutral-300 px-5 py-2.5 text-sm font-medium text-neutral-800 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-900"
+            href={`mailto:${portfolio.contact.email}`}
+            className="inline-flex items-center border border-background/60 px-5 py-2.5 text-sm font-medium transition-colors hover:border-background hover:bg-background/10"
           >
             Email me
           </a>

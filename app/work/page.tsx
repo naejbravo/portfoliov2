@@ -10,103 +10,70 @@ export const metadata: Metadata = {
     "Selection of platforms and digital products where I have led architecture, development and deployment.",
 }
 
+/**
+ * Índice de casos de estudio: filas de documento (número, metadatos, resumen, portada),
+ * sin tarjetas ni sombras. Misma retícula que el resto del sitio.
+ */
 export default function WorkPage() {
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-24 pt-20">
-      <section className="mx-auto max-w-3xl text-center">
-        <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-          Projects
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold leading-tight text-center md:text-5xl">
-          I turn complex processes into reliable backends, APIs and AI-powered systems.
-        </h1>
-        <p className="mt-5 text-lg text-neutral-600 dark:text-neutral-300 text-center">
-          Each project combines scalable architecture, production operations and business metrics to guide
-          decisions. Here&apos;s a recent sample.
-        </p>
-      </section>
+    <main className="mx-auto w-full max-w-[1400px] px-5 pb-24 pt-16 sm:px-8 md:pt-20">
+      <p className="mono-label text-brand">Case studies</p>
+      <h1 className="display mt-6 max-w-[26ch] text-3xl font-medium md:text-5xl">
+        I turn complex processes into reliable backends, APIs and AI-powered systems.
+      </h1>
+      <p className="mt-6 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
+        Each project combines scalable architecture, production operations and business metrics to
+        guide decisions. Here&apos;s a recent sample.
+      </p>
 
-      <div className="mt-16 space-y-16">
-        {projects.map((project) => (
-          <article
-            key={project.slug}
-            className="grid gap-8 rounded-3xl border border-neutral-200 p-6 md:grid-cols-[1.05fr,0.95fr] md:p-10 dark:border-neutral-800"
-          >
+      <ul className="mt-16 border-b border-border">
+        {projects.map((project, index) => (
+          <li key={project.slug} className="border-t border-border">
             <Link
               href={`/work/${project.slug}`}
-              className="relative block overflow-hidden rounded-2xl border border-neutral-200/70 bg-neutral-50 transition-transform hover:-translate-y-1 hover:shadow-lg dark:border-neutral-800/70 dark:bg-neutral-900"
+              className="group grid gap-6 py-8 md:grid-cols-[3.5rem_1fr_18rem] md:gap-8"
             >
-              <div className="relative aspect-[16/9]">
+              <span className="mono-label pt-1 text-muted-foreground">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <div>
+                <div className="mono-label flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
+                  <span>{project.status}</span>
+                  <span>{project.timeline.stage}</span>
+                  {project.timeline.start ? <span>Since {project.timeline.start}</span> : null}
+                </div>
+                <h2 className="display mt-3 text-xl font-medium transition-colors group-hover:text-brand md:text-2xl">
+                  {project.title}
+                </h2>
+                <p className="mt-3 max-w-[64ch] text-sm leading-relaxed text-muted-foreground">
+                  {project.solutionOverview}
+                </p>
+                <ul className="mono-label mt-5 flex flex-wrap gap-x-4 gap-y-2 text-[0.6rem] text-muted-foreground">
+                  {project.techKeywords.slice(0, 5).map((tag) => (
+                    <li key={`${project.slug}-${tag}`} className="border-b border-border pb-0.5">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mono-label mt-6 text-foreground transition-colors group-hover:text-brand">
+                  View case study →
+                </p>
+              </div>
+
+              <div className="relative aspect-[16/10] border border-border">
                 <Image
                   src={project.cover.src}
                   alt={project.cover.alt}
                   fill
-                  className="object-contain p-8"
-                  sizes="(max-width: 768px) 100vw, 600px"
+                  className="object-contain p-6"
+                  sizes="(max-width: 768px) 100vw, 288px"
                 />
               </div>
             </Link>
-
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
-                  <span>{project.status}</span>
-                  <span>•</span>
-                  <span>{project.timeline.stage}</span>
-                  {project.timeline.start && (
-                    <>
-                      <span>•</span>
-                      <span>Since {project.timeline.start}</span>
-                    </>
-                  )}
-                </div>
-                <h2 className="text-2xl font-semibold leading-tight">
-                  <Link href={`/work/${project.slug}`} className="hover:underline">
-                    {project.title}
-                  </Link>
-                </h2>
-                <p className="text-sm italic text-neutral-500 dark:text-neutral-400">{project.tagline}</p>
-              </div>
-
-              <p className="text-neutral-600 dark:text-neutral-300">{project.solutionOverview}</p>
-
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-                  Impact
-                </h3>
-                <ul className="mt-2 space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
-                  {project.impactHighlights.map((result) => (
-                    <li key={`${project.slug}-${result}`} className="flex gap-2">
-                      <span aria-hidden="true" className="mt-1 inline-block size-1.5 rounded-full bg-neutral-400" />
-                      <span>{result}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                {project.techKeywords.map((tag) => (
-                  <span
-                    key={`${project.slug}-tag-${tag}`}
-                    className="rounded-full border border-neutral-300/70 px-3 py-1 text-xs text-neutral-600 dark:border-neutral-700 dark:text-neutral-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div>
-                <Link
-                  href={`/work/${project.slug}`}
-                  className="inline-flex items-center gap-1 text-sm font-medium text-neutral-900 underline underline-offset-4 hover:opacity-80 dark:text-neutral-50"
-                >
-                  View case study →
-                </Link>
-              </div>
-            </div>
-          </article>
+          </li>
         ))}
-      </div>
+      </ul>
     </main>
   )
 }

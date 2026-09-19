@@ -1,52 +1,79 @@
 import Link from "next/link"
-import { Github, Linkedin, FileText } from "lucide-react"
 
+import { portfolio } from "@/content/portfolio/placeholder"
+
+const sections = [
+  { index: "01", label: "Profile", href: "/#profile" },
+  { index: "02", label: "Stack", href: "/#stack" },
+  { index: "03", label: "Projects", href: "/#projects" },
+  { index: "04", label: "Experience", href: "/#experience" },
+  { index: "05", label: "Contact", href: "/#contact" },
+]
+
+/**
+ * Cabecera editorial: identidad en monoespaciada, índice numerado de secciones
+ * y enlaces directos. Sin iconos de relleno ni degradados: la jerarquía la marca
+ * la tipografía y el filete inferior.
+ */
 export default function Header() {
+  const { contact, brand } = portfolio
+
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200/60 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:border-neutral-800/60 dark:bg-neutral-950/80">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-      <Link href="/" className="flex items-center">
-        <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
-          Jean Bravo
-        </span>
-      </Link>
-        <div className="flex items-center gap-5">
-          <nav className="hidden items-center gap-6 text-sm md:flex">
-            <Link className="hover:opacity-80" href="/#projects">
-              Projects
-            </Link>
-            <Link className="hover:opacity-80" href="/#contact">
-              Contact
-            </Link>
-          </nav>
-          <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-3 sm:px-8">
+        <Link href="/" className="mono-label text-foreground">
+          {brand.name}
+          <span className="hidden text-muted-foreground sm:inline"> / {brand.role}</span>
+        </Link>
+
+        <nav
+          aria-label="Sections"
+          className="order-3 -mx-5 w-full overflow-x-auto px-5 sm:-mx-8 sm:px-8 md:order-2 md:mx-0 md:w-auto md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          <ul className="flex items-center gap-5 whitespace-nowrap md:gap-6">
+            {sections.map((section) => (
+              <li key={section.index}>
+                <Link
+                  href={section.href}
+                  className="mono-label text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="text-brand">{section.index}</span> {section.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <ul className="order-2 flex items-center gap-4 md:order-3">
+          <li>
             <a
-              href="https://github.com/naejbravo"
+              href={contact.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
-              aria-label="GitHub"
+              className="mono-label text-muted-foreground transition-colors hover:text-brand"
             >
-              <Github className="size-4" />
+              GitHub ↗
             </a>
+          </li>
+          <li>
             <a
-              href="https://linkedin.com/in/jean-bravo"
+              href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
-              aria-label="LinkedIn"
+              className="mono-label text-muted-foreground transition-colors hover:text-brand"
             >
-              <Linkedin className="size-4" />
+              LinkedIn ↗
             </a>
+          </li>
+          <li>
             <a
-              href="/cv_eng_jean_2026.pdf"
-              className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
-              aria-label="CV"
+              href={contact.cvEn}
+              className="mono-label text-muted-foreground transition-colors hover:text-brand"
             >
-              <FileText className="size-4" />
+              CV ↓
             </a>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </header>
   )

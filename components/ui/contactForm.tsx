@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { portfolio } from "@/content/portfolio/placeholder"
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -56,7 +57,7 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
       console.error(error)
       setFeedback({
         status: "error",
-        message: "Could not send the message. You can write directly to naejbravo@gmail.com.",
+        message: `Could not send the message. You can write directly to ${portfolio.contact.email}.`,
       })
     }
   }
@@ -84,7 +85,7 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input inputMode="email" placeholder="tu@email.com" {...field} />
+                <Input inputMode="email" placeholder="you@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

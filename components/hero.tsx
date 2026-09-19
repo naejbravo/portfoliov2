@@ -1,91 +1,114 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Linkedin, FileText } from "lucide-react"
-import TagTech from "./ui/tagsTech"
-import { ScrollReveal } from "./ui/scroll-reveal"
 
+import { portfolio } from "@/content/portfolio/placeholder"
+
+/**
+ * Hero editorial: declaración tipográfica grande, retícula visible de tres columnas
+ * y la foto reducida a un apunte dentro de la columna de metadatos.
+ */
 export default function Hero() {
+  const { contact, meta, photo, statement } = portfolio
+
+  const metaRows = [
+    { label: "Location", value: meta.location },
+    { label: "Modality", value: meta.modality },
+    { label: "Languages", value: meta.languages },
+  ]
+
+  const directLinks = [
+    { label: contact.email.replace(/^mailto:/, ""), href: `mailto:${contact.email}`, external: false },
+    { label: "github.com/naejbravo ↗", href: contact.github, external: true },
+    { label: "linkedin/in/jean-bravo ↗", href: contact.linkedin, external: true },
+    { label: "CV — English (PDF) ↓", href: contact.cvEn, external: false },
+    { label: "Lebenslauf — Deutsch (PDF) ↓", href: contact.cvDe, external: false },
+  ]
+
   return (
-    <section className="mx-auto max-w-6xl px-4 pt-12 pb-20 md:pt-20 md:pb-32" id="inicio">
-      <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        <ScrollReveal className="flex-1 text-center md:text-left">
-          <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-            Backend Software Engineer <span className="mx-1.5 opacity-50">·</span> .NET <span className="mx-1.5 opacity-50">·</span> Cloud <span className="mx-1.5 opacity-50">·</span> Applied AI
-          </p>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
-            Hi, I&apos;m <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Jean
-            Bravo</span>.
-          </h1>
-          <p className="mt-5 max-w-prose text-lg text-neutral-600 dark:text-neutral-300">
-            Backend engineer building and operating production systems — REST APIs, multi-tenant SaaS backends and AI-powered pipelines. I work across .NET, PostgreSQL, Docker and cloud infrastructure (GCP, Azure, OCI), integrating LLMs, RAG and agent tooling into real products.
-          </p>
-          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
-            🇪🇺 EU passport &nbsp;·&nbsp; Relocating to <strong>Zürich</strong> in 2026 &nbsp;·&nbsp; <a href="/lebenslauf_jean_2026.pdf" className="underline underline-offset-2 hover:text-blue-900 dark:hover:text-blue-200">Lebenslauf (DE)</a>
-          </div>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <Link
-              href="/work"
-              className="inline-flex items-center rounded-2xl bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 dark:bg-white dark:text-neutral-900"
-            >
-              View projects
-            </Link>
-            <Link
-              href="/#contact"
-              className="inline-flex items-center rounded-2xl border border-neutral-300/70 px-5 py-2.5 text-sm font-medium transition hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-900"
-            >
-              Schedule a call
-            </Link>
-          </div>
+    <section id="profile" className="border-b border-border">
+      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
+        <div className="mono-label flex flex-wrap items-center gap-x-4 gap-y-2 pt-10 text-brand md:pt-14">
+          <span>01 — Profile</span>
+          <span className="h-px min-w-8 flex-1 bg-border" aria-hidden="true" />
+          <span className="flex items-center gap-2">
+            <span className="inline-block size-1.5 rounded-full bg-brand" aria-hidden="true" />
+            {portfolio.availability} · {portfolio.availabilityNote}
+          </span>
+        </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
-            <a
-              href="https://github.com/naejbravo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
-            >
-              <Github className="size-4" />
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/jean-bravo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
-            >
-              <Linkedin className="size-4" />
-              LinkedIn
-            </a>
-            <a
-              href="/cv_eng_jean_2026.pdf"
-              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
-            >
-              <FileText className="size-4" />
-              CV (EN)
-            </a>
-            <a
-              href="/lebenslauf_jean_2026.pdf"
-              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
-            >
-              <FileText className="size-4" />
-              Lebenslauf (DE)
-            </a>
+        <h1 className="display mt-10 max-w-[20ch] text-[2.2rem] font-medium sm:text-[3.2rem] md:mt-14 md:text-[4.4rem]">
+          {statement.lead}{" "}
+          <span className="font-light text-muted-foreground">{statement.light}</span>{" "}
+          <span className="marker">{statement.marked}</span>.
+        </h1>
+
+        <div className="mt-14 grid gap-10 border-t border-foreground md:mt-20 md:grid-cols-[1.55fr_1fr_1fr] md:gap-10">
+          <div className="pt-8">
+            <p className="max-w-[46ch] text-base leading-relaxed text-muted-foreground md:text-[1.05rem]">
+              {portfolio.intro}
+            </p>
+
+            <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
+              {portfolio.stats.map((stat) => (
+                <div key={stat.label}>
+                  <dd className="display text-2xl font-medium md:text-3xl">{stat.value}</dd>
+                  <dt className="mono-label mt-2 text-[0.62rem] text-muted-foreground">{stat.label}</dt>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <TagTech />
-        </ScrollReveal>
+          <div className="pt-8 md:border-l md:border-border md:pl-8">
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              width={260}
+              height={320}
+              priority
+              unoptimized
+              className="h-28 w-auto border border-border object-contain"
+            />
+            <dl className="mt-7 space-y-4">
+              {metaRows.map((row) => (
+                <div key={row.label}>
+                  <dt className="mono-label text-[0.62rem] text-muted-foreground">{row.label}</dt>
+                  <dd className="mt-1 text-sm">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
 
-        <ScrollReveal delay={0.2} className="relative w-full max-w-sm md:w-80 lg:w-96 aspect-[3/4] flex-shrink-0" style={{ WebkitMaskImage: 'linear-gradient(to bottom, black 75%, transparent 88%)', maskImage: 'linear-gradient(to bottom, black 75%, transparent 88%)' }}>
-          <Image
-            src="/perfil.png"
-            alt="Jean Bravo - Software Engineer"
-            fill
-            className="object-contain object-center drop-shadow-2xl"
-            quality={100}
-            priority
-            unoptimized
-          />
-        </ScrollReveal>
+          <div className="pt-8 md:border-l md:border-border md:pl-8">
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/work"
+                className="inline-flex items-center border border-foreground bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:border-brand hover:bg-brand"
+              >
+                View projects →
+              </Link>
+              <Link
+                href="/#contact"
+                className="inline-flex items-center border border-foreground px-5 py-2.5 text-sm font-medium transition-colors hover:bg-foreground hover:text-background"
+              >
+                Get in touch
+              </Link>
+            </div>
+
+            <ul className="mt-8 space-y-2.5">
+              {directLinks.map((link) => (
+                <li key={link.href} className="mono-label text-[0.66rem] text-muted-foreground">
+                  <a
+                    href={link.href}
+                    className="transition-colors hover:text-brand"
+                    {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   )

@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "keen-slider/keen-slider.min.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -9,6 +8,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-brand: var(--brand);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -53,73 +53,50 @@
   }
 }
 
+/*
+ * Sistema editorial: papel, tinta y un único acento rojo.
+ * Sin modo oscuro — el sitio es claro a propósito (imprime bien y aguanta PDF).
+ */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-}
+  --radius: 0.375rem;
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: #ffffff;
+  --foreground: #111110;
+  --card: #ffffff;
+  --card-foreground: #111110;
+  --popover: #ffffff;
+  --popover-foreground: #111110;
+
+  --primary: #111110;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f1;
+  --secondary-foreground: #111110;
+
+  --muted: #f4f4f1;
+  --muted-foreground: #6a6a64;
+  --accent: #f4f4f1;
+  --accent-foreground: #111110;
+
+  --brand: #cc3327;
+  --destructive: #c0392b;
+  --border: #dcdcd6;
+  --input: #dcdcd6;
+  --ring: #cc3327;
+
+  --chart-1: #111110;
+  --chart-2: #6a6a64;
+  --chart-3: #e4322b;
+  --chart-4: #dcdcd6;
+  --chart-5: #f4f4f1;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #111110;
+  --sidebar-primary: #111110;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f4f4f1;
+  --sidebar-accent-foreground: #111110;
+  --sidebar-border: #dcdcd6;
+  --sidebar-ring: #e4322b;
 }
 
 @layer base {
@@ -128,6 +105,83 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv05";
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--brand);
+    color: #ffffff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
   }
 }
 
+@layer utilities {
+  /* etiquetas, años, niveles y metadatos: todo lo que en un documento iría en monoespaciada */
+  .mono-label {
+    font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* titulares: una sola familia, contraste de pesos y tracking cerrado */
+  .display {
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  /* subrayado tipo rotulador, un solo acento */
+  .marker {
+    background-image: linear-gradient(
+      transparent 62%,
+      color-mix(in oklab, var(--brand) 18%, transparent) 62%
+    );
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* filetes y guías de retícula */
+  .rule {
+    border-top: 1px solid var(--border);
+  }
+  .rule-b {
+    border-bottom: 1px solid var(--border);
+  }
+  .grid-guides {
+    background-image: repeating-linear-gradient(
+      to right,
+      color-mix(in oklab, var(--foreground) 6%, transparent) 0 1px,
+      transparent 1px calc(100% / 12)
+    );
+  }
+
+  /* fila de proyecto: se invierte a tinta al pasar el cursor */
+  .row-invert {
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+  .row-invert:hover,
+  .row-invert:focus-visible {
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+}
+
+/* Nada de contenido invisible: si el usuario prefiere menos movimiento o imprime,
+   las secciones animadas se muestran tal cual. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
