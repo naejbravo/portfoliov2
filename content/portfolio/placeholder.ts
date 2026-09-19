@@ -1,11 +1,9 @@
 /**
- * Contenido de la home — PLANTILLA.
+ * Contenido de la portada.
  *
- * Todo el texto que se ve en la portada vive aquí: para pasar de plantilla a contenido real
- * basta editar este archivo (los casos de estudio de /work y los CV siguen en sus fuentes de siempre).
- *
- * Nota: el nombre y los enlaces de contacto son los reales del sitio (aparecen también en los
- * metadatos, los PDFs y /work). El copy de las secciones es genérico de plantilla.
+ * Los cinco pilares del perfil mandan sobre este archivo: soluciones .NET, Docker y
+ * registry (GHCR), cloud engineering y fullstack, con la IA aplicada como capacidad
+ * secundaria. Lo editable vive aquí; los casos de estudio salen de content/projects/details.json.
  *
  * El ritmo de cada bloque (3 métricas, 3 columnas de 5 tecnologías, 4 filas de proyecto,
  * 4 hitos de trayectoria) es el del diseño: cambiarlo desajusta la comparación con el mockup.
@@ -18,15 +16,6 @@ export type StackGroup = {
   items: { name: string; level: Level }[]
 }
 
-export type ProjectRow = {
-  id: string
-  title: string
-  summary: string
-  year: string
-  detail: string
-  tech: string[]
-}
-
 export type ExperienceEntry = {
   period: string
   role: string
@@ -37,20 +26,23 @@ export type ExperienceEntry = {
 export const portfolio = {
   brand: {
     name: "Jean Bravo",
-    role: "Backend & AI Engineer",
+    role: "Full-stack .NET Engineer",
   },
+
+  /* línea de posicionamiento única — la misma que deben contar CV y metadatos */
+  positioning: "Full-stack .NET Engineer — Cloud, Containers, Applied AI",
 
   availability: "Available for new projects",
   availabilityNote: "2026",
 
   statement: {
-    lead: "I build",
-    light: "backend systems, APIs and applied AI",
-    marked: "engineered to outlast the trend",
+    lead: "I design, build and run",
+    light: "full-stack .NET solutions, Docker containers and cloud infrastructure",
+    marked: "from the data model to the container registry",
   },
 
   intro:
-    "Backend engineer working end-to-end: API architecture, data modelling, cloud deployment and AI-powered features. I move between the data model and the interface, and I ship with migrations, monitoring and a rollback plan in place.",
+    "Full-stack .NET engineer building and operating production systems end-to-end: solution and data-model design, ASP.NET Core and Blazor, container images published to GHCR, and cloud infrastructure on GCP, Azure and OCI with Terraform and CI/CD. Applied AI — LLM integrations and RAG — as a capability on top, not as the headline.",
 
   meta: {
     location: "Málaga, ES · Zürich, CH",
@@ -61,81 +53,43 @@ export const portfolio = {
 
   stats: [
     { value: "6", label: "years of experience" },
-    { value: "20+", label: "projects delivered" },
-    { value: "2", label: "target markets" },
+    { value: "20+", label: ".NET projects delivered" },
+    { value: "3", label: "cloud platforms (GCP · Azure · OCI)" },
   ],
 
   stack: [
     {
-      title: "Backend & APIs",
+      title: ".NET Solutions",
       items: [
-        { name: ".NET 8 / 10", level: "advanced" },
+        { name: "C# / .NET 8–10", level: "advanced" },
         { name: "ASP.NET Core", level: "advanced" },
-        { name: "REST APIs & EF Core", level: "advanced" },
-        { name: "PostgreSQL / SQL Server", level: "solid" },
+        { name: "Entity Framework Core", level: "advanced" },
+        { name: "Multi-tenant architecture & RBAC", level: "advanced" },
         { name: "Blazor & SignalR", level: "solid" },
       ],
     },
     {
-      title: "Cloud & Infrastructure",
+      title: "Cloud & Containers",
       items: [
-        { name: "Docker & Compose", level: "solid" },
+        { name: "Docker & Compose", level: "advanced" },
+        { name: "GHCR container registry", level: "advanced" },
         { name: "Terraform (IaC)", level: "solid" },
-        { name: "GCP / Azure / OCI", level: "solid" },
         { name: "GitHub Actions CI/CD", level: "solid" },
-        { name: "Linux / systemd", level: "advanced" },
+        { name: "GCP · Azure · OCI", level: "solid" },
+        { name: "Kubernetes", level: "working knowledge" },
       ],
     },
     {
-      title: "Applied AI",
+      title: "Full-stack & Applied AI",
       items: [
-        { name: "LLM integrations & routing", level: "advanced" },
-        { name: "RAG / vector databases", level: "solid" },
-        { name: "Semantic memory (Mem0)", level: "working knowledge" },
-        { name: "Agent infrastructure", level: "working knowledge" },
-        { name: "Python", level: "solid" },
+        { name: "TypeScript / JavaScript", level: "advanced" },
+        { name: "React", level: "solid" },
+        { name: "CSS & design systems", level: "advanced" },
+        { name: "PostgreSQL / SQL Server", level: "solid" },
+        { name: "LLM integrations & RAG", level: "solid" },
       ],
     },
   ] satisfies StackGroup[],
-
-  projects: [
-    {
-      id: "01",
-      title: "Document management platform",
-      summary: "Approval flows, versioning and audit trail for 300 internal users.",
-      year: "2025",
-      detail:
-        "Multi-tenant .NET application with an immutable history model, role-based permissions and PDF report generation. Cut report turnaround from 40 to 15 minutes per case.",
-      tech: [".NET 8", "Blazor", "PostgreSQL"],
-    },
-    {
-      id: "02",
-      title: "Real-time metrics dashboard",
-      summary: "Live dashboards with combinable filters and scheduled exports.",
-      year: "2024",
-      detail:
-        "SignalR for data push, aggregations in SQL Server, Excel and PDF export, plus threshold alerting. Designed for always-on operations room screens.",
-      tech: ["SignalR", "TypeScript", "MySQL"],
-    },
-    {
-      id: "03",
-      title: "Reproducible deployment pipeline",
-      summary: "Multi-architecture build, controlled migrations and automatic rollback.",
-      year: "2024",
-      detail:
-        "Deployment scripts with health verification, pre-flight backup and automatic revert. Took releases from 45 minutes to 6 and removed manual maintenance windows.",
-      tech: ["Docker", "Linux", "Bash"],
-    },
-    {
-      id: "04",
-      title: "Third-party integrations",
-      summary: "Payment gateways, ERP and external services over REST APIs.",
-      year: "2023",
-      detail:
-        "Retry queues with exponential backoff, idempotent operations and full traceability of every call for support.",
-      tech: ["REST", "Queues", "Idempotency"],
-    },
-  ] satisfies ProjectRow[],
 
   experience: [
     {

@@ -9,7 +9,7 @@
 
 <br>
 
-Full-stack .NET-Entwickler mit Fokus auf B2B-SaaS-Plattformen für Dokumenten-Workflows, digitale Signaturen und Betriebsautomatisierung — von der Architektur bis zur produktiven Bereitstellung auf Cloud-Infrastruktur.
+Full-stack .NET-Entwickler, der Produktionssysteme end-to-end baut und betreibt: .NET- und Blazor-Lösungen, Multi-Tenant-Architekturen, Docker-Images in der GHCR-Registry und Cloud-Infrastruktur auf GCP, Azure und OCI mit Terraform und CI/CD. Angewandte KI (LLM-Integrationen, RAG) als Zusatzfähigkeit, nicht als Aushängeschild.
 
 ## Berufserfahrung
 
@@ -58,7 +58,7 @@ IES Fuengirola N°1
 
 **Backend und Architektur:** C# 14, .NET 8/10, ASP.NET Core, Blazor Web App, ASP.NET MVC, Razor, Entity Framework Core, Clean Architecture, REST-APIs, Hintergrundjob-Verarbeitung
 
-**Daten und Cloud:** PostgreSQL, MySQL, SQL Server, Docker, Caddy, GCP, Azure, Terraform (IaC), GitHub Actions CI/CD, Serilog
+**Daten und Cloud:** PostgreSQL, MySQL, SQL Server, Docker, GHCR (Container Registry), Kubernetes (Grundkenntnisse), Caddy, GCP, Azure, OCI, Terraform (IaC), GitHub Actions CI/CD, Serilog
 
 **Dokumentenautomatisierung und Sicherheit:** PdfPig (OCR), QuestPDF, PdfSharpCore, ChromeHtmlToPdf, digitale Signaturen (OTP, SHA-256-Tokens, zertifikatsbasiert), PKI-Evaluierung (EJBCA / SignServer), RBAC, ASP.NET Identity, JWT, Audit-Trails
 

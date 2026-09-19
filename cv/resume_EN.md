@@ -9,7 +9,7 @@
 
 <br>
 
-Backend engineer building and operating production systems — REST APIs, multi-tenant SaaS backends and applied AI pipelines. Strong with .NET, PostgreSQL, Docker and cloud infrastructure (GCP, Azure, OCI); hands-on with LLM integrations, RAG over vector databases and self-hosted agent infrastructure.
+Full-stack .NET engineer building and operating production systems end-to-end: .NET 10 and Blazor solutions, multi-tenant architecture, Docker images published to GHCR, and cloud infrastructure on GCP, Azure and OCI with Terraform and CI/CD. Applied AI — LLM integrations, RAG — as a capability on top, not the headline.
 
 ## Experience
 
@@ -66,9 +66,9 @@ IES Fuengirola N°1
 
 ## Skills
 
-**Backend & APIs:** C# 14, .NET 8/10, ASP.NET Core, REST APIs, Entity Framework Core, Clean Architecture, Blazor Web App, background job processing, SignalR
+**.NET Solutions:** C# 14, .NET 8/10, ASP.NET Core, REST APIs, Entity Framework Core, Clean Architecture, Blazor Web App, multi-tenant, RBAC, background job processing, SignalR
 
-**Cloud & Infrastructure:** Docker, GCP, Azure, OCI, Terraform (IaC), GitHub Actions CI/CD, Caddy, Cloudflare Tunnel, Linux/systemd, Serilog
+**Cloud & Containers:** Docker, GHCR (container registry), Kubernetes (working knowledge), GCP, Azure, OCI, Terraform (IaC), GitHub Actions CI/CD, Caddy, Cloudflare Tunnel, Linux/systemd, Serilog
 
 **Data:** PostgreSQL, MySQL, SQL Server, Qdrant (vector DB)
 

@@ -5,9 +5,9 @@ import Link from "next/link"
 import { projects } from "@/lib/projects"
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Case studies",
   description:
-    "Selection of platforms and digital products where I have led architecture, development and deployment.",
+    "Multi-tenant .NET solutions, containerised delivery with Docker and GHCR, cloud infrastructure on GCP, Azure and OCI, and applied AI where it pays off.",
 }
 
 /**
@@ -19,11 +19,12 @@ export default function WorkPage() {
     <main className="shell pb-24 pt-16 md:pt-20">
       <p className="sec-num">Case studies</p>
       <h1 className="h2 mt-6 max-w-[26ch]">
-        I turn complex processes into reliable backends, APIs and AI-powered systems.
+        I turn complex processes into full-stack .NET solutions that run in containers and in the
+        cloud.
       </h1>
       <p className="lead mt-6 max-w-[62ch] text-ink-soft">
-        Each project combines scalable architecture, production operations and business metrics to
-        guide decisions. Here&apos;s a recent sample.
+        Each project combines solution design, containerised delivery and production operations with
+        business metrics. Here&apos;s a recent sample.
       </p>
 
       <div className="rows mt-16">
