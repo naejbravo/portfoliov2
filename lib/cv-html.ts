@@ -1,5 +1,6 @@
 import type { CvContent, CvLanguage } from "@/content/cv"
 import type { Profile } from "@/content/profiles/types"
+import { linkLabel } from "@/components/hero"
 
 /**
  * Maqueta A4 del CV. Es la misma hoja que se viene usando (una página, Arial 9,1 pt) pero
@@ -104,16 +105,16 @@ export function renderCvHtml({
 </style>
 </head>
 <body>
-  <img class="photo" src="/cv-perfil.jpg" alt="${escapeHtml(profile.brand.name)}">
+  <img class="photo" src="/placeholder-portrait.svg" alt="${escapeHtml(profile.brand.name)}">
 
   <div class="header-block">
     <h1>${escapeHtml(profile.brand.name)}</h1>
     <div class="subtitle">${escapeHtml(cv.subtitle ?? profile.positioning)}</div>
     <div class="contact">
-      ${escapeHtml(contact.email)}<span class="sep">|</span>${escapeHtml(contact.phone)}<span class="sep">|</span>bravojc.com
+      ${escapeHtml(contact.email)}<span class="sep">|</span>${escapeHtml(contact.phone)}<span class="sep">|</span>${escapeHtml(contact.site)}
     </div>
     <div class="contact">
-      ${escapeHtml(cv.labels.location)}<span class="sep">|</span>linkedin.com/in/jean-bravo<span class="sep">|</span>github.com/naejbravo
+      ${escapeHtml(cv.labels.location)}<span class="sep">|</span>${escapeHtml(linkLabel(contact.linkedin))}<span class="sep">|</span>${escapeHtml(linkLabel(contact.github))}
     </div>
   </div>
 

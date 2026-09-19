@@ -103,14 +103,14 @@ export const saasB2bProfile: Profile = {
     {
       period: "2026 — Present",
       role: "Tech Lead & Full-stack .NET Developer",
-      org: "Software company · Málaga (hybrid)",
+      org: "Software company · Hybrid",
       description:
         "Architecture and delivery of a multi-tenant SaaS platform: tenant isolation, permission model and document automation with OCR and digital signatures.",
     },
     {
       period: "2025 — Present",
       role: "Full-stack .NET Developer",
-      org: "Software company · Málaga (hybrid)",
+      org: "Software company · Hybrid",
       description:
         "Workforce management platform with a GDPR-compliant signature workflow, REST API for mobile tracking and multi-brand support from one codebase.",
     },

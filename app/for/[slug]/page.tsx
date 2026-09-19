@@ -25,6 +25,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: { absolute: `${profile.brand.name} · ${profile.positioning}` },
     description: profile.intro,
+    // Página pensada para una candidatura concreta: no debe indexarse.
+    robots: { index: false, follow: false },
   }
 }
 

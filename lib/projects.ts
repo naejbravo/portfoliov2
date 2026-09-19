@@ -29,17 +29,17 @@ function formatImpact(impact: RawProject["impact"]) {
 }
 
 const coverMap: Record<string, { src: string; alt: string }> = {
-  "webcaepro-cae-management-platform": {
-    src: "/webcaepro-home-sidebar.png",
-    alt: "WebCAEpro - CAE Management Platform",
+  "multi-tenant-saas-platform": {
+    src: "/placeholder-cover.svg",
+    alt: "Multi-tenant SaaS platform — cover placeholder",
   },
-  "webrrhhpro-hr-saas-multi-tenant-platform": {
-    src: "/webrrhhpro.png",
-    alt: "WebRRHHpro - HR SaaS Multi-tenant Platform",
+  "container-delivery-pipeline": {
+    src: "/placeholder-cover.svg",
+    alt: "Container delivery pipeline — cover placeholder",
   },
-  hermes: {
-    src: "/hermes-cover.svg",
-    alt: "Hermes Agent Infrastructure - self-hosted AI agent stack",
+  "real-time-metrics-dashboard": {
+    src: "/placeholder-cover.svg",
+    alt: "Real-time metrics dashboard — cover placeholder",
   },
 }
 

@@ -3,6 +3,11 @@ import Link from "next/link"
 
 import type { Profile } from "@/content/profiles/types"
 
+/** Etiqueta corta para un enlace: quita el protocolo y el www. */
+export function linkLabel(url: string) {
+  return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")
+}
+
 /**
  * Hero del sistema editorial: declaración tipográfica a gran escala, retícula de tres
  * columnas bajo un filete fino y la foto reducida a un apunte en la columna de metadatos.
@@ -73,13 +78,13 @@ export default function Hero({ profile }: { profile: Profile }) {
               <dt>GitHub</dt>
               <dd>
                 <a href={contact.github} target="_blank" rel="noopener noreferrer">
-                  github.com/naejbravo
+                  {linkLabel(contact.github)}
                 </a>
               </dd>
               <dt>LinkedIn</dt>
               <dd>
                 <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
-                  linkedin.com/in/jean-bravo
+                  {linkLabel(contact.linkedin)}
                 </a>
               </dd>
               <dt>Lebenslauf</dt>

@@ -103,7 +103,7 @@ export const defaultProfile: Profile = {
     {
       period: "2023 — Present",
       role: "Senior Software Engineer",
-      org: "Software company · Málaga (hybrid)",
+      org: "Software company · Hybrid",
       description:
         "Technical owner of three business modules. Data model design, internal APIs and the team's frontend style guide. Mentoring two junior developers.",
     },

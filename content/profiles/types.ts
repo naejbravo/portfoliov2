@@ -61,6 +61,8 @@ export type Profile = {
     phone: string
     github: string
     linkedin: string
+    /** dominio que se muestra en el CV y los pies de página (sin protocolo) */
+    site: string
     cvEn: string
     cvDe: string
   }

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter_Tight, JetBrains_Mono } from "next/font/google"
 import GridGuides from "@/components/grid-guides"
 import { getProfile } from "@/content/profiles"
+import { siteUrl } from "@/lib/site"
 import Header from "@/components/header"
 import "./globals.css"
 
@@ -15,32 +16,36 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 })
 
+const profile = getProfile()
+
+/**
+ * Metadatos de PLANTILLA: se construyen desde el perfil activo, así que basta con editar
+ * content/profiles para que título, descripción y datos estructurados sigan al contenido.
+ */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bravojc.com"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: `${getProfile().brand.name} · ${getProfile().positioning} · Zürich`,
-    template: "%s · Jean Bravo",
+    default: `${profile.brand.name} · ${profile.positioning}`,
+    template: `%s · ${profile.brand.name}`,
   },
   description:
-    "Full-stack .NET engineer building and running production systems end-to-end: ASP.NET Core and Blazor solutions, Docker containers published to GHCR, cloud infrastructure on GCP, Azure and OCI with Terraform and CI/CD, plus applied AI (LLM integrations, RAG). Relocating to Zürich, EU passport.",
+    "Full-stack .NET engineer building and running production systems end-to-end: ASP.NET Core and Blazor solutions, Docker containers published to a registry, cloud infrastructure with Terraform and CI/CD, plus applied AI (LLM integrations, RAG).",
   openGraph: {
     type: "website",
     url: "/",
-    title: "Jean Bravo · Full-stack .NET Engineer — Cloud & Containers",
+    title: `${profile.brand.name} · ${profile.positioning}`,
     description:
-      ".NET solutions, Docker and GHCR container delivery, cloud infrastructure (GCP, Azure, OCI) and applied AI. Relocating to Zürich, EU passport.",
+      ".NET solutions, Docker container delivery through a registry, cloud infrastructure and applied AI. Template content.",
     locale: "en_US",
-    siteName: "Jean Bravo",
+    siteName: profile.brand.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jean Bravo · Full-stack .NET Engineer",
+    title: `${profile.brand.name} · ${profile.brand.role}`,
     description:
-      "Full-stack .NET engineer — .NET and Blazor solutions, Docker and GHCR, cloud infrastructure (GCP, Azure, OCI), applied AI. Relocating to Zürich.",
-    creator: "@jeanbravo",
+      "Full-stack .NET engineer — .NET and Blazor solutions, Docker and container registry, cloud infrastructure, applied AI. Template content.",
   },
   keywords: [
-    "Jean Bravo",
     "Full-stack .NET Developer",
     ".NET Developer",
     "ASP.NET Core",
@@ -65,14 +70,10 @@ export const metadata: Metadata = {
     "Applied AI",
     "LLM Integrations",
     "RAG",
-    "Zürich",
-    "Switzerland",
-    "EU passport",
-    ".NET Developer Switzerland",
     "Digital Signatures",
     "Document Automation",
   ],
-  authors: [{ name: "Jean Bravo" }],
+  authors: [{ name: profile.brand.name }],
 }
 
 export default function RootLayout({
@@ -92,9 +93,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": "Jean Bravo",
-              "url": "https://bravojc.com",
-              "jobTitle": "Full-stack .NET Engineer",
+              "name": profile.brand.name,
+              "url": siteUrl,
+              "jobTitle": profile.brand.role,
               "knowsAbout": [
                 "C#",
                 ".NET",
@@ -108,12 +109,12 @@ export default function RootLayout({
                 "Full-stack development",
                 "Applied AI"
               ],
-              "knowsLanguage": ["Spanish", "English", "German"],
+              "knowsLanguage": ["Spanish", "English"],
               "jobLocation": {
                 "@type": "Place",
                 "address": {
-                  "addressLocality": "Zürich",
-                  "addressCountry": "CH"
+                  "addressLocality": "Madrid",
+                  "addressCountry": "ES"
                 }
               }
             })

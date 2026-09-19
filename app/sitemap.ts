@@ -1,27 +1,31 @@
-import { MetadataRoute } from 'next'
-import { projects } from '@/lib/projects'
+import { MetadataRoute } from "next"
 
+import { projects } from "@/lib/projects"
+import { siteUrl } from "@/lib/site"
+
+/**
+ * Las variantes de /for/<slug> son material para candidaturas concretas: llevan
+ * `noindex` en su metadata y aquí se excluyen del sitemap a propósito.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://jeanbravo.dev'
-
   const projectUrls = projects.map((project) => ({
-    url: `${baseUrl}/work/${project.slug}`,
+    url: `${siteUrl}/work/${project.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
+    changeFrequency: "monthly" as const,
     priority: 0.8,
   }))
 
   return [
     {
-      url: baseUrl,
+      url: siteUrl,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/work`,
+      url: `${siteUrl}/work`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.9,
     },
     ...projectUrls,

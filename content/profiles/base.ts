@@ -1,33 +1,38 @@
+import { siteLabel } from "@/lib/site"
 import type { Profile } from "./types"
 
 /**
  * Datos que no cambian entre variantes: identidad, contacto, ubicación y enlaces.
- * Todo lo que sí cambia por candidatura vive en cada perfil.
+ *
+ * ⚠ PLANTILLA: persona ficticia. Nombre, correo, teléfono, enlaces y foto son genéricos.
+ * Al publicar contenido real, sustituye estos valores (o crea un perfil nuevo en
+ * content/profiles/ y deja este como plantilla).
  */
 export const base: Omit<Profile, "slug" | "label" | "statement" | "intro" | "stats" | "stack" | "projects" | "experience"> = {
   brand: {
-    name: "Jean Bravo",
+    name: "Alex Rivera",
     role: "Full-stack .NET Engineer",
   },
   positioning: "Full-stack .NET Engineer — Cloud, Containers, Applied AI",
   availability: "Available for new projects",
   availabilityNote: "2026",
   meta: {
-    location: "Málaga, ES · Zürich, CH",
+    location: "Madrid, ES · Zürich, CH",
     modality: "Remote · Hybrid · Relocation",
     languages: "Spanish (native) · English (professional)",
     timezone: "CET (UTC+01:00)",
   },
   contact: {
-    email: "naejbravo@gmail.com",
-    phone: "+34 677 750 689",
-    github: "https://github.com/naejbravo",
-    linkedin: "https://www.linkedin.com/in/jean-bravo/",
-    cvEn: "/cv_eng_jean_2026.pdf",
-    cvDe: "/lebenslauf_jean_2026.pdf",
+    email: "hola@ejemplo.com",
+    phone: "+34 600 000 000",
+    github: "https://github.com/usuario",
+    linkedin: "https://linkedin.com/in/usuario",
+    site: siteLabel,
+    cvEn: "/cv_en.pdf",
+    cvDe: "/cv_de.pdf",
   },
   photo: {
-    src: "/perfil.png",
-    alt: "Portrait of Jean Bravo",
+    src: "/placeholder-portrait.svg",
+    alt: "Portrait placeholder",
   },
 }

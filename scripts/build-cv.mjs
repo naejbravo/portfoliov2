@@ -32,9 +32,11 @@ const port = Number(flag("--port") ?? 3199)
 const outDir = resolve(root, flag("--out-dir") ?? "public")
 
 const OUTPUTS = [
-  { lang: "en", file: "cv_eng_jean_2026.pdf" },
-  { lang: "de", file: "lebenslauf_jean_2026.pdf" },
+  { lang: "en", file: "cv_en.pdf" },
+  { lang: "de", file: "cv_de.pdf" },
 ]
+
+const cvSource = process.env.CV_CONTENT === "real" ? "real" : "template"
 
 const CHROMIUM_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -122,7 +124,7 @@ async function main() {
   const baseUrl = externalUrl ?? `http://127.0.0.1:${port}`
 
   if (!externalUrl) {
-    process.stdout.write(`▸ arrancando servidor de producción en ${baseUrl} (perfil: ${profileSlug})\n`)
+    process.stdout.write(`▸ arrancando servidor de producción en ${baseUrl} (perfil: ${profileSlug}, CV: ${cvSource})\n`)
     server = spawn(join(root, "node_modules/.bin/next"), ["start", "--port", String(port)], {
       cwd: root,
       env: { ...process.env, PORTFOLIO_PROFILE: profileSlug },
@@ -146,7 +148,7 @@ async function main() {
         process.stdout.write(`  ⚠ ${file} ocupa más de una página: revisa el contenido o el tamaño de fuente\n`)
       }
     }
-    process.stdout.write(`\nPDF generados en ${outDir} desde el perfil "${profileSlug}".\n`)
+    process.stdout.write(`\nPDF generados en ${outDir} desde el perfil "${profileSlug}" y el CV "${cvSource}".\n`)
   } finally {
     if (server) {
       server.kill("SIGTERM")

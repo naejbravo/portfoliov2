@@ -1,158 +1,115 @@
 {
+  "$comment": "PLANTILLA. Casos de estudio genéricos para el diseño: sin clientes, sin marcas y sin métricas reales. Los reales están en details.real.json: para publicarlos, intercambia los nombres de los dos ficheros.",
   "projects": [
     {
-      "slug": "webrrhhpro-hr-saas-multi-tenant-platform",
-      "displayName": "WebRRHHpro",
-      "tagline": "Multi-tenant HR SaaS with AI-powered OCR document classification, digital signatures and real-time collaboration.",
-      "description": "B2B SaaS platform for companies to manage HR documents, digital signatures and employee self-service without local infrastructure. Covers the full document lifecycle from AI-driven classification to automated expiration alerts.",
-      "status": "Active development",
-      "role": "Tech Lead & Full-stack .NET Developer — architecture, backend, deployment and production operations.",
-      "timeline": {
-        "start": "2026",
-        "end": null,
-        "stage": "Production tenants live"
-      },
-      "businessProblem": "HR teams managed employee documents, signatures and expiration tracking through paper workflows, email threads and local storage. This created compliance gaps, duplicated manual work and made it impossible to audit document lifecycles across departments or prove chain of custody for signed documents.",
-      "solutionOverview": "Built a cloud-hosted multi-tenant SaaS platform from scratch. Each tenant gets a dedicated subdomain with isolated database access via EF Core global query filters, custom branding, and independent notification channels (SMTP + WhatsApp). The platform automates the HR document lifecycle — AI-powered OCR classification (PdfPig), multi-mode digital signatures (OTP, simple, certificate-based), worker self-service portal without accounts, real-time notifications via SignalR, and RBAC across 6 roles.",
-      "technicalDecisions": [
-        "Clean Architecture on .NET 10 with C# 14 — separates domain, application, infrastructure and presentation layers. Chosen to enforce boundaries early and make tenant isolation, testing and future extraction of modules straightforward.",
-        "Blazor Web App (SSR + InteractiveServer) — unified .NET stack for backend and UI. SSR handles public pages and worker portal; InteractiveServer powers admin dashboards with real-time updates. Keeps the entire codebase in C#.",
-        "PostgreSQL with EF Core global query filters — every query is automatically scoped to the current tenant. No application-level .Where(t => t.TenantId == ...) scattered across the codebase. Combined with RBAC, this prevents data leaks at the ORM level.",
-        "Subdomain-based tenant resolution — tenant.platform.com resolves to an isolated database and brand configuration. Enables clean TLS termination per tenant through Caddy without application-level routing complexity.",
-        "PdfPig for OCR document classification — lightweight, pure .NET library with no native dependencies. Sufficient accuracy for structured HR documents (contracts, payslips, certificates) without the overhead of Tesseract-based alternatives.",
-        "Docker + Caddy on GCP with GitHub Actions CI/CD — single-container deployment per environment with automatic HTTPS, health checks and zero-downtime rolling updates. Infrastructure complexity stays low while supporting multi-tenant growth.",
-        "3-mode digital signature architecture — OTP via email (low friction for workers), simple click-to-sign (medium trust for internal docs), certificate-based with QuestPDF visual positioning (high trust for external docs). PKI integration with EJBCA/SignServer researched for enterprise-grade certificate signatures.",
-        "Trade-off — Blazor InteractiveServer holds a persistent SignalR connection per user. Acceptable for B2B SaaS with dozens-to-hundreds of concurrent users per tenant. Beyond ~500 concurrent users per node, would require Redis backplane or Azure SignalR for horizontal scaling."
-      ],
-      "technicalChallenges": [
-        "Designed tenant isolation across three layers — subdomain routing, EF Core global query filters, and RBAC role checks — ensuring no cross-tenant data exposure even through direct database inspection.",
-        "Built a document lifecycle state machine (Draft → Review → Validated → Expired) with automatic transitions triggered by signature completion events and expiration date thresholds.",
-        "Developed OCR classification pipeline that extracts key fields (employee name, document type, dates) from uploaded PDFs and auto-classifies them into HR categories — handles varied document layouts from different providers and languages.",
-        "Architected three independent signature workflows sharing a common audit trail schema — each mode validates differently (OTP expiry, click consent, certificate chain) but produces the same tamper-evident output.",
-        "Integrated SignalR real-time notifications with tenant-aware connection groups and structured JSON payloads — notifications are scoped to authorized users within their tenant context, not broadcast globally.",
-        "Set up CI/CD with Docker multi-stage builds, GitHub Actions, and Caddy reverse proxy on GCP — including health check endpoints, deployment verification and structured logging across all services.",
-        "Implemented Serilog structured logging with TenantId and CorrelationId enrichment — every log entry is traceable to a specific tenant and request, critical for debugging multi-tenant issues in production."
-      ],
-      "techStack": {
-        "backend": [".NET 10", "C# 14", "ASP.NET Core", "Blazor Web App", "EF Core 10"],
-        "data": ["PostgreSQL 17/18", "Supabase"],
-        "ui": ["MudBlazor 9"],
-        "infrastructure": ["Docker", "Caddy", "GCP", "GitHub Actions CI/CD"],
-        "ai_ocr": ["PdfPig", "Document classification", "Text extraction"],
-        "realtime": ["SignalR"],
-        "security": ["ASP.NET Identity", "RBAC", "JWT", "Multi-tenant query filters", "PKI research (EJBCA / SignServer)"]
+      "slug": "multi-tenant-saas-platform",
+      "displayName": "Multi-tenant SaaS platform",
+      "status": "In production",
+      "timeline": { "start": "2023", "end": null, "stage": "Production tenants live" },
+      "tagline": "Tenant isolation, role-based access and document workflows with a full audit trail.",
+      "solutionOverview": "Multi-tenant application with subdomain isolation, a permission model across six roles and a document workflow covering upload, classification, signature and archival. Delivered as a container image and operated on cloud infrastructure.",
+      "businessProblem": "Processes running on paper and shared drives, with no traceability and no way to prove who approved what.",
+      "role": "Solution architecture, data model, API design and front-end delivery, plus ownership of the deployment pipeline and production operations.",
+      "description": "Reference implementation of the architecture patterns the team reuses today.",
+      "callToAction": "Happy to walk through the data model, the isolation strategy and the trade-offs behind them.",
+      "impact": {
+        "ops": "Manual handling of documents removed from the daily workflow",
+        "quality": "Every state change leaves an auditable trail",
+        "scalability": "New tenants are provisioned without code changes"
       },
       "metrics": [
-        "95% paper elimination in HR document workflows",
-        "80% time reduction in signature workflows vs. manual processes",
-        "100% document traceability with full audit trail per signature event"
+        "95% less manual document handling",
+        "100% of state changes auditable",
+        "6 roles modelled across tenants"
       ],
-      "impact": {
-        "ops": "Eliminated 95% of paper-based HR workflows. Signature processes reduced from days to minutes across all tenants.",
-        "quality": "AI-powered classification eliminates manual document sorting errors. Automated expiration alerts prevent compliance gaps and missed renewals.",
-        "scalability": "Multi-tenant architecture enables new client onboarding without infrastructure changes. Adding a tenant is a configuration step, not a deployment."
+      "techStack": {
+        "backend": [".NET 10", "ASP.NET Core", "Entity Framework Core", "Clean Architecture"],
+        "data": ["PostgreSQL", "Row-level tenant isolation"],
+        "ui": ["Blazor Web App", "Design tokens", "Accessibility"],
+        "infrastructure": ["Docker", "GHCR", "GitHub Actions CI/CD", "Caddy"],
+        "security": ["RBAC", "Audit trail", "Digital signatures"]
       },
-      "callToAction": "Schedule a technical walkthrough of the multi-tenant architecture, AI document classification pipeline, digital signature workflows and the worker portal."
+      "technicalDecisions": [
+        "Tenant isolation enforced in the data layer with a global filter, instead of trusting every query to remember it.",
+        "Immutable history for document state changes: the audit trail is built from events, not from mutable rows.",
+        "Container images built once in CI and promoted between environments, so what is tested is what runs."
+      ],
+      "technicalChallenges": [
+        "Keeping read performance acceptable with tenant filters applied to every query.",
+        "Modelling signatures with three assurance levels without duplicating the workflow."
+      ]
     },
     {
-      "slug": "hermes",
-      "displayName": "Hermes Agent Infrastructure",
-      "tagline": "Self-hosted autonomous AI agent stack — persistent semantic memory, multi-model routing, browser automation and multi-platform messaging on a $5/month ARM VPS.",
-      "description": "Personal AI agent infrastructure built on Hermes Agent (Nous Research's open-source framework). I designed, deployed and operate the full self-hosted stack: vector-backed long-term memory, LLM provider routing with fallbacks, cloud browser automation, a multi-platform messaging gateway and scheduled automation — all running 24/7 on Oracle Cloud ARM64.",
-      "status": "Live 24/7",
-      "role": "Infrastructure & AI Engineer — self-hosted deployment, integration and operations of the open-source Hermes Agent framework.",
-      "timeline": {
-        "start": "2026",
-        "end": null,
-        "stage": "Running in production (personal)"
-      },
-      "businessProblem": "Hosted AI assistants are stateless, locked to a single provider and unreachable outside their own app. I wanted a persistent agent I fully control — one that remembers context across sessions, survives provider outages and rate limits, automates browser tasks, and is reachable from the messaging apps I already use — without recurring SaaS costs or sending private data to a third-party host.",
-      "solutionOverview": "Deployed and operate the full Hermes Agent stack self-hosted on Oracle Cloud (ARM64, Ubuntu 22.04): Mem0 (OSS mode) with a self-hosted Qdrant vector database for cross-session semantic memory, multi-model inference routed through OpenRouter and OpenCode Go with automatic fallback chains across ~20 providers, cloud browser automation via the Browser Use REST API with hybrid cloud/local routing, and a systemd-managed messaging gateway serving Telegram and Slack (6+ platforms supported). Cron-based scheduled jobs deliver daily briefings and health reports, and a Kanban orchestration pipeline dispatches multi-worker task flows. Exposed securely through Cloudflare Tunnel — no open inbound ports.",
-      "technicalDecisions": [
-        "Self-hosted Mem0 (OSS) + Qdrant over managed memory APIs — semantic long-term memory with hybrid search (vector + keyword) stays on my own infrastructure. The agent captures and retrieves cross-session context automatically via LLM-powered extraction, with zero per-request SaaS cost.",
-        "Multi-provider routing through OpenRouter / OpenCode Go — fallback chains across ~20 model providers (Claude, GPT, Gemini, DeepSeek, Qwen) with credential pools, rate-limit recovery and exhaustion tracking. No single provider is a point of failure.",
-        "Browser Use cloud API with hybrid routing — public URLs are handled by cloud browsers via REST; LAN/localhost targets auto-route to a local Chromium sidecar. Keeps internal services unexposed while enabling full web automation.",
-        "Cloudflare Tunnel instead of open ports — the dashboard and gateway are reachable from anywhere with no inbound firewall rules on the VPS, reducing attack surface on a box that holds API credentials.",
-        "systemd user services for the gateway and sidecars — automatic restarts, journald logging and clean dependency ordering without a container orchestrator. Docker is reserved for stateful services (Qdrant, Mem0).",
-        "OCI ARM64 free/low-cost tier — the entire stack (agent, vector DB, memory layer, gateway, dashboard) runs 24/7 on a ~$5/month ARM VPS, which forced deliberate choices about resource footprint and ARM-compatible images.",
-        "Trade-off — self-hosting means I own upgrades, backups and incident response. Acceptable for a personal system; it is also the point: the project exists to operate real AI infrastructure end-to-end, not just consume it."
-      ],
-      "technicalChallenges": [
-        "Integrated Mem0 (self-hosted OSS mode) with Qdrant v1.18 as vector store — configured LLM-powered memory extraction, semantic + keyword hybrid search and cross-session retrieval so the agent recalls facts and preferences without manual memory management.",
-        "Configured provider routing and fallback chains across ~20 LLM providers with credential pools, automatic rate-limit recovery and per-provider exhaustion tracking — the agent degrades gracefully instead of failing when a provider throttles.",
-        "Deployed the full stack on ARM64 (OCI) — sourcing/validating ARM-compatible Docker images for Qdrant and Mem0, tuning memory footprint to fit a small VPS, and keeping everything on Ubuntu 22.04 with unattended upgrades.",
-        "Set up a long-running multi-platform messaging gateway under systemd — Telegram and Slack live, with per-platform tool gating, DM pairing authorization and isolated session stores per platform.",
-        "Built scheduled automation with cron-based jobs (daily briefings, system health reports) delivered across platforms, plus Kanban orchestration for multi-profile, multi-worker task pipelines with automatic dispatch and failure recovery.",
-        "Operate 40+ agent skills with a background curator handling lifecycle — stale detection, archival, backup and rollback — keeping the agent's procedural knowledge maintainable over time."
-      ],
-      "techStack": {
-        "ai": ["Hermes Agent (Nous Research)", "OpenRouter", "OpenCode Go", "Mem0 (self-hosted)", "LLM fallback routing"],
-        "data": ["Qdrant v1.18 (vector DB)", "PostgreSQL", "Hybrid semantic + keyword search"],
-        "automation": ["Browser Use (cloud REST API)", "Cron jobs", "Kanban multi-worker orchestration", "40+ agent skills"],
-        "messaging": ["Telegram", "Slack", "Multi-platform gateway (systemd)"],
-        "infrastructure": ["OCI ARM64", "Ubuntu 22.04", "Docker", "Cloudflare Tunnel", "systemd"]
+      "slug": "container-delivery-pipeline",
+      "displayName": "Container delivery pipeline",
+      "status": "Active",
+      "timeline": { "start": "2024", "end": null, "stage": "Used for every release" },
+      "tagline": "Images built in CI, published to a registry and deployed with health-checked rollback.",
+      "solutionOverview": "Multi-architecture images built and pushed to the GitHub Container Registry (GHCR), then released with Docker Compose behind a reverse proxy. Every release verifies service health before switching traffic and reverts automatically when the check fails.",
+      "businessProblem": "Releases that needed a maintenance window, a manual checklist and a rollback plan agreed in a chat message.",
+      "role": "Pipeline design and implementation, plus the operational runbook and the rollback criteria.",
+      "description": "The deployment path every project in this portfolio now follows.",
+      "callToAction": "Can show the pipeline definition and the rollback behaviour end to end.",
+      "impact": {
+        "ops": "Releases no longer need a maintenance window",
+        "quality": "A failed health check reverts before it reaches users",
+        "scalability": "The same pipeline serves every project"
       },
       "metrics": [
-        "~$5/month total infrastructure cost for a 24/7 autonomous agent stack",
-        "~20 LLM providers behind automatic fallback routing — no single point of failure",
-        "6+ messaging platforms supported through one self-hosted gateway"
+        "Releases down from 45 minutes to 6",
+        "No manual approval steps",
+        "Automatic revert on failed health check"
       ],
-      "impact": {
-        "ops": "A persistent AI agent available 24/7 from Telegram, Slack or the CLI, with daily automated briefings and health reports — fully self-hosted and self-operated.",
-        "quality": "Cross-session semantic memory (Mem0 + Qdrant) means the agent retains context, preferences and facts indefinitely — no repeated onboarding per conversation.",
-        "scalability": "Provider-agnostic routing and containerized stateful services make swapping models, adding messaging platforms or migrating hosts a configuration change, not a rebuild."
+      "techStack": {
+        "infrastructure": ["Docker", "Docker Compose", "GHCR", "GitHub Actions", "Caddy"],
+        "backend": ["Multi-architecture builds", "Health checks"],
+        "data": ["Pre-flight database backup", "Controlled migrations"]
       },
-      "callToAction": "Happy to walk through the architecture — memory pipeline, provider routing, browser automation and how the whole stack fits on a $5 ARM VPS."
+      "technicalDecisions": [
+        "Immutable images tagged by commit and promoted between environments instead of rebuilt.",
+        "The health check is the release gate: no traffic switch until the service answers correctly.",
+        "Pre-flight backups and controlled migrations, so a revert never needs a manual database fix."
+      ],
+      "technicalChallenges": [
+        "Getting multi-architecture builds to cache well enough to stay under a few minutes.",
+        "Making rollback safe once a migration has already run."
+      ]
     },
     {
-      "slug": "webcaepro-cae-management-platform",
-      "displayName": "WebCAEpro",
-      "tagline": "Workforce management platform with GDPR-compliant digital signature workflows, REST API and multi-brand support.",
-      "description": "Operations platform for CAE companies managing clients, workers, time tracking and monthly timesheet validation. Features automated GDPR-compliant e-signatures, mobile time tracking APIs and multi-brand tenant support.",
-      "status": "Production",
-      "role": "Contributing Developer — Full-stack .NET: features, REST APIs, PDF pipeline and multi-brand support.",
-      "timeline": {
-        "start": "2025",
-        "end": null,
-        "stage": "Active multi-client deployment"
-      },
-      "businessProblem": "Operations teams at CAE companies tracked workers, clients and monthly timesheets entirely through spreadsheets and manual processes. Each monthly closing required days of manual reconciliation, signature collection was done on paper or scanned PDFs, and there was no auditable trail for timesheet validation or GDPR compliance.",
-      "solutionOverview": "Extended an existing ASP.NET Core MVC platform with production-critical features. Implemented an automated GDPR-compliant digital signature workflow for monthly timesheet validation, a REST API for mobile time tracking with concurrent operation limits, multi-brand support for 3 business brands on a single codebase, and a PDF generation and stamping pipeline combining QuestPDF, PdfSharpCore and ChromeHtmlToPdf.",
-      "technicalDecisions": [
-        "Modular ASP.NET Core MVC monolith — evolved the existing system rather than rewriting. Brand-specific behavior (themes, databases, communication channels) handled through configuration and isolated database instances per brand, not code forks.",
-        "SHA-256 magic tokens for GDPR-compliant e-signatures — workers receive time-limited, single-use magic links via email. Signature capture includes stroke count, IP, UserAgent and timestamp in the audit trail.",
-        "Async background job processing for PDF generation — timesheet signing triggers PDF stamping (PdfSharpCore), structured report generation (QuestPDF) and email delivery asynchronously, keeping the UI responsive during monthly validation peaks.",
-        "MySQL (Pomelo EF Core provider) and SQL Server — dual database support based on client deployment environment. EF Core abstractions keep the codebase database-agnostic.",
-        "REST API with encrypted API keys and per-day operation limits — mobile apps authenticate via client-specific API keys, with rate limiting scoped to calendar days and timezone-aware boundaries.",
-        "Multi-brand tenant architecture — single codebase serving 3 brands with isolated databases, independent SMTP/WhatsApp communication channels and custom CSS themes per brand. Brand resolution based on deployment configuration.",
-        "PDF pipeline layering — QuestPDF for programmatic structured reports, PdfSharpCore for visual signature stamping on existing PDFs, ChromeHtmlToPdf for converting HTML templates to PDF. Each tool chosen for its specific role in the pipeline.",
-        "Trade-off — keeping the MVC monolith avoided a risky rewrite. Brand-specific logic lives in configuration and isolated databases, not in code branches. The cost is that deploying a new brand requires infrastructure setup rather than purely declarative configuration."
-      ],
-      "technicalChallenges": [
-        "Implemented end-to-end digital signature workflow: token generation (SHA-256 + expiry), email delivery, signature capture (stroke count, browser metadata), PDF stamping (PdfSharpCore), and async audit trail generation — all with retry logic for transient failures.",
-        "Designed REST API for concurrent mobile time tracking — handles workers clocking in/out simultaneously across time zones with per-day operation limits and encrypted API keys per client.",
-        "Built multi-brand support on a single codebase — 3 business brands with isolated databases, independent SMTP/WhatsApp channels and custom CSS themes, all resolved at runtime without code branches.",
-        "Created PDF pipeline combining three libraries for different stages: QuestPDF for structured report generation, PdfSharpCore for visual signature stamping on existing documents, and ChromeHtmlToPdf for HTML-to-PDF conversion of dynamic content.",
-        "Implemented CSV import pipeline for bulk data migration — validates templates, enforces referential integrity and reduces manual data entry by 80% compared to previous spreadsheet workflows."
-      ],
-      "techStack": {
-        "backend": [".NET 8", "ASP.NET Core MVC", "Entity Framework Core"],
-        "data": ["MySQL (Pomelo)", "SQL Server"],
-        "pdf": ["QuestPDF", "PdfSharpCore", "ChromeHtmlToPdf"],
-        "infrastructure": ["IIS / Windows Server", "SMTP + WhatsApp API"],
-        "security": ["ASP.NET Identity", "Role-based access", "Tenant isolation", "SHA-256 magic tokens"]
+      "slug": "real-time-metrics-dashboard",
+      "displayName": "Real-time metrics dashboard",
+      "status": "In production",
+      "timeline": { "start": "2022", "end": "2024", "stage": "Delivered" },
+      "tagline": "Live operational dashboards with combinable filters and scheduled exports.",
+      "solutionOverview": "Push-based dashboards over a signal channel, aggregations computed in the database and exports scheduled to spreadsheet and PDF. Designed to stay readable on always-on screens.",
+      "businessProblem": "Teams making decisions from a spreadsheet that was already hours out of date.",
+      "role": "Data model, aggregation strategy, front-end implementation and the export jobs.",
+      "description": "Where most of the reporting experience in this portfolio comes from.",
+      "callToAction": "Available to discuss aggregation strategy and how to keep dashboards honest.",
+      "impact": {
+        "ops": "Decisions made on live numbers instead of yesterday's file",
+        "quality": "One definition per metric, shared by every view",
+        "scalability": "New panels reuse the same aggregation layer"
       },
       "metrics": [
-        "80% reduction in manual data entry through CSV imports",
-        "100% digital timesheet compliance with audit trail",
-        "3 brands running from a single codebase"
+        "Sub-second updates on the operational view",
+        "One shared definition per metric",
+        "Scheduled exports without manual work"
       ],
-      "impact": {
-        "ops": "Reduced manual data entry by 80% through CSV imports and centralized management. Monthly timesheet closing reduced from days to hours.",
-        "quality": "Eliminated data inconsistencies across spreadsheets with validated templates and referential integrity enforcement. Digital signatures provide auditable chain of custody.",
-        "scalability": "Template-driven architecture supports adding new clients without code changes. Multi-brand model allows market expansion through configuration, not development."
+      "techStack": {
+        "backend": [".NET", "SignalR", "Aggregation layer"],
+        "data": ["SQL Server", "Scheduled jobs"],
+        "ui": ["TypeScript", "Design tokens", "Charts"]
       },
-      "callToAction": "Available for a technical walkthrough of the signature workflow, API architecture and multi-brand deployment model."
+      "technicalDecisions": [
+        "Aggregations computed in the database and cached by time bucket, not in the browser.",
+        "Push updates limited to the visible time window, to avoid flooding the client.",
+        "Exports generated by the same code path as the on-screen view, so the numbers always match."
+      ],
+      "technicalChallenges": [
+        "Keeping the interface responsive with several panels subscribing at once.",
+        "Reconciling timezone boundaries between the operational view and the stored history."
+      ]
     }
   ]
 }
