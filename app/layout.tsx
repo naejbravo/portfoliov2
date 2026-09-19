@@ -16,17 +16,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bravojc.com"),
   title: {
-    default: "Jean Bravo · Backend & AI Engineer — .NET, Cloud, Applied AI",
+    default: "Jean Bravo · Backend & AI Engineer — .NET, Cloud, Applied AI · Zürich",
     template: "%s · Jean Bravo",
   },
   description:
-    "Backend engineer building production systems — REST APIs, multi-tenant SaaS backends and AI-powered pipelines. .NET, PostgreSQL, Docker, GCP/Azure, LLM integrations, RAG and agent infrastructure.",
+    "Backend engineer building production systems — REST APIs, multi-tenant SaaS backends and AI-powered pipelines. .NET, PostgreSQL, Docker, GCP/Azure, LLM integrations, RAG and agent infrastructure. Relocating to Zürich, EU passport.",
   openGraph: {
     type: "website",
     url: "/",
-    title: "Jean Bravo · Backend & AI Engineer",
+    title: "Jean Bravo · Backend & AI Engineer — Zürich",
     description:
-      "Backend engineer building production systems — REST APIs, cloud infrastructure and applied AI (LLMs, RAG, agents).",
+      "Backend engineer building production systems — REST APIs, cloud infrastructure and applied AI (LLMs, RAG, agents). Relocating to Zürich, EU passport.",
     locale: "en_US",
     siteName: "Jean Bravo",
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jean Bravo · Backend & AI Engineer",
     description:
-      "Backend engineer — .NET, REST APIs, PostgreSQL, Docker, cloud and applied AI (LLMs, RAG, agents).",
+      "Backend engineer — .NET, REST APIs, PostgreSQL, Docker, cloud and applied AI (LLMs, RAG, agents). Relocating to Zürich.",
     creator: "@jeanbravo",
   },
   keywords: [
@@ -54,6 +54,12 @@ export const metadata: Metadata = {
     "AI Agents",
     "Multi-tenant",
     "B2B SaaS",
+    "Zürich",
+    "Switzerland",
+    "EU passport",
+    ".NET Developer Switzerland",
+    "Digital Signatures",
+    "Document Automation",
   ],
   authors: [{ name: "Jean Bravo" }],
 }
@@ -77,7 +83,14 @@ export default function RootLayout({
               "name": "Jean Bravo",
               "url": "https://bravojc.com",
               "jobTitle": "Backend & AI Engineer",
-              "knowsLanguage": ["Spanish", "English"]
+              "knowsLanguage": ["Spanish", "English", "German"],
+              "jobLocation": {
+                "@type": "Place",
+                "address": {
+                  "addressLocality": "Zürich",
+                  "addressCountry": "CH"
+                }
+              }
             })
           }}
         />

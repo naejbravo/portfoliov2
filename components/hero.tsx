@@ -19,6 +19,9 @@ export default function Hero() {
           <p className="mt-5 max-w-prose text-lg text-neutral-600 dark:text-neutral-300">
             Backend engineer building and operating production systems — REST APIs, multi-tenant SaaS backends and AI-powered pipelines. I work across .NET, PostgreSQL, Docker and cloud infrastructure (GCP, Azure, OCI), integrating LLMs, RAG and agent tooling into real products.
           </p>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300">
+            🇪🇺 EU passport &nbsp;·&nbsp; Relocating to <strong>Zürich</strong> in 2026 &nbsp;·&nbsp; <a href="/lebenslauf_jean_2026.pdf" className="underline underline-offset-2 hover:text-blue-900 dark:hover:text-blue-200">Lebenslauf (DE)</a>
+          </div>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Link
               href="/work"
@@ -59,6 +62,13 @@ export default function Hero() {
             >
               <FileText className="size-4" />
               CV (EN)
+            </a>
+            <a
+              href="/lebenslauf_jean_2026.pdf"
+              className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
+            >
+              <FileText className="size-4" />
+              Lebenslauf (DE)
             </a>
           </div>
 
