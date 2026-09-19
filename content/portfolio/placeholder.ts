@@ -1,12 +1,14 @@
 /**
- * Contenido de la portada.
+ * Contenido de la portada — PLANTILLA.
  *
  * Los cinco pilares del perfil mandan sobre este archivo: soluciones .NET, Docker y
  * registry (GHCR), cloud engineering y fullstack, con la IA aplicada como capacidad
- * secundaria. Lo editable vive aquí; los casos de estudio salen de content/projects/details.json.
+ * secundaria.
  *
- * El ritmo de cada bloque (3 métricas, 3 columnas de 5 tecnologías, 4 filas de proyecto,
- * 4 hitos de trayectoria) es el del diseño: cambiarlo desajusta la comparación con el mockup.
+ * Todo el copy de las secciones es genérico de plantilla a propósito: la idea es poder
+ * sustituirlo por contenido adaptado a cada candidatura sin tocar los componentes. El
+ * ritmo de cada bloque (3 métricas, 3 columnas de stack, 4 filas de proyecto, 4 hitos de
+ * trayectoria) es el del diseño; cambiarlo desajusta la comparación con el mockup.
  */
 
 export type Level = "advanced" | "solid" | "working knowledge"
@@ -14,6 +16,16 @@ export type Level = "advanced" | "solid" | "working knowledge"
 export type StackGroup = {
   title: string
   items: { name: string; level: Level }[]
+}
+
+export type ProjectRow = {
+  id: string
+  title: string
+  summary: string
+  year: string
+  detail: string
+  tech: string[]
+  href?: string
 }
 
 export type ExperienceEntry = {
@@ -29,7 +41,7 @@ export const portfolio = {
     role: "Full-stack .NET Engineer",
   },
 
-  /* línea de posicionamiento única — la misma que deben contar CV y metadatos */
+  /* línea de posicionamiento única — la misma que cuentan CV y metadatos */
   positioning: "Full-stack .NET Engineer — Cloud, Containers, Applied AI",
 
   availability: "Available for new projects",
@@ -90,6 +102,46 @@ export const portfolio = {
       ],
     },
   ] satisfies StackGroup[],
+
+  /* filas de la portada: plantilla, no los casos reales (esos viven en /work) */
+  projects: [
+    {
+      id: "01",
+      title: "Multi-tenant .NET platform",
+      summary: "Approval and signature workflows with a full audit trail for 300 internal users.",
+      year: "2025",
+      detail:
+        "ASP.NET Core and Blazor solution with tenant isolation, role-based permissions and PDF generation. Cut report turnaround from 40 to 15 minutes per case.",
+      tech: [".NET 10", "Blazor", "PostgreSQL"],
+    },
+    {
+      id: "02",
+      title: "Container delivery pipeline",
+      summary: "Images built in CI, published to GHCR and deployed with health-checked rollback.",
+      year: "2026",
+      detail:
+        "Multi-architecture images built and pushed to the GitHub Container Registry, released with Docker Compose behind a reverse proxy and reverted automatically when a health check fails.",
+      tech: ["Docker", "GHCR", "GitHub Actions"],
+    },
+    {
+      id: "03",
+      title: "Cloud infrastructure as code",
+      summary: "Terraform-managed environments on GCP, Azure and OCI, wired to CI/CD.",
+      year: "2026",
+      detail:
+        "Reproducible environments defined as code, with secrets management, structured logging and monitoring from the start. Traffic only switches after the health check passes.",
+      tech: ["Terraform", "GCP", "Azure"],
+    },
+    {
+      id: "04",
+      title: "Full-stack product surface",
+      summary: "TypeScript and React front end over a .NET API, with accessibility and design tokens.",
+      year: "2025",
+      detail:
+        "Component design system, accessible states and type-safe API contracts. End-to-end tests cover the complete signature flow.",
+      tech: ["TypeScript", "React", ".NET"],
+    },
+  ] satisfies ProjectRow[],
 
   experience: [
     {
