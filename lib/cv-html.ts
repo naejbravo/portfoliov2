@@ -96,16 +96,15 @@ export function renderCvHtml({
   .edu-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
   .edu-row .date { color: #777; font-size: 8.8pt; white-space: nowrap; margin-left: 12px; }
 
-  .skills { width: 100%; border-collapse: collapse; }
-  .skills td { padding: 1.5px 0; vertical-align: top; }
-  .skills td.label { width: 158px; color: #1e5f9e; font-weight: bold; padding-right: 10px; }
+  .skill-row { margin-bottom: 1.5px; }
+  .skill-row .label { color: #1e5f9e; font-weight: bold; }
 
   .langs span.lang { color: #1e5f9e; font-weight: bold; }
   .langs { border-bottom: 1px solid #ddd; padding-bottom: 6px; }
 </style>
 </head>
 <body>
-  <img class="photo" src="/placeholder-portrait.svg" alt="${escapeHtml(profile.brand.name)}">
+  <img class="photo" src="${escapeHtml(profile.photo.src)}" alt="${escapeHtml(profile.brand.name)}">
 
   <div class="header-block">
     <h1>${escapeHtml(profile.brand.name)}</h1>
@@ -139,17 +138,16 @@ export function renderCvHtml({
     .join("")}
 
   <h2>${escapeHtml(cv.labels.skills)}</h2>
-  <table class="skills">
-    ${cv.skills
-      .map(
-        (row) =>
-          `<tr><td class="label">${escapeHtml(row.label)}</td><td>${escapeHtml(row.items)}</td></tr>`,
-      )
-      .join("\n    ")}
-  </table>
+  ${cv.skills
+    .map(
+      (row) =>
+        `<div class="skill-row"><span class="label">${escapeHtml(row.label)}:</span> ${escapeHtml(row.items)}</div>`,
+    )
+    .join("\n  ")}
 
   <h2>${escapeHtml(cv.labels.languages)}</h2>
   <p class="langs">${escapeHtml(cv.languages)}</p>
+  ${cv.interests ? `\n  <h2>${escapeHtml(cv.labels.interests)}</h2>\n  <p class="langs">${escapeHtml(cv.interests)}</p>` : ""}
 </body>
 </html>
 `

@@ -36,6 +36,7 @@ export type CvContent = {
     education: string
     skills: string
     languages: string
+    interests: string
     present: string
     location: string
   }
@@ -44,4 +45,6 @@ export type CvContent = {
   education: CvEducation[]
   skills: CvSkills[]
   languages: string
+  /** intereses/hobbies (sección esperada en DACH); si falta, no se pinta */
+  interests?: string
 }

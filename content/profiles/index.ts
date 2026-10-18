@@ -1,4 +1,5 @@
 import { defaultProfile } from "./default"
+import { realProfile } from "./real"
 import { saasB2bProfile } from "./saas-b2b"
 import type { Profile } from "./types"
 
@@ -10,6 +11,7 @@ import type { Profile } from "./types"
  */
 export const profiles = {
   default: defaultProfile,
+  real: realProfile,
   "saas-b2b": saasB2bProfile,
 } satisfies Record<string, Profile>
 

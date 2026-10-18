@@ -15,8 +15,9 @@ export const cvEn: CvContent = {
     education: "Education",
     skills: "Skills",
     languages: "Languages",
+    interests: "Interests",
     present: "Present",
-    location: "Spain",
+    location: "Spain → Zürich (EU passport, no visa required)",
   },
   experience: [
     {
@@ -101,7 +102,8 @@ export const cvEn: CvContent = {
         "ASP.NET Identity, RBAC, JWT, digital signatures (OTP, SHA-256, certificate), audit trails, GDPR",
     },
   ],
-  languages: "Spanish — Native    English — Proficient (C1)",
+  languages: "Spanish — Native    English — B2    German — A1 (learning)",
+  interests: "Team sports · Volunteering",
 }
 
 export const cvDe: CvContent = {
@@ -115,6 +117,7 @@ export const cvDe: CvContent = {
     education: "Ausbildung",
     skills: "Fähigkeiten",
     languages: "Sprachen",
+    interests: "Interessen",
     present: "Heute",
     location: "Spanien → Zürich (EU-Pass, kein Visum erforderlich)",
   },
@@ -200,5 +203,6 @@ export const cvDe: CvContent = {
       items: "ASP.NET Identity, RBAC, JWT, Audit-Trails, DSGVO",
     },
   ],
-  languages: "Spanisch — Muttersprache    Englisch — Verhandlungssicher (C1)",
+  languages: "Spanisch — Muttersprache    Englisch — B2    Deutsch — A1 (Grundkenntnisse)",
+  interests: "Mannschaftssport · Ehrenamt",
 }
