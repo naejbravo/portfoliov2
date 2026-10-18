@@ -8,6 +8,7 @@ import { linkLabel } from "@/components/hero"
  * perfil (`intro`), y `content/cv` pone experiencia, proyectos, formación y skills reales.
  *
  * El HTML resultante lo sirve /cv/<lang> y el script `npm run cv:build` lo imprime a PDF.
+ * La cabecera es un flex (texto + foto en flujo): la foto no puede pisar texto.
  */
 export function renderCvHtml({
   profile,
@@ -57,12 +58,12 @@ export function renderCvHtml({
   }
   a { color: inherit; text-decoration: none; }
 
+  .header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 8px; }
+  .header-text { flex: 1 1 auto; min-width: 0; }
   .photo {
-    position: absolute;
-    top: 11mm;
-    right: 15mm;
-    width: 96px;
-    height: 128px;
+    flex: 0 0 auto;
+    width: 90px;
+    height: 120px;
     object-fit: cover;
     object-position: top;
     border-radius: 6px;
@@ -81,7 +82,6 @@ export function renderCvHtml({
     padding-bottom: 2px;
     margin: 8px 0 5px;
   }
-  .header-block { margin-bottom: 8px; padding-right: 115px; }
 
   .entry { margin-bottom: 6px; }
   .entry-head { display: flex; justify-content: space-between; align-items: baseline; }
@@ -104,17 +104,18 @@ export function renderCvHtml({
 </style>
 </head>
 <body>
-  <img class="photo" src="${escapeHtml(profile.photo.src)}" alt="${escapeHtml(profile.brand.name)}">
-
-  <div class="header-block">
-    <h1>${escapeHtml(profile.brand.name)}</h1>
-    <div class="subtitle">${escapeHtml(cv.subtitle ?? profile.positioning)}</div>
-    <div class="contact">
-      ${escapeHtml(contact.email)}<span class="sep">|</span>${escapeHtml(contact.phone)}<span class="sep">|</span>${escapeHtml(contact.site)}
+  <div class="header">
+    <div class="header-text">
+      <h1>${escapeHtml(profile.brand.name)}</h1>
+      <div class="subtitle">${escapeHtml(cv.subtitle ?? profile.positioning)}</div>
+      <div class="contact">
+        ${escapeHtml(contact.email)}<span class="sep">|</span>${escapeHtml(contact.phone)}<span class="sep">|</span>${escapeHtml(contact.site)}
+      </div>
+      <div class="contact">
+        ${escapeHtml(cv.labels.location)}<span class="sep">|</span>${escapeHtml(linkLabel(contact.linkedin))}<span class="sep">|</span>${escapeHtml(linkLabel(contact.github))}
+      </div>
     </div>
-    <div class="contact">
-      ${escapeHtml(cv.labels.location)}<span class="sep">|</span>${escapeHtml(linkLabel(contact.linkedin))}<span class="sep">|</span>${escapeHtml(linkLabel(contact.github))}
-    </div>
+    <img class="photo" src="${escapeHtml(profile.photo.src)}" alt="${escapeHtml(profile.brand.name)}">
   </div>
 
   <h2>${escapeHtml(cv.labels.profile)}</h2>
