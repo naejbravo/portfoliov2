@@ -106,6 +106,125 @@ export const cvEn: CvContent = {
   interests: "Team sports · Volunteering",
 }
 
+/**
+ * Variante inglesa para ofertas en España: mismo historial y mismas competencias que
+ * `cvEn`, sin la línea de Suiza ni el pasaporte UE. La ubicación es la real y la
+ * disponibilidad es inmediata.
+ */
+export const cvEnSpain: CvContent = {
+  ...cvEn,
+  labels: {
+    ...cvEn.labels,
+    location: "Málaga, Spain · available immediately",
+  },
+}
+
+/**
+ * CV en español para el mercado español: sin referencias a Suiza, Zúrich ni visado.
+ * Titular, perfil y competencias propios del idioma; el historial es el mismo.
+ */
+export const cvEs: CvContent = {
+  subtitle: "Ingeniero .NET full-stack — Cloud, Contenedores, IA aplicada",
+  profile:
+    "Ingeniero .NET full-stack que construye y opera sistemas en producción de principio a fin: diseño de soluciones y modelos de datos, ASP.NET Core y Blazor, imágenes de contenedor publicadas en GHCR e infraestructura cloud en GCP, Azure y OCI con Terraform y CI/CD. IA aplicada — integraciones LLM y RAG — como capacidad adicional, no como titular.",
+  labels: {
+    profile: "Perfil",
+    experience: "Experiencia profesional",
+    projects: "Proyectos",
+    education: "Formación",
+    skills: "Competencias",
+    languages: "Idiomas",
+    interests: "Intereses",
+    present: "Actualidad",
+    location: "Málaga, España · Incorporación inmediata",
+  },
+  experience: [
+    {
+      title: "Tech Lead & Full-stack .NET Developer",
+      company: "HumanTech Software",
+      period: "ene 2026 – actualidad",
+      project: "WebRRHHpro — SaaS de RRHH multi-tenant (producción)",
+      bullets: [
+        "Diseñé y desarrollé una plataforma SaaS multi-tenant (.NET 10, Blazor, PostgreSQL, Clean Architecture) con aislamiento por subdominio, RBAC y filtros globales de EF Core para 6 roles.",
+        "Implementé clasificación documental con IA (OCR, extracción de campos, autocategorización) y flujos de firma en 3 modos (OTP, clic, certificado). Reduje un 95 % los procesos en papel y un 80 % el tiempo de firma.",
+        "Diseñé y opero la infraestructura de producción en GCP: imágenes Docker publicadas en GHCR, CI/CD con GitHub Actions, Caddy, SignalR y Serilog.",
+      ],
+    },
+    {
+      title: "Desarrollador Full-stack .NET",
+      company: "HumanTech Software",
+      period: "may 2025 – actualidad",
+      project: "WebCAEpro — Gestión de personal (multi-tenant)",
+      bullets: [
+        "Implementé un flujo de firma digital conforme al RGPD con enlaces mágicos SHA-256, trazabilidad de auditoría y estampado de PDF — 100 % de cumplimiento digital.",
+        "Diseñé una API REST para el registro horario móvil con claves de API cifradas y validación por zona horaria.",
+        "Diseñé una única base de código para 3 marcas de negocio, con bases de datos aisladas y canales independientes de SMTP/WhatsApp.",
+      ],
+    },
+    {
+      title: "Ingeniero de Software",
+      company: "Correcto · Startup",
+      period: "may 2022 – may 2023",
+      bullets: [
+        "Desarrollé plataformas web responsivas con Angular y JavaScript en un entorno startup ágil.",
+        "Gestioné despliegues en GCP y trabajé con equipos multidisciplinares usando Jira.",
+      ],
+    },
+  ],
+  projects: [
+    {
+      title: "Infraestructura del agente Hermes — stack de agente IA autoalojado",
+      company: "Personal",
+      period: "2026 – actualidad",
+      bullets: [
+        "Despliego y opero un agente de IA autoalojado 24/7 (Hermes Agent, open source de Nous Research) en Oracle Cloud ARM64 — Docker, systemd, Cloudflare Tunnel, ~5 USD/mes de coste total.",
+        "Memoria semántica persistente con Mem0 + Qdrant autoalojados (búsqueda híbrida semántica y por palabras clave); enrutado multi-modelo de LLM vía OpenRouter con fallback automático entre ~20 proveedores.",
+        "Automatización de navegador en la nube (Browser Use API), pasarela de mensajería multiplataforma (Telegram, Slack) y automatización programada con cron.",
+      ],
+    },
+  ],
+  education: [
+    {
+      title: "Programa Full Stack Developer",
+      detail: "Upgrade Hub, Madrid",
+      period: "2021 – 2022",
+    },
+    {
+      title: "Técnico Superior en Administración de Sistemas Informáticos en Red (ASIR)",
+      detail: "IES Fuengirola N°1",
+      period: "2018 – 2020",
+    },
+  ],
+  skills: [
+    {
+      label: ".NET",
+      items:
+        "C# 14, .NET 8/10, ASP.NET Core, APIs REST, EF Core, Blazor, Clean Architecture, multi-tenant, RBAC, SignalR",
+    },
+    {
+      label: "Cloud y contenedores",
+      items:
+        "Docker, GHCR (registro de contenedores), Kubernetes (nociones), GCP, Azure, OCI, Terraform, CI/CD con GitHub Actions, Caddy, Cloudflare Tunnel, Linux/systemd",
+    },
+    {
+      label: "Datos",
+      items: "PostgreSQL, MySQL, SQL Server, Qdrant (base de datos vectorial)",
+    },
+    {
+      label: "IA aplicada",
+      items:
+        "Integraciones LLM, enrutado multi-modelo (OpenRouter), RAG, memoria semántica (Mem0), automatización de navegador (Browser Use), clasificación documental con OCR",
+    },
+    {
+      label: "Seguridad y documentos",
+      items:
+        "ASP.NET Identity, RBAC, JWT, firmas digitales (OTP, SHA-256, certificado), auditoría, RGPD",
+    },
+  ],
+  languages: "Español — Nativo    Inglés — B2    Alemán — A1 (en curso)",
+  interests: "Deporte en equipo · Voluntariado",
+}
+
 export const cvDe: CvContent = {
   subtitle: "Full-stack .NET-Entwickler — Cloud, Container, Angewandte KI",
   profile:

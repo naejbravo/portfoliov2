@@ -59,7 +59,7 @@ content/profiles/
 Los PDF se generan desde el perfil activo, así que no pueden contradecir a la web:
 
 ```bash
-npm run cv:build                        # perfil activo → public/cv_en.pdf y public/cv_de.pdf
+npm run cv:build                        # perfil activo → cv_en, cv_de, cv_es y cv_en_spain en public/
 npm run cv:build -- --profile saas-b2b  # CV de una variante
 npm run cv:build -- --out-dir /tmp/cv   # sin tocar public/
 CV_CONTENT=real npm run cv:build        # con los datos reales de content/cv/real.ts
@@ -69,6 +69,8 @@ CV_CONTENT=real npm run cv:build        # con los datos reales de content/cv/rea
   otro no toca ni la maqueta ni el generador.
 - `lib/cv-html.ts` — maqueta A4; el titular y el párrafo de perfil salen del perfil activo.
 - `/cv/<lang>` — sirve ese HTML, útil para revisar cambios en el navegador antes de generar el PDF.
+  Variantes servidas: `en`, `de`, `es` y `en-spain` (inglés con ubicación solo España, sin la línea
+  de Suiza).
 - El script busca Chromium (el de Playwright, `/usr/bin/chromium`, Chrome de macOS/Windows) o usa
   `CHROME_PATH`, e informa si algún PDF pasa de una página.
 

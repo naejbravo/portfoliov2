@@ -34,6 +34,8 @@ const outDir = resolve(root, flag("--out-dir") ?? "public")
 const OUTPUTS = [
   { lang: "en", file: "cv_en.pdf" },
   { lang: "de", file: "cv_de.pdf" },
+  { lang: "es", file: "cv_es.pdf" },
+  { lang: "en-spain", file: "cv_en_spain.pdf" },
 ]
 
 const cvSource = process.env.CV_CONTENT === "real" ? "real" : "template"

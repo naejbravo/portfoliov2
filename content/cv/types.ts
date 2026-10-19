@@ -3,7 +3,7 @@
  * cambiar de uno a otro no toca ni la maqueta ni el generador de PDF.
  */
 
-export type CvLanguage = "en" | "de"
+export type CvLanguage = "en" | "de" | "es"
 
 export type CvEntry = {
   title: string

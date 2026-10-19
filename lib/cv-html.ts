@@ -14,10 +14,13 @@ export function renderCvHtml({
   profile,
   cv,
   lang,
+  docTitle,
 }: {
   profile: Profile
   cv: CvContent
   lang: CvLanguage
+  /** título del documento (metadatos del PDF); si falta, «Nombre — CV (LANG)» */
+  docTitle?: string
 }): string {
   const { contact } = profile
 
@@ -43,7 +46,7 @@ export function renderCvHtml({
 <html lang="${lang}">
 <head>
 <meta charset="utf-8">
-<title>${escapeHtml(profile.brand.name)} — CV (${lang.toUpperCase()})</title>
+<title>${escapeHtml(docTitle ?? `${profile.brand.name} — CV (${lang.toUpperCase()})`)}</title>
 <style>
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
