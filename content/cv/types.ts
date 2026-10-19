@@ -41,7 +41,8 @@ export type CvContent = {
     location: string
   }
   experience: CvEntry[]
-  projects: CvEntry[]
+  /** opcional: si falta o está vacío, la sección no se pinta */
+  projects?: CvEntry[]
   education: CvEducation[]
   skills: CvSkills[]
   languages: string

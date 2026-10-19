@@ -52,18 +52,6 @@ export const cvEn: CvContent = {
       ],
     },
   ],
-  projects: [
-    {
-      title: "Hermes Agent Infrastructure — self-hosted AI agent stack",
-      company: "Personal",
-      period: "2026 – Present",
-      bullets: [
-        "Deployed and operate a 24/7 self-hosted AI agent (Hermes Agent, open source by Nous Research) on Oracle Cloud ARM64 — Docker, systemd, Cloudflare Tunnel, ~$5/month total cost.",
-        "Persistent semantic memory with self-hosted Mem0 + Qdrant vector DB (hybrid semantic + keyword search); multi-model LLM routing via OpenRouter with automatic fallbacks across ~20 providers.",
-        "Cloud browser automation (Browser Use API), multi-platform messaging gateway (Telegram, Slack) and cron-based scheduled automation.",
-      ],
-    },
-  ],
   education: [
     {
       title: "Full Stack Developer Program",
@@ -171,18 +159,6 @@ export const cvEs: CvContent = {
       ],
     },
   ],
-  projects: [
-    {
-      title: "Infraestructura del agente Hermes — stack de agente IA autoalojado",
-      company: "Personal",
-      period: "2026 – actualidad",
-      bullets: [
-        "Despliego y opero un agente de IA autoalojado 24/7 (Hermes Agent, open source de Nous Research) en Oracle Cloud ARM64 — Docker, systemd, Cloudflare Tunnel, ~5 USD/mes de coste total.",
-        "Memoria semántica persistente con Mem0 + Qdrant autoalojados (búsqueda híbrida semántica y por palabras clave); enrutado multi-modelo de LLM vía OpenRouter con fallback automático entre ~20 proveedores.",
-        "Automatización de navegador en la nube (Browser Use API), pasarela de mensajería multiplataforma (Telegram, Slack) y automatización programada con cron.",
-      ],
-    },
-  ],
   education: [
     {
       title: "Programa Full Stack Developer",
@@ -270,18 +246,6 @@ export const cvDe: CvContent = {
       bullets: [
         "Entwicklung responsiver Webplattformen mit Angular und JavaScript in einem schnelllebigen Startup-Umfeld.",
         "Verwaltung von GCP-Deployments und Zusammenarbeit in cross-funktionalen Teams mit Jira und Agile/Scrum.",
-      ],
-    },
-  ],
-  projects: [
-    {
-      title: "Hermes Agent Infrastructure — selbst gehosteter KI-Agent-Stack",
-      company: "Privat",
-      period: "2026 – Heute",
-      bullets: [
-        "Betreibt rund um die Uhr einen selbst gehosteten KI-Agenten (Hermes Agent, Open Source von Nous Research) auf Oracle Cloud ARM64 — Docker, systemd, Cloudflare Tunnel, ca. 5 USD/Monat Gesamtkosten.",
-        "Persistenter semantischer Speicher mit selbst gehostetem Mem0 + Qdrant (hybride semantische und Stichwort-Suche); Multi-Modell-LLM-Routing über OpenRouter mit automatischen Fallbacks über ~20 Anbieter.",
-        "Cloud-Browser-Automatisierung (Browser Use API), Messaging-Gateway für mehrere Plattformen (Telegram, Slack) und cron-basierte Automatisierung.",
       ],
     },
   ],

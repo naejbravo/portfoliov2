@@ -127,8 +127,10 @@ export function renderCvHtml({
   <h2>${escapeHtml(cv.labels.experience)}</h2>
   ${entries(cv.experience)}
 
-  <h2>${escapeHtml(cv.labels.projects)}</h2>
-  ${entries(cv.projects)}
+  ${cv.projects?.length
+    ? `<h2>${escapeHtml(cv.labels.projects)}</h2>
+  ${entries(cv.projects)}`
+    : ""}
 
   <h2>${escapeHtml(cv.labels.education)}</h2>
   ${cv.education
