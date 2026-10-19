@@ -13,8 +13,8 @@
  */
 
 import { spawn, spawnSync } from "node:child_process"
-import { existsSync, mkdirSync, readFileSync, statSync } from "node:fs"
-import { dirname, join, resolve } from "node:path"
+import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, unlinkSync } from "node:fs"
+import { dirname, join, relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -39,6 +39,37 @@ const OUTPUTS = [
 ]
 
 const cvSource = process.env.CV_CONTENT === "real" ? "real" : "template"
+
+/**
+ * La foto real vive en `assets/real/` y NO en `public/`: el sitio desplegado no debe servir la
+ * identidad real (commit debab08). Pero el CV la pide como `/perfil.jpg`, así que hay que
+ * dejarla en `public/` mientras dura la impresión y retirarla al terminar.
+ *
+ * Si se olvida, Chromium pinta el icono de imagen rota y el PDF sale sin foto: pasó el 19-oct-2026.
+ */
+const PHOTO_TARGET = resolve(root, "public/perfil.jpg")
+const PHOTO_SOURCES = ["assets/real/cv-perfil.jpg", "assets/real/perfil.jpg"].map((p) => resolve(root, p))
+let stagedPhoto = false
+
+function stagePhoto() {
+  if (cvSource !== "real" || existsSync(PHOTO_TARGET)) return
+  const source = PHOTO_SOURCES.find((candidate) => existsSync(candidate))
+  if (!source) {
+    process.stdout.write(
+      "⚠ No encuentro la foto del CV (assets/real/cv-perfil.jpg). El PDF saldrá sin foto.\n",
+    )
+    return
+  }
+  copyFileSync(source, PHOTO_TARGET)
+  stagedPhoto = true
+  process.stdout.write(`▸ foto del CV preparada desde ${relative(root, source)}\n`)
+}
+
+function cleanupPhoto() {
+  if (!stagedPhoto || !existsSync(PHOTO_TARGET)) return
+  unlinkSync(PHOTO_TARGET)
+  process.stdout.write("▸ foto retirada de public/ (no se sirve en la web desplegada)\n")
+}
 
 const CHROMIUM_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -118,10 +149,27 @@ function pdfInfo(path) {
   return { pages, chars: text.stdout.replace(/\s+/g, " ").trim().length }
 }
 
+/**
+ * Cuenta las imágenes de más de 100 px incrustadas en el PDF. Sirve para detectar que la foto
+ * no se cargó: Chromium imprime entonces un icono roto de 14x16 px en lugar de la retratada.
+ */
+function pdfPhotos(path) {
+  const out = spawnSync("pdfimages", ["-list", path], { encoding: "utf8" })
+  if (out.error || typeof out.stdout !== "string") return null
+  return out.stdout
+    .split("\n")
+    .slice(2)
+    .map((line) => line.trim().split(/\s+/))
+    .filter((cols) => cols.length > 4 && /^\d+$/.test(cols[3]) && /^\d+$/.test(cols[4]))
+    .map((cols) => ({ w: Number(cols[3]), h: Number(cols[4]) }))
+    .filter((img) => img.w > 100 && img.h > 100)
+}
+
 async function main() {
   const chromium = findChromium()
   mkdirSync(outDir, { recursive: true })
 
+  stagePhoto()
   let server
   const baseUrl = externalUrl ?? `http://127.0.0.1:${port}`
 
@@ -143,11 +191,15 @@ async function main() {
       const output = join(outDir, file)
       printToPdf(chromium, `${baseUrl}/cv/${lang}`, output)
       const { pages, chars } = pdfInfo(output)
+      const photos = pdfPhotos(output)
       const size = (statSync(output).size / 1024).toFixed(0)
       const pageNote = pages ? `${pages} página(s)` : "páginas: n/d"
       process.stdout.write(`✓ ${file} — ${pageNote}, ${chars ?? "?"} caracteres, ${size} KB\n`)
       if (pages && pages > 1) {
         process.stdout.write(`  ⚠ ${file} ocupa más de una página: revisa el contenido o el tamaño de fuente\n`)
+      }
+      if (photos && photos.length === 0) {
+        process.stdout.write(`  ⚠ ${file} no lleva la foto incrustada: revisa public/perfil.jpg\n`)
       }
     }
     process.stdout.write(`\nPDF generados en ${outDir} desde el perfil "${profileSlug}" y el CV "${cvSource}".\n`)
@@ -157,6 +209,7 @@ async function main() {
       await new Promise((r) => setTimeout(r, 800))
       if (!server.killed) server.kill("SIGKILL")
     }
+    cleanupPhoto()
   }
 }
 
