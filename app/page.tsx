@@ -1,7 +1,6 @@
 import CtaFinal from "@/components/ctaFinal"
 import Footer from "@/components/footer"
 import Hero from "@/components/hero"
-import ProjectsSection from "@/components/projects"
 import ResumeSection from "@/components/resume"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
@@ -39,7 +38,6 @@ export default function HomePage() {
     <main className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
       <Hero />
       <ResumeSection />
-      <ProjectsSection />
       <AboutSection />
       <CtaFinal />
       <Footer />
