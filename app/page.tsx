@@ -2,6 +2,7 @@ import CtaFinal from "@/components/ctaFinal"
 import Footer from "@/components/footer"
 import Hero from "@/components/hero"
 import ProjectsSection from "@/components/projects"
+import ResumeSection from "@/components/resume"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 const skillGroups = [
@@ -37,6 +38,7 @@ export default function HomePage() {
   return (
     <main className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
       <Hero />
+      <ResumeSection />
       <ProjectsSection />
       <AboutSection />
       <CtaFinal />
