@@ -6,7 +6,7 @@
       "tagline": "Multi-tenant HR SaaS with AI-powered OCR document classification, digital signatures and real-time collaboration.",
       "description": "B2B SaaS platform for companies to manage HR documents, digital signatures and employee self-service without local infrastructure. Covers the full document lifecycle from AI-driven classification to automated expiration alerts.",
       "status": "Active development",
-      "role": "Tech Lead & Full-stack .NET Developer — architecture, backend, deployment and production operations.",
+      "role": "Backend .NET Developer — architecture, backend, deployment and production operations.",
       "timeline": {
         "start": "2026",
         "end": null,
@@ -53,6 +53,56 @@
         "scalability": "Multi-tenant architecture enables new client onboarding without infrastructure changes. Adding a tenant is a configuration step, not a deployment."
       },
       "callToAction": "Schedule a technical walkthrough of the multi-tenant architecture, AI document classification pipeline, digital signature workflows and the worker portal."
+    },
+    {
+      "slug": "webcaepro-cae-management-platform",
+      "displayName": "WebCAEpro",
+      "tagline": "Workforce management platform with GDPR-compliant digital signature workflows, REST API and multi-brand support.",
+      "description": "Operations platform for CAE companies managing clients, workers, time tracking and monthly timesheet validation. Features automated GDPR-compliant e-signatures, mobile time tracking APIs and multi-brand tenant support.",
+      "status": "Production",
+      "role": "Backend .NET Developer — maintenance and new features, REST APIs, PDF pipeline and multi-brand support.",
+      "timeline": {
+        "start": "2025",
+        "end": null,
+        "stage": "Active multi-client deployment"
+      },
+      "businessProblem": "Operations teams at CAE companies tracked workers, clients and monthly timesheets entirely through spreadsheets and manual processes. Each monthly closing required days of manual reconciliation, signature collection was done on paper or scanned PDFs, and there was no auditable trail for timesheet validation or GDPR compliance.",
+      "solutionOverview": "Extended an existing ASP.NET Core MVC platform with production-critical features. Implemented an automated GDPR-compliant digital signature workflow for monthly timesheet validation, a REST API for mobile time tracking with concurrent operation limits, multi-brand support for 3 business brands on a single codebase, and a PDF generation and stamping pipeline combining QuestPDF, PdfSharpCore and ChromeHtmlToPdf.",
+      "technicalDecisions": [
+        "Modular ASP.NET Core MVC monolith — evolved the existing system rather than rewriting. Brand-specific behavior (themes, databases, communication channels) handled through configuration and isolated database instances per brand, not code forks.",
+        "SHA-256 magic tokens for GDPR-compliant e-signatures — workers receive time-limited, single-use magic links via email. Signature capture includes stroke count, IP, UserAgent and timestamp in the audit trail.",
+        "Async background job processing for PDF generation — timesheet signing triggers PDF stamping (PdfSharpCore), structured report generation (QuestPDF) and email delivery asynchronously, keeping the UI responsive during monthly validation peaks.",
+        "MySQL (Pomelo EF Core provider) and SQL Server — dual database support based on client deployment environment. EF Core abstractions keep the codebase database-agnostic.",
+        "REST API with encrypted API keys and per-day operation limits — mobile apps authenticate via client-specific API keys, with rate limiting scoped to calendar days and timezone-aware boundaries.",
+        "Multi-brand tenant architecture — single codebase serving 3 brands with isolated databases, independent SMTP/WhatsApp communication channels and custom CSS themes per brand. Brand resolution based on deployment configuration.",
+        "PDF pipeline layering — QuestPDF for programmatic structured reports, PdfSharpCore for visual signature stamping on existing PDFs, ChromeHtmlToPdf for converting HTML templates to PDF. Each tool chosen for its specific role in the pipeline.",
+        "Trade-off — keeping the MVC monolith avoided a risky rewrite. Brand-specific logic lives in configuration and isolated databases, not in code branches. The cost is that deploying a new brand requires infrastructure setup rather than purely declarative configuration."
+      ],
+      "technicalChallenges": [
+        "Implemented end-to-end digital signature workflow: token generation (SHA-256 + expiry), email delivery, signature capture (stroke count, browser metadata), PDF stamping (PdfSharpCore), and async audit trail generation — all with retry logic for transient failures.",
+        "Designed REST API for concurrent mobile time tracking — handles workers clocking in/out simultaneously across time zones with per-day operation limits and encrypted API keys per client.",
+        "Built multi-brand support on a single codebase — 3 business brands with isolated databases, independent SMTP/WhatsApp channels and custom CSS themes, all resolved at runtime without code branches.",
+        "Created PDF pipeline combining three libraries for different stages: QuestPDF for structured report generation, PdfSharpCore for visual signature stamping on existing documents, and ChromeHtmlToPdf for HTML-to-PDF conversion of dynamic content.",
+        "Implemented CSV import pipeline for bulk data migration — validates templates, enforces referential integrity and reduces manual data entry by 80% compared to previous spreadsheet workflows."
+      ],
+      "techStack": {
+        "backend": [".NET 8", "ASP.NET Core MVC", "Entity Framework Core"],
+        "data": ["MySQL (Pomelo)", "SQL Server"],
+        "pdf": ["QuestPDF", "PdfSharpCore", "ChromeHtmlToPdf"],
+        "infrastructure": ["IIS / Windows Server", "SMTP + WhatsApp API"],
+        "security": ["ASP.NET Identity", "Role-based access", "Tenant isolation", "SHA-256 magic tokens"]
+      },
+      "metrics": [
+        "80% reduction in manual data entry through CSV imports",
+        "100% digital timesheet compliance with audit trail",
+        "3 brands running from a single codebase"
+      ],
+      "impact": {
+        "ops": "Reduced manual data entry by 80% through CSV imports and centralized management. Monthly timesheet closing reduced from days to hours.",
+        "quality": "Eliminated data inconsistencies across spreadsheets with validated templates and referential integrity enforcement. Digital signatures provide auditable chain of custody.",
+        "scalability": "Template-driven architecture supports adding new clients without code changes. Multi-brand model allows market expansion through configuration, not development."
+      },
+      "callToAction": "Available for a technical walkthrough of the signature workflow, API architecture and multi-brand deployment model."
     },
     {
       "slug": "hermes",
@@ -103,56 +153,6 @@
         "scalability": "Provider-agnostic routing and containerized stateful services make swapping models, adding messaging platforms or migrating hosts a configuration change, not a rebuild."
       },
       "callToAction": "Happy to walk through the architecture — memory pipeline, provider routing, browser automation and how the whole stack fits on a $5 ARM VPS."
-    },
-    {
-      "slug": "webcaepro-cae-management-platform",
-      "displayName": "WebCAEpro",
-      "tagline": "Workforce management platform with GDPR-compliant digital signature workflows, REST API and multi-brand support.",
-      "description": "Operations platform for CAE companies managing clients, workers, time tracking and monthly timesheet validation. Features automated GDPR-compliant e-signatures, mobile time tracking APIs and multi-brand tenant support.",
-      "status": "Production",
-      "role": "Contributing Developer — Full-stack .NET: features, REST APIs, PDF pipeline and multi-brand support.",
-      "timeline": {
-        "start": "2025",
-        "end": null,
-        "stage": "Active multi-client deployment"
-      },
-      "businessProblem": "Operations teams at CAE companies tracked workers, clients and monthly timesheets entirely through spreadsheets and manual processes. Each monthly closing required days of manual reconciliation, signature collection was done on paper or scanned PDFs, and there was no auditable trail for timesheet validation or GDPR compliance.",
-      "solutionOverview": "Extended an existing ASP.NET Core MVC platform with production-critical features. Implemented an automated GDPR-compliant digital signature workflow for monthly timesheet validation, a REST API for mobile time tracking with concurrent operation limits, multi-brand support for 3 business brands on a single codebase, and a PDF generation and stamping pipeline combining QuestPDF, PdfSharpCore and ChromeHtmlToPdf.",
-      "technicalDecisions": [
-        "Modular ASP.NET Core MVC monolith — evolved the existing system rather than rewriting. Brand-specific behavior (themes, databases, communication channels) handled through configuration and isolated database instances per brand, not code forks.",
-        "SHA-256 magic tokens for GDPR-compliant e-signatures — workers receive time-limited, single-use magic links via email. Signature capture includes stroke count, IP, UserAgent and timestamp in the audit trail.",
-        "Async background job processing for PDF generation — timesheet signing triggers PDF stamping (PdfSharpCore), structured report generation (QuestPDF) and email delivery asynchronously, keeping the UI responsive during monthly validation peaks.",
-        "MySQL (Pomelo EF Core provider) and SQL Server — dual database support based on client deployment environment. EF Core abstractions keep the codebase database-agnostic.",
-        "REST API with encrypted API keys and per-day operation limits — mobile apps authenticate via client-specific API keys, with rate limiting scoped to calendar days and timezone-aware boundaries.",
-        "Multi-brand tenant architecture — single codebase serving 3 brands with isolated databases, independent SMTP/WhatsApp communication channels and custom CSS themes per brand. Brand resolution based on deployment configuration.",
-        "PDF pipeline layering — QuestPDF for programmatic structured reports, PdfSharpCore for visual signature stamping on existing PDFs, ChromeHtmlToPdf for converting HTML templates to PDF. Each tool chosen for its specific role in the pipeline.",
-        "Trade-off — keeping the MVC monolith avoided a risky rewrite. Brand-specific logic lives in configuration and isolated databases, not in code branches. The cost is that deploying a new brand requires infrastructure setup rather than purely declarative configuration."
-      ],
-      "technicalChallenges": [
-        "Implemented end-to-end digital signature workflow: token generation (SHA-256 + expiry), email delivery, signature capture (stroke count, browser metadata), PDF stamping (PdfSharpCore), and async audit trail generation — all with retry logic for transient failures.",
-        "Designed REST API for concurrent mobile time tracking — handles workers clocking in/out simultaneously across time zones with per-day operation limits and encrypted API keys per client.",
-        "Built multi-brand support on a single codebase — 3 business brands with isolated databases, independent SMTP/WhatsApp channels and custom CSS themes, all resolved at runtime without code branches.",
-        "Created PDF pipeline combining three libraries for different stages: QuestPDF for structured report generation, PdfSharpCore for visual signature stamping on existing documents, and ChromeHtmlToPdf for HTML-to-PDF conversion of dynamic content.",
-        "Implemented CSV import pipeline for bulk data migration — validates templates, enforces referential integrity and reduces manual data entry by 80% compared to previous spreadsheet workflows."
-      ],
-      "techStack": {
-        "backend": [".NET 8", "ASP.NET Core MVC", "Entity Framework Core"],
-        "data": ["MySQL (Pomelo)", "SQL Server"],
-        "pdf": ["QuestPDF", "PdfSharpCore", "ChromeHtmlToPdf"],
-        "infrastructure": ["IIS / Windows Server", "SMTP + WhatsApp API"],
-        "security": ["ASP.NET Identity", "Role-based access", "Tenant isolation", "SHA-256 magic tokens"]
-      },
-      "metrics": [
-        "80% reduction in manual data entry through CSV imports",
-        "100% digital timesheet compliance with audit trail",
-        "3 brands running from a single codebase"
-      ],
-      "impact": {
-        "ops": "Reduced manual data entry by 80% through CSV imports and centralized management. Monthly timesheet closing reduced from days to hours.",
-        "quality": "Eliminated data inconsistencies across spreadsheets with validated templates and referential integrity enforcement. Digital signatures provide auditable chain of custody.",
-        "scalability": "Template-driven architecture supports adding new clients without code changes. Multi-brand model allows market expansion through configuration, not development."
-      },
-      "callToAction": "Available for a technical walkthrough of the signature workflow, API architecture and multi-brand deployment model."
     }
   ]
 }

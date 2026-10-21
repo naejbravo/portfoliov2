@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, Geist_Mono } from "next/font/google"
 import Header from "@/components/header"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 })
 
@@ -16,25 +16,26 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://bravojc.com"),
   title: {
-    default: "Jean Bravo · Backend & AI Engineer — .NET, Cloud, Applied AI",
+    default: "Jean Bravo · Backend .NET & AI Engineer",
     template: "%s · Jean Bravo",
   },
   description:
-    "Backend engineer building production systems — REST APIs, multi-tenant SaaS backends and AI-powered pipelines. .NET, PostgreSQL, Docker, GCP/Azure, LLM integrations, RAG and agent infrastructure.",
+    "Backend .NET engineer building web applications with .NET 8–10: REST APIs, MySQL and PostgreSQL, GitHub Actions CI/CD, Linux, Oracle Cloud and Azure, and AI integrated into production apps.",
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: "/",
-    title: "Jean Bravo · Backend & AI Engineer",
+    title: "Jean Bravo · Backend .NET & AI Engineer",
     description:
-      "Backend engineer building production systems — REST APIs, cloud infrastructure and applied AI (LLMs, RAG, agents).",
+      "Backend .NET engineer — REST APIs, CI/CD, Linux and cloud, with AI integrated into production apps.",
     locale: "en_US",
     siteName: "Jean Bravo",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jean Bravo · Backend & AI Engineer",
+    title: "Jean Bravo · Backend .NET & AI Engineer",
     description:
-      "Backend engineer — .NET, REST APIs, PostgreSQL, Docker, cloud and applied AI (LLMs, RAG, agents).",
+      "Backend .NET engineer — REST APIs, MySQL, PostgreSQL, Docker, CI/CD, cloud and applied AI.",
     creator: "@jeanbravo",
   },
   keywords: [
@@ -44,16 +45,18 @@ export const metadata: Metadata = {
     ".NET Developer",
     "ASP.NET Core",
     "REST APIs",
+    "C#",
+    "MySQL",
     "PostgreSQL",
     "Docker",
-    "GCP",
+    "GitHub Actions",
+    "Linux",
+    "Oracle Cloud",
     "Azure",
     "LLM Integrations",
-    "RAG",
-    "Vector Databases",
-    "AI Agents",
     "Multi-tenant",
-    "B2B SaaS",
+    "Zürich",
+    "Málaga",
   ],
   authors: [{ name: "Jean Bravo" }],
 }
@@ -66,7 +69,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <script
           type="application/ld+json"
@@ -76,8 +79,12 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Jean Bravo",
               "url": "https://bravojc.com",
-              "jobTitle": "Backend & AI Engineer",
-              "knowsLanguage": ["Spanish", "English"]
+              "jobTitle": "Backend .NET & AI Engineer",
+              "knowsLanguage": ["Spanish", "English", "German"],
+              "sameAs": [
+                "https://linkedin.com/in/jean-bravo",
+                "https://github.com/naejbravo"
+              ]
             })
           }}
         />

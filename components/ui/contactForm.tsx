@@ -84,7 +84,7 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input inputMode="email" placeholder="tu@email.com" {...field} />
+                <Input inputMode="email" placeholder="you@company.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -100,7 +100,7 @@ export function ContactForm({ descriptionId }: ContactFormProps) {
               <FormControl>
                 <Textarea
                   rows={5}
-                  placeholder="Tell me about your product, team or current challenges…"
+                  placeholder="Tell me about the role and your team…"
                   className="resize-none"
                   {...field}
                 />
