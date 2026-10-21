@@ -39,7 +39,7 @@ export default function Header() {
               <Linkedin className="size-4" />
             </a>
             <a
-              href="/cv_eng_jean_2026.pdf"
+              href="/Jean-Bravo-CV-EN.pdf"
               className="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
               aria-label="CV"
             >

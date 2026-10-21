@@ -54,7 +54,7 @@ export default function Hero() {
               LinkedIn
             </a>
             <a
-              href="/cv_eng_jean_2026.pdf"
+              href="/Jean-Bravo-CV-EN.pdf"
               className="inline-flex items-center gap-1.5 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors"
             >
               <FileText className="size-4" />
